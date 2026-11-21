@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from '@astrojs/starlight/components';
+import Pagination from 'virtual:starlight/components/Pagination';
+import creatorMark from '../assets/creator-mark.png';
+import toolkitIcon from '../assets/toolkit-icon.png';
+import { repositoryUrl, websiteUrl } from '../../site-links.mjs';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home = base + '/';
+const isHome = Astro.url.pathname.replace(/\/$/, '') === base;
+---
+
+<footer class="toolkit-footer">
+  {!isHome && <Pagination />}
+
+  {isHome && (
+    <section class="toolkit-creator" aria-label="Creator">
+      <Image src={creatorMark} alt="" width={120} height={120} loading="lazy" />
+      <div>
+        <p class="creator-credit">Made with care by <a href={websiteUrl}>Ji&#345;&#237; Pol&#225;&#353;ek</a>.</p>
+        <p class="creator-note">Feedback and contributions are welcome.</p>
+      </div>
+      <a class="toolkit-footer-action" href={repositoryUrl}>
+        Say hello on GitHub <Icon name="external" size="1em" />
+      </a>
+    </section>
+  )}
+
+  <div class="toolkit-footer-main">
+    <a class="toolkit-footer-brand" href={home}>
+      <img src={toolkitIcon.src} alt="" width="28" height="28" />
+      {Astro.locals.starlightRoute.siteTitle}
+    </a>
+    <a class="toolkit-footer-action" href="#_top">
+      Back to top <Icon name="up-arrow" size="1em" />
+    </a>
+  </div>
+  <div class="toolkit-footer-bottom">
+    <p>Made by <a href={websiteUrl}>Ji&#345;&#237; Pol&#225;&#353;ek</a></p>
+    <nav aria-label="Footer navigation">
+      <a href={base + '/catalog/'}>Control catalog</a>
+      <a href={base + '/packages/'}>Packages</a>
+      <a href={repositoryUrl}>GitHub</a>
+      <a href={websiteUrl}>jiripolasek.com <Icon name="external" size="1em" /></a>
+    </nav>
+  </div>
+</footer>

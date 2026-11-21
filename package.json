@@ -1,0 +1,20 @@
+{
+  "name": "jpsoftworks-desktop-toolkit-docs",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24.0.0" },
+  "scripts": {
+    "predev": "node scripts/sync-components.mjs",
+    "dev": "astro dev",
+    "prebuild": "node scripts/sync-components.mjs",
+    "build": "astro build",
+    "prepare:pages": "pwsh -NoProfile -File scripts/ensure-windows-sdk.ps1 && npm run build:api",
+    "build:api": "pwsh -NoProfile -File scripts/build-api-reference.ps1",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.0",
+    "@astrojs/starlight": "0.43.1",
+    "astro": "7.4.12"
+  }
+}

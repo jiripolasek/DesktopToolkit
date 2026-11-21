@@ -1,0 +1,9 @@
+{
+  "LogLevel": "Warning",
+  "AssemblyPageName": "index",
+  "GeneratedAccessModifiers": "Api",
+  "GeneratedPages": "Types",
+  "Sections": ["Default"],
+  "Markdown.Exclude": ["^[NT]:.*_XamlTypeInfo(?:\\.|$)"],
+  "Markdown.UrlFormat": "[{0}]({1})"
+}

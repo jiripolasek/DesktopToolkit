@@ -1,0 +1,11 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+import config from 'virtual:starlight/user-config';
+---
+
+{config.social?.map(({ href, label, icon }) => (
+  <a class="project-link" {href} aria-label={label} title={label}>
+    <Icon name={icon} />
+    <span>{label}</span>
+  </a>
+))}
