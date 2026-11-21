@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+**/.vs/
+artifacts/
+.worktrees/
+*.user
+**/node_modules/
+**/.astro/
+**/dist/

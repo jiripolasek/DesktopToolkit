@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.Samples.SearchableContextMenuExample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:menus="using:JPSoftworks.DesktopToolkit.Controls">
+    <StackPanel Spacing="8">
+        <Border
+            x:Name="FileTarget"
+            Padding="12"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{ThemeResource ControlCornerRadius}">
+            <Border.ContextFlyout>
+                <menus:SearchableItemsFlyout
+                    x:Name="FileMenu"
+                    FilterBoxAutomationName="Find a file action"
+                    ItemInvoked="OnItemInvoked">
+                    <menus:SearchableFlyoutItem Glyph="&#xE8E5;" Text="Open" />
+                    <menus:SearchableFlyoutItem Glyph="&#xE70F;" Text="Rename" />
+                    <menus:SearchableFlyoutItem
+                        Glyph="&#xE8C8;"
+                        Keywords="location clipboard"
+                        Text="Copy path" />
+                    <menus:SearchableFlyoutItem IsSeparator="True" />
+                    <menus:SearchableFlyoutItem
+                        Glyph="&#xE734;"
+                        IsCheckable="True"
+                        Text="Pin to favorites" />
+                </menus:SearchableItemsFlyout>
+            </Border.ContextFlyout>
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock VerticalAlignment="Center" Text="Project notes.docx" />
+                <Button Click="OnOpenMenu" Content="Open file menu" />
+            </StackPanel>
+        </Border>
+        <TextBlock
+            x:Name="FileResult"
+            AutomationProperties.LiveSetting="Polite"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</Page>

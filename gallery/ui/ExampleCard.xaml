@@ -1,0 +1,106 @@
+﻿<UserControl
+    x:Class="JPSoftworks.DesktopToolkit.Gallery.UI.ExampleCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    IsTabStop="False"
+    SizeChanged="OnCardSizeChanged">
+    <StackPanel Spacing="8">
+        <TextBlock
+            AutomationProperties.HeadingLevel="Level2"
+            Style="{ThemeResource SubtitleTextBlockStyle}"
+            Text="{x:Bind Header, Mode=OneWay}"
+            TextWrapping="Wrap" />
+        <TextBlock
+            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+            Text="{x:Bind Description, Mode=OneWay}"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind GetTextVisibility(Description), Mode=OneWay}" />
+        <Grid Margin="0,4,0,0" RowDefinitions="Auto,Auto">
+            <Border
+                x:Name="PreviewBorder"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                    <Border Padding="20,16">
+                        <ContentPresenter
+                            MinHeight="48"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="{x:Bind PreviewVerticalAlignment, Mode=OneWay}"
+                            Content="{x:Bind Example, Mode=OneWay}" />
+                    </Border>
+                    <Border
+                        x:Name="SampleSidebar"
+                        Grid.Column="1"
+                        Width="248"
+                        Padding="16"
+                        BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                        BorderThickness="1,0,0,0"
+                        Visibility="Collapsed">
+                        <StackPanel Spacing="16">
+                            <Button
+                                x:Name="OptionsButton"
+                                AutomationProperties.Name="{x:Bind GetOptionsName(Header), Mode=OneWay}"
+                                Visibility="Collapsed">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon FontSize="14" Glyph="&#xE713;" />
+                                    <TextBlock Text="Options" />
+                                </StackPanel>
+                                <Button.Flyout>
+                                    <Flyout Placement="BottomEdgeAlignedRight">
+                                        <ScrollViewer
+                                            MaxHeight="460"
+                                            HorizontalScrollMode="Disabled"
+                                            VerticalScrollBarVisibility="Auto">
+                                            <ContentPresenter
+                                                Width="300"
+                                                HorizontalContentAlignment="Stretch"
+                                                Content="{x:Bind Options, Mode=OneWay}" />
+                                        </ScrollViewer>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                            <ContentPresenter
+                                x:Name="SampleControlsHost"
+                                HorizontalContentAlignment="Stretch"
+                                Content="{x:Bind SampleControls, Mode=OneWay}"
+                                Visibility="Collapsed" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+            <Expander
+                x:Name="SourceExpander"
+                Grid.Row="1"
+                Padding="12,4,12,8"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                AutomationProperties.Name="{x:Bind GetSourceName(Header), Mode=OneWay}"
+                CornerRadius="0,0,8,8"
+                Expanding="OnSourceExpanding"
+                Header="Source code"
+                Visibility="Collapsed">
+                <StackPanel Spacing="4">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <SelectorBar
+                            x:Name="SourceLanguage"
+                            AutomationProperties.Name="Source language"
+                            SelectionChanged="OnSourceLanguageChanged">
+                            <SelectorBarItem x:Name="XamlSourceItem" Text="XAML" />
+                            <SelectorBarItem x:Name="CSharpSourceItem" Text="C#" />
+                        </SelectorBar>
+                        <Button
+                            x:Name="CopySource"
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            AutomationProperties.Name="Copy source code"
+                            Click="OnCopySource"
+                            Content="Copy" />
+                    </Grid>
+                    <ContentPresenter x:Name="SourceHost" />
+                </StackPanel>
+            </Expander>
+        </Grid>
+    </StackPanel>
+</UserControl>

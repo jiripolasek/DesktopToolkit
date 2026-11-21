@@ -1,0 +1,21 @@
+<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Samples.AsyncShortcutEditorExample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:keys="using:JPSoftworks.DesktopToolkit.Controls"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls">
+    <StackPanel Spacing="12">
+        <toolkit:SettingsCard Header="Open launcher">
+            <toolkit:SettingsCard.HeaderIcon>
+                <FontIcon Glyph="&#xE756;" />
+            </toolkit:SettingsCard.HeaderIcon>
+            <keys:ShortcutEditor x:Name="LauncherEditor" AllowClear="True" />
+        </toolkit:SettingsCard>
+        <toolkit:SettingsCard Header="Open search">
+            <toolkit:SettingsCard.HeaderIcon>
+                <FontIcon Glyph="&#xE721;" />
+            </toolkit:SettingsCard.HeaderIcon>
+            <keys:ShortcutEditor x:Name="SearchEditor" AllowClear="True" />
+        </toolkit:SettingsCard>
+    </StackPanel>
+</Page>

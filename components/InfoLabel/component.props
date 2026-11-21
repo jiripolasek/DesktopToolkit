@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>JPSoftworks.DesktopToolkit.Controls.InfoLabel</PackageId>
+    <Version>0.1.0-preview.1</Version>
+    <Title>InfoLabel</Title>
+    <Description>A compact WinUI 3 information icon with a native tooltip.</Description>
+    <PackageTags>WinUI;WinUI3;tooltip;help;label;accessibility</PackageTags>
+    <ComponentSlug>info-label</ComponentSlug>
+    <ComponentStage>preview</ComponentStage>
+  </PropertyGroup>
+</Project>

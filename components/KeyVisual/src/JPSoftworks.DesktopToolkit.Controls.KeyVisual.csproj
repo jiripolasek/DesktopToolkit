@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../component.props" />
+  <PropertyGroup>
+    <RootNamespace>JPSoftworks.DesktopToolkit.Controls</RootNamespace>
+    <ComponentDirectory>KeyVisual</ComponentDirectory>
+    <TargetFrameworks>net10.0-windows10.0.19041;net11.0-windows10.0.19041</TargetFrameworks>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.xaml</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackKeyVisualXaml</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+  <Import Project="../../../eng/WinUIPackage.props" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools.WinUIAnalyzer" PrivateAssets="all" />
+    <None Include="ThirdParty/PowerToys.LICENSE.txt" Exclude="@(None)" />
+    <None Update="ThirdParty/PowerToys.LICENSE.txt" Pack="true" PackagePath="licenses/PowerToys.LICENSE.txt" />
+    <InternalsVisibleTo Include="JPSoftworks.DesktopToolkit.Controls.KeyVisual.ControlTests" />
+  </ItemGroup>
+  <Target Name="_PackKeyVisualXaml" DependsOnTargets="GetTargetPath">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="buildTransitive/$(PackageId).targets"
+                              PackagePath="buildTransitive/$(TargetFramework)/$(PackageId).targets" />
+      <TfmSpecificPackageFile Include="$(TargetDir)$(AssemblyName)/%(Page.RelativeDir)%(Page.Filename).xbf"
+                              PackagePath="buildTransitive/$(TargetFramework)/%(Page.RelativeDir)%(Page.Filename).xbf" />
+    </ItemGroup>
+  </Target>
+</Project>

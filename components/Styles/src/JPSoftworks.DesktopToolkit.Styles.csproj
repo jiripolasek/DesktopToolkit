@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../component.props" />
+  <PropertyGroup>
+    <ComponentDirectory>Styles</ComponentDirectory>
+    <TargetFrameworks>net10.0-windows10.0.19041;net11.0-windows10.0.19041</TargetFrameworks>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.xaml</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackStylesXaml</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+  <Import Project="../../../eng/WinUIPackage.props" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools.WinUIAnalyzer" PrivateAssets="all" />
+  </ItemGroup>
+  <Target Name="_PackStylesXaml" DependsOnTargets="GetTargetPath">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="buildTransitive/$(PackageId).targets"
+                              PackagePath="buildTransitive/$(TargetFramework)/$(PackageId).targets" />
+      <TfmSpecificPackageFile Include="$(TargetDir)$(AssemblyName)/%(Page.RelativeDir)%(Page.Filename).xbf"
+                              PackagePath="buildTransitive/$(TargetFramework)/%(Page.RelativeDir)%(Page.Filename).xbf" />
+    </ItemGroup>
+  </Target>
+</Project>

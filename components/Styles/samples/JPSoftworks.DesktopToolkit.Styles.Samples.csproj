@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../../eng/WinUI.props" />
+  <PropertyGroup>
+    <TargetFramework>net11.0-windows10.0.26100.0</TargetFramework>
+    <Platforms>x64;ARM64</Platforms>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../src/JPSoftworks.DesktopToolkit.Styles.csproj" />
+    <ProjectReference Include="../../../gallery/ui/JPSoftworks.DesktopToolkit.Gallery.UI.csproj" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" PrivateAssets="all" />
+    <EmbeddedResource Include="../src/Themes/SettingsSearchBoxStyle.xaml"
+                      LogicalName="ExampleSource.SettingsSearchBoxStylePage.xaml" />
+    <EmbeddedResource Include="../src/SearchBoxLayout.cs"
+                      LogicalName="ExampleSource.SettingsSearchBoxStylePage.xaml.cs" />
+  </ItemGroup>
+</Project>

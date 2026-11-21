@@ -1,0 +1,670 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.WebAnalyticsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:dates="using:JPSoftworks.DesktopToolkit.Controls"
+    xmlns:reports="using:JPSoftworks.DesktopToolkit.Controls.Demo.Pages"
+    xmlns:ui="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <Page.Resources>
+        <Style x:Key="ReportSurface" TargetType="Border">
+            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="16" />
+        </Style>
+        <Style
+            x:Key="ReportCaption"
+            BasedOn="{StaticResource CaptionTextBlockStyle}"
+            TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style
+            x:Key="MetricName"
+            BasedOn="{StaticResource BodyStrongTextBlockStyle}"
+            TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style
+            x:Key="MetricGain"
+            BasedOn="{StaticResource ReportCaption}"
+            TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{ThemeResource SystemFillColorSuccessBrush}" />
+        </Style>
+        <Style
+            x:Key="MetricLoss"
+            BasedOn="{StaticResource ReportCaption}"
+            TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{ThemeResource SystemFillColorCriticalBrush}" />
+        </Style>
+        <Style x:Key="MetricSparkline" TargetType="charts:LineChart">
+            <Setter Property="Height" Value="34" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="CornerRadius" Value="0,0,9,9" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="ShowGrid" Value="False" />
+            <Setter Property="ShowLegend" Value="False" />
+            <Setter Property="ShowAreaFill" Value="True" />
+            <Setter Property="Interpolation" Value="Monotone" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="AutomationProperties.AccessibilityView" Value="Raw" />
+            <Setter Property="charts:ChartInspection.IsEnabled" Value="False" />
+            <Setter Property="charts:ChartAxisAppearance.Presentation" Value="Hidden" />
+        </Style>
+        <Style x:Key="MetricButton" TargetType="ToggleButton">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+        <Style x:Key="TableHeader" TargetType="Grid">
+            <Setter Property="ColumnSpacing" Value="10" />
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="Background" Value="{ThemeResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style x:Key="ReportTableItem" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="10,0" />
+            <Setter Property="MinHeight" Value="38" />
+        </Style>
+        <DataTemplate x:Key="ReportRow" x:DataType="reports:AnalyticsReportRow">
+            <Grid ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Name}"
+                    TextTrimming="CharacterEllipsis"
+                    ToolTipService.ToolTip="{x:Bind Name}" />
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Count}"
+                    TextAlignment="Right" />
+                <TextBlock
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Detail}"
+                    TextAlignment="Right" />
+                <TextBlock
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Rate}"
+                    TextAlignment="Right" />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid
+        x:Name="Workspace"
+        MaxWidth="1450"
+        SizeChanged="OnWorkspaceSizeChanged">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ui:GalleryPageHeader
+            x:Name="PageHeader"
+            Title="Web analytics"
+            ApiNamespace="JPSoftworks.DesktopToolkit.Charts"
+            ApiNotes="Use the date picker and channel selector to filter all reports. Use LineChart for trends, HeatmapChart for hourly activity, and FunnelChart for checkout stages."
+            Description="Northline Outfitters  /  Demo property"
+            Glyph="&#xE9D9;"
+            PreviewThemeToggleVisibility="Collapsed" />
+
+        <Grid
+            x:Name="Filters"
+            Grid.Row="1"
+            Margin="0,16,0,8"
+            ColumnSpacing="10"
+            RowSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.25*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <dates:DateRangePicker
+                x:Name="ReportDates"
+                VerticalAlignment="Bottom"
+                Header="Date range"
+                IsComparisonEnabled="True"
+                SelectionChanged="OnReportDatesChanged" />
+            <ComboBox
+                x:Name="AnalyticsDeviceBox"
+                Grid.Column="1"
+                MinWidth="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                Header="Device"
+                SelectedIndex="0"
+                SelectionChanged="OnFilterChanged">
+                <x:String>All devices</x:String>
+                <x:String>Mobile</x:String>
+                <x:String>Desktop</x:String>
+            </ComboBox>
+            <ComboBox
+                x:Name="AnalyticsChannelBox"
+                Grid.Column="2"
+                MinWidth="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                Header="Channel"
+                SelectionChanged="OnFilterChanged" />
+        </Grid>
+
+        <Border
+            Grid.Row="2"
+            Margin="0,2,0,6"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="0,0,0,1">
+            <ScrollViewer
+                HorizontalScrollBarVisibility="Auto"
+                HorizontalScrollMode="Enabled"
+                VerticalScrollBarVisibility="Disabled"
+                VerticalScrollMode="Disabled">
+                <SelectorBar
+                    x:Name="ReportTabs"
+                    AutomationProperties.Name="Analytics reports"
+                    SelectionChanged="OnReportChanged">
+                    <SelectorBarItem x:Name="OverviewTab" Text="Overview" />
+                    <SelectorBarItem x:Name="AcquisitionTab" Text="Acquisition" />
+                    <SelectorBarItem x:Name="EngagementTab" Text="Engagement" />
+                    <SelectorBarItem x:Name="PurchaseTab" Text="Purchase journey" />
+                </SelectorBar>
+            </ScrollViewer>
+        </Border>
+
+        <ScrollViewer
+            x:Name="ReportScroll"
+            Grid.Row="3"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <Grid Width="{Binding ViewportWidth, ElementName=ReportScroll}" Padding="0,12,0,28">
+                <StackPanel x:Name="OverviewReport" Spacing="14">
+                    <Grid
+                        x:Name="MetricGrid"
+                        ColumnSpacing="10"
+                        RowSpacing="10">
+                        <Grid.Resources>
+                            <ResourceDictionary>
+                                <ResourceDictionary.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Default">
+                                        <StaticResource x:Key="ToggleButtonBackgroundChecked" ResourceKey="ControlFillColorSecondaryBrush" />
+                                        <StaticResource x:Key="ToggleButtonBackgroundCheckedPointerOver" ResourceKey="ControlFillColorSecondaryBrush" />
+                                        <StaticResource x:Key="ToggleButtonBackgroundCheckedPressed" ResourceKey="ControlFillColorTertiaryBrush" />
+                                        <StaticResource x:Key="ToggleButtonForegroundChecked" ResourceKey="TextFillColorPrimaryBrush" />
+                                        <StaticResource x:Key="ToggleButtonForegroundCheckedPointerOver" ResourceKey="TextFillColorPrimaryBrush" />
+                                        <StaticResource x:Key="ToggleButtonForegroundCheckedPressed" ResourceKey="TextFillColorSecondaryBrush" />
+                                        <StaticResource x:Key="ToggleButtonBorderBrushChecked" ResourceKey="AccentFillColorDefaultBrush" />
+                                        <StaticResource x:Key="ToggleButtonBorderBrushCheckedPointerOver" ResourceKey="AccentFillColorDefaultBrush" />
+                                        <StaticResource x:Key="ToggleButtonBorderBrushCheckedPressed" ResourceKey="AccentFillColorDefaultBrush" />
+                                    </ResourceDictionary>
+                                </ResourceDictionary.ThemeDictionaries>
+                            </ResourceDictionary>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton
+                            x:Name="SessionsMetric"
+                            AutomationProperties.Name="Sessions trend"
+                            Checked="OnMetricCheckChanged"
+                            Style="{StaticResource MetricButton}"
+                            Unchecked="OnMetricCheckChanged">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Margin="14,12,14,8" Spacing="4">
+                                    <TextBlock Style="{StaticResource MetricName}" Text="Sessions" />
+                                    <TextBlock x:Name="SessionsValue" Style="{StaticResource TitleTextBlockStyle}" />
+                                    <TextBlock x:Name="SessionsDelta" Style="{StaticResource ReportCaption}" />
+                                </StackPanel>
+                                <charts:LineChart
+                                    x:Name="SessionsSparkline"
+                                    Grid.Row="1"
+                                    Style="{StaticResource MetricSparkline}" />
+                            </Grid>
+                        </ToggleButton>
+                        <ToggleButton
+                            x:Name="EngagementMetric"
+                            Grid.Column="1"
+                            AutomationProperties.Name="Engagement rate trend"
+                            Checked="OnMetricCheckChanged"
+                            Style="{StaticResource MetricButton}"
+                            Unchecked="OnMetricCheckChanged">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Margin="14,12,14,8" Spacing="4">
+                                    <TextBlock Style="{StaticResource MetricName}" Text="Engagement rate" />
+                                    <TextBlock x:Name="EngagementValue" Style="{StaticResource TitleTextBlockStyle}" />
+                                    <TextBlock x:Name="EngagementDelta" Style="{StaticResource ReportCaption}" />
+                                </StackPanel>
+                                <charts:LineChart
+                                    x:Name="EngagementSparkline"
+                                    Grid.Row="1"
+                                    Style="{StaticResource MetricSparkline}" />
+                            </Grid>
+                        </ToggleButton>
+                        <ToggleButton
+                            x:Name="PurchasesMetric"
+                            Grid.Column="2"
+                            AutomationProperties.Name="Purchases trend"
+                            Checked="OnMetricCheckChanged"
+                            Style="{StaticResource MetricButton}"
+                            Unchecked="OnMetricCheckChanged">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Margin="14,12,14,8" Spacing="4">
+                                    <TextBlock Style="{StaticResource MetricName}" Text="Purchases" />
+                                    <TextBlock x:Name="PurchasesValue" Style="{StaticResource TitleTextBlockStyle}" />
+                                    <TextBlock x:Name="PurchasesDelta" Style="{StaticResource ReportCaption}" />
+                                </StackPanel>
+                                <charts:LineChart
+                                    x:Name="PurchasesSparkline"
+                                    Grid.Row="1"
+                                    Style="{StaticResource MetricSparkline}" />
+                            </Grid>
+                        </ToggleButton>
+                        <ToggleButton
+                            x:Name="PurchaseRateMetric"
+                            Grid.Column="3"
+                            AutomationProperties.Name="Purchase rate trend"
+                            Checked="OnMetricCheckChanged"
+                            Style="{StaticResource MetricButton}"
+                            Unchecked="OnMetricCheckChanged">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Margin="14,12,14,8" Spacing="4">
+                                    <TextBlock Style="{StaticResource MetricName}" Text="Purchase rate" />
+                                    <TextBlock x:Name="PurchaseRateValue" Style="{StaticResource TitleTextBlockStyle}" />
+                                    <TextBlock x:Name="PurchaseRateDelta" Style="{StaticResource ReportCaption}" />
+                                </StackPanel>
+                                <charts:LineChart
+                                    x:Name="PurchaseRateSparkline"
+                                    Grid.Row="1"
+                                    Style="{StaticResource MetricSparkline}" />
+                            </Grid>
+                        </ToggleButton>
+                    </Grid>
+
+                    <Grid
+                        x:Name="OverviewCharts"
+                        ColumnSpacing="14"
+                        RowSpacing="14">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2.15*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource ReportSurface}">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    x:Name="TrendHeading"
+                                    AutomationProperties.HeadingLevel="Level2"
+                                    Style="{StaticResource SubtitleTextBlockStyle}" />
+                                <TextBlock x:Name="TrendPeriod" Style="{StaticResource ReportCaption}" />
+                                <charts:LineChart
+                                    x:Name="SessionHistory"
+                                    Height="232"
+                                    Padding="0"
+                                    charts:ChartAxisAppearance.Presentation="Subtle"
+                                    AutomationProperties.Name="Daily metric for the selected and previous periods"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    ShowAreaFill="True"
+                                    ValueFormat="N0"
+                                    XValueFormat="d MMM" />
+                            </StackPanel>
+                        </Border>
+                        <Border
+                            x:Name="DeviceSurface"
+                            Grid.Column="1"
+                            Style="{StaticResource ReportSurface}">
+                            <StackPanel Spacing="6">
+                                <TextBlock
+                                    AutomationProperties.HeadingLevel="Level2"
+                                    Style="{StaticResource SubtitleTextBlockStyle}"
+                                    Text="Sessions by device"
+                                    TextWrapping="Wrap" />
+                                <TextBlock Style="{StaticResource ReportCaption}" Text="Share of the selected period" />
+                                <charts:DoughnutGraph
+                                    x:Name="DeviceMix"
+                                    Height="178"
+                                    Padding="0"
+                                    AutomationProperties.Name="Session share by device"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    CenterLabel="sessions"
+                                    GapAngle="0"
+                                    ShowLegend="False"
+                                    ValueFormat="N0" />
+                                <Grid ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Border
+                                            x:Name="MobileSwatch"
+                                            Width="8"
+                                            Height="8"
+                                            VerticalAlignment="Center"
+                                            CornerRadius="2" />
+                                        <TextBlock Text="Mobile" />
+                                    </StackPanel>
+                                    <TextBlock
+                                        x:Name="MobileShare"
+                                        Grid.Column="1"
+                                        TextAlignment="Right" />
+                                </Grid>
+                                <Grid ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <Border
+                                            x:Name="DesktopSwatch"
+                                            Width="8"
+                                            Height="8"
+                                            VerticalAlignment="Center"
+                                            CornerRadius="2" />
+                                        <TextBlock Text="Desktop" />
+                                    </StackPanel>
+                                    <TextBlock
+                                        x:Name="DesktopShare"
+                                        Grid.Column="1"
+                                        TextAlignment="Right" />
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Border Style="{StaticResource ReportSurface}">
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Spacing="4">
+                                <TextBlock Style="{StaticResource MetricName}" Text="Top acquisition channel" />
+                                <TextBlock x:Name="ChannelSummary" Style="{StaticResource ReportCaption}" />
+                            </StackPanel>
+                            <Button
+                                Grid.Column="1"
+                                Click="OnOpenAcquisitionClick"
+                                Content="View acquisition" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="AcquisitionReport"
+                    Spacing="14"
+                    Visibility="Collapsed">
+                    <Border Style="{StaticResource ReportSurface}">
+                        <StackPanel Spacing="6">
+                            <TextBlock
+                                AutomationProperties.HeadingLevel="Level2"
+                                Style="{StaticResource SubtitleTextBlockStyle}"
+                                Text="Sessions by channel" />
+                            <TextBlock x:Name="AcquisitionPeriod" Style="{StaticResource ReportCaption}" />
+                            <charts:BarChart
+                                x:Name="SessionChannels"
+                                Height="245"
+                                Padding="0"
+                                charts:ChartAxisAppearance.Presentation="Subtle"
+                                AutomationProperties.Name="Sessions by acquisition channel and period"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                InspectionMode="Category"
+                                Orientation="Horizontal"
+                                ValueFormat="N0" />
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource ReportSurface}">
+                        <StackPanel Spacing="8">
+                            <Grid ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Spacing="4">
+                                    <TextBlock
+                                        AutomationProperties.HeadingLevel="Level2"
+                                        Style="{StaticResource SubtitleTextBlockStyle}"
+                                        Text="Channel performance"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock Style="{StaticResource ReportCaption}" Text="Select a row to filter all reports by that channel." />
+                                </StackPanel>
+                                <ComboBox
+                                    x:Name="ChannelSortBox"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    AutomationProperties.Name="Sort channels by"
+                                    Header="Sort by"
+                                    SelectedIndex="0"
+                                    SelectionChanged="OnChannelSortChanged">
+                                    <x:String>Sessions</x:String>
+                                    <x:String>Purchases</x:String>
+                                    <x:String>Purchase rate</x:String>
+                                </ComboBox>
+                            </Grid>
+                            <Grid Style="{StaticResource TableHeader}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Channel" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="Sessions"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Text="Purchases"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Column="3"
+                                    Text="Purchase rate"
+                                    TextAlignment="Right" />
+                            </Grid>
+                            <ListView
+                                x:Name="ChannelsTable"
+                                AutomationProperties.Name="Channel performance"
+                                IsItemClickEnabled="True"
+                                ItemClick="OnChannelInvoked"
+                                ItemContainerStyle="{StaticResource ReportTableItem}"
+                                ItemTemplate="{StaticResource ReportRow}"
+                                SelectionMode="None" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="EngagementReport"
+                    Spacing="14"
+                    Visibility="Collapsed">
+                    <Border Style="{StaticResource ReportSurface}">
+                        <StackPanel Spacing="6">
+                            <TextBlock
+                                AutomationProperties.HeadingLevel="Level2"
+                                Style="{StaticResource SubtitleTextBlockStyle}"
+                                Text="When visitors arrive" />
+                            <TextBlock Style="{StaticResource ReportCaption}" Text="Average sessions per weekday in three-hour blocks (UTC)." />
+                            <charts:HeatmapChart
+                                x:Name="VisitorHours"
+                                Height="235"
+                                Padding="0"
+                                AutomationProperties.Name="Average sessions by weekday and three-hour UTC block"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                CellCornerRadius="4"
+                                ValueFormat="N0" />
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource ReportSurface}">
+                        <StackPanel Spacing="8">
+                            <Grid ColumnSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Spacing="4">
+                                    <TextBlock
+                                        AutomationProperties.HeadingLevel="Level2"
+                                        Style="{StaticResource SubtitleTextBlockStyle}"
+                                        Text="Landing pages" />
+                                    <TextBlock Style="{StaticResource ReportCaption}" Text="First page seen in each session." />
+                                </StackPanel>
+                                <TextBox
+                                    x:Name="LandingSearch"
+                                    Grid.Column="1"
+                                    Width="152"
+                                    VerticalAlignment="Center"
+                                    AutomationProperties.Name="Find a landing page"
+                                    PlaceholderText="Find a page"
+                                    TextChanged="OnLandingSearchChanged" />
+                            </Grid>
+                            <Grid Style="{StaticResource TableHeader}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Landing page" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="Sessions"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Text="Engaged"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Column="3"
+                                    Text="Engagement rate"
+                                    TextAlignment="Right" />
+                            </Grid>
+                            <ListView
+                                x:Name="LandingTable"
+                                AutomationProperties.Name="Landing page engagement"
+                                ItemContainerStyle="{StaticResource ReportTableItem}"
+                                ItemTemplate="{StaticResource ReportRow}"
+                                SelectionMode="None" />
+                            <TextBlock
+                                x:Name="NoLandingPages"
+                                Style="{StaticResource ReportCaption}"
+                                Text="No landing pages match your search."
+                                Visibility="Collapsed" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="PurchaseReport"
+                    Spacing="14"
+                    Visibility="Collapsed">
+                    <Border Style="{StaticResource ReportSurface}">
+                        <StackPanel Spacing="6">
+                            <TextBlock
+                                AutomationProperties.HeadingLevel="Level2"
+                                Style="{StaticResource SubtitleTextBlockStyle}"
+                                Text="Checkout journey" />
+                            <TextBlock Style="{StaticResource ReportCaption}" Text="Sessions that reached each step in order during one visit." />
+                            <charts:FunnelChart
+                                x:Name="CheckoutJourney"
+                                Height="280"
+                                Padding="0"
+                                charts:ChartLegend.HighlightOnHover="True"
+                                AutomationProperties.Name="Checkout stages by device"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Presentation="Flow"
+                                ValueFormat="N0" />
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource ReportSurface}">
+                        <StackPanel Spacing="8">
+                            <TextBlock
+                                AutomationProperties.HeadingLevel="Level2"
+                                Style="{StaticResource SubtitleTextBlockStyle}"
+                                Text="Where shoppers drop off" />
+                            <TextBlock x:Name="DropOffSummary" Style="{StaticResource ReportCaption}" />
+                            <Grid Style="{StaticResource TableHeader}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Step" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="Reached"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Text="Drop-offs"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Column="3"
+                                    Text="Step rate"
+                                    TextAlignment="Right" />
+                            </Grid>
+                            <ListView
+                                x:Name="CheckoutTable"
+                                AutomationProperties.Name="Checkout stage counts and drop-offs"
+                                ItemContainerStyle="{StaticResource ReportTableItem}"
+                                ItemTemplate="{StaticResource ReportRow}"
+                                SelectionMode="None" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

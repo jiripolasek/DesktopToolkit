@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <!-- WinUI adds .xaml to the pack allowlist only in framework-specific builds. -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder Condition="'$(TargetFramework)' == ''">$(AllowedOutputExtensionsInPackageBuildOutputFolder);.xaml</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackCompiledMenuXaml</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+  <Target Name="_PackCompiledMenuXaml" DependsOnTargets="GetTargetPath">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="buildTransitive\$(PackageId).targets"
+                              PackagePath="buildTransitive/$(TargetFramework)/$(PackageId).targets" />
+      <TfmSpecificPackageFile Include="$(TargetDir)$(AssemblyName)\%(Page.RelativeDir)%(Page.Filename).xbf"
+                              PackagePath="buildTransitive/$(TargetFramework)/%(Page.RelativeDir)%(Page.Filename).xbf"
+                              Condition="'%(Page.Pack)' != 'false'" />
+    </ItemGroup>
+  </Target>
+</Project>

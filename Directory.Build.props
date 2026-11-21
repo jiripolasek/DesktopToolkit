@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <DesktopToolkitRoot>$(MSBuildThisFileDirectory)</DesktopToolkitRoot>
+    <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+    <Company>JPSoftworks</Company>
+    <Authors>JPSoftworks</Authors>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl Condition="'$(GITHUB_REPOSITORY)' != ''">https://github.com/$(GITHUB_REPOSITORY)</RepositoryUrl>
+    <RepositoryUrl Condition="'$(RepositoryUrl)' == ''">https://github.com/jiripolasek/DesktopToolkit</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+</Project>

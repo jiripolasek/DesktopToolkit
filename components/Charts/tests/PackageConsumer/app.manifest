@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+  <assemblyIdentity name="ChartsPackageConsumer.app" version="1.0.0.0" />
+  <file name="Microsoft.Graphics.Canvas.dll">
+    <activatableClass xmlns="urn:schemas-microsoft-com:winrt.v1" name="Microsoft.Graphics.Canvas.UI.Xaml.CanvasControl" threadingModel="both" />
+    <activatableClass xmlns="urn:schemas-microsoft-com:winrt.v1" name="Microsoft.Graphics.Canvas.UI.Xaml.CanvasAnimatedControl" threadingModel="both" />
+    <activatableClass xmlns="urn:schemas-microsoft-com:winrt.v1" name="Microsoft.Graphics.Canvas.CanvasDevice" threadingModel="both" />
+    <activatableClass xmlns="urn:schemas-microsoft-com:winrt.v1" name="Microsoft.Graphics.Canvas.Geometry.CanvasStrokeStyle" threadingModel="both" />
+    <activatableClass xmlns="urn:schemas-microsoft-com:winrt.v1" name="Microsoft.Graphics.Canvas.Text.CanvasTextFormat" threadingModel="both" />
+  </file>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
+    </application>
+  </compatibility>
+</assembly>

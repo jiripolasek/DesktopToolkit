@@ -1,0 +1,191 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.VerticalUsageBarPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            MaxWidth="1600"
+            Spacing="32">
+            <demo:SamplePageHeader
+                Title="Usage bar"
+                ApiNotes="Use IsCompact for a solid track that fits into a dashboard. SegmentGap separates stacked contributions, and ShowLegend adds their names and formatted values. The unfilled track represents remaining capacity. Value and ValueText still provide the independent headline."
+                Description="Show a resource level or how several contributions share a capacity. Hover a meter segment to inspect its value."
+                StylingControl="VerticalUsageBar"
+                StylingExample="SegmentedExample" />
+            <sample:ExampleCard
+                x:Name="SegmentedExample"
+                Header="Compact capacity meters"
+                PreviewVerticalAlignment="Top">
+                <StackPanel Spacing="24">
+                    <StackPanel Spacing="9">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Workspace drive" />
+                        <TextBlock Style="{StaticResource ChartsDescriptionStyle}" Text="164 GB used of 256 GB" />
+                        <charts:VerticalUsageBar
+                            x:Name="CompactStorageMeter"
+                            AutomationProperties.Name="Workspace drive capacity, slim track"
+                            IsCompact="True"
+                            LegendPlacement="{x:Bind GetLegendPlacement(LegendPlacementBox.SelectedIndex), Mode=OneWay}"
+                            Maximum="256"
+                            Orientation="Horizontal"
+                            SegmentGap="{x:Bind GapSlider.Value, Mode=OneWay}"
+                            ShowLegend="True"
+                            TrackThickness="{x:Bind ThicknessSlider.Value, Mode=OneWay}"
+                            ValueFormat="0' GB'"
+                            Value="164" />
+                        <charts:VerticalUsageBar
+                            x:Name="ThickStorageMeter"
+                            Margin="0,4,0,0"
+                            AutomationProperties.Name="Workspace drive capacity, thick track"
+                            IsCompact="True"
+                            Maximum="256"
+                            Orientation="Horizontal"
+                            SegmentGap="{x:Bind GapSlider.Value, Mode=OneWay}"
+                            TrackThickness="30"
+                            ValueFormat="0' GB'"
+                            Value="164" />
+                    </StackPanel>
+                    <StackPanel Spacing="9">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Build queue" />
+                        <charts:VerticalUsageBar
+                            x:Name="CompactQueueMeter"
+                            Height="112"
+                            HorizontalAlignment="Left"
+                            AutomationProperties.Name="Build queue capacity"
+                            IsCompact="True"
+                            LegendOrientation="Vertical"
+                            Maximum="80"
+                            SegmentGap="2"
+                            ShowLegend="True"
+                            ValueFormat="0' jobs'"
+                            Value="52" />
+                    </StackPanel>
+                </StackPanel>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <Slider
+                            x:Name="ThicknessSlider"
+                            Header="Slim track thickness"
+                            Maximum="20"
+                            Minimum="4"
+                            Value="8" />
+                        <Slider
+                            x:Name="GapSlider"
+                            Header="Segment gap"
+                            Maximum="8"
+                            Minimum="0"
+                            Value="2" />
+                        <ComboBox
+                            x:Name="LegendPlacementBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Legend placement"
+                            SelectedIndex="1">
+                            <x:String>Above</x:String>
+                            <x:String>Below</x:String>
+                        </ComboBox>
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind CompactStorageMeter}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="SingleExample" Header="A single value, with or without a footer">
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="48">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="With value text" />
+                        <charts:VerticalUsageBar
+                            x:Name="SingleBar"
+                            Width="72"
+                            Height="210"
+                            AutomationProperties.Name="Single resource usage" />
+                    </StackPanel>
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Without footer" />
+                        <charts:VerticalUsageBar
+                            x:Name="CompactBar"
+                            Width="56"
+                            Height="160"
+                            AutomationProperties.Name="Compact resource usage" />
+                    </StackPanel>
+                </StackPanel>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="20">
+                        <Slider
+                            x:Name="UsageSlider"
+                            Header="Usage (%)"
+                            Maximum="100"
+                            Minimum="0"
+                            ValueChanged="OnUsageChanged"
+                            Value="42" />
+                        <CheckBox
+                            x:Name="GridBox"
+                            Click="OnOptionsClick"
+                            Content="Show grid"
+                            IsChecked="True" />
+                        <CheckBox
+                            x:Name="AnimationBox"
+                            Click="OnOptionsClick"
+                            Content="Animate changes"
+                            IsChecked="True" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="StackedExample" Header="Stacked storage usage">
+                <StackPanel Spacing="20">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="24">
+                        <charts:VerticalUsageBar
+                            x:Name="StackedBar"
+                            Width="64"
+                            Height="150"
+                            AutomationProperties.Name="Vertical storage usage meter"
+                            Maximum="256" />
+                        <StackPanel VerticalAlignment="Center" Spacing="8">
+                            <TextBlock x:Name="AppsLegend" Foreground="#FF0078D4" />
+                            <TextBlock x:Name="MediaLegend" Foreground="#FF9C5DD8" />
+                            <TextBlock x:Name="FreeSpaceLegend" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <charts:VerticalUsageBar
+                        x:Name="HorizontalStackedBar"
+                        Height="54"
+                        AutomationProperties.Name="Horizontal storage usage meter"
+                        Maximum="256"
+                        Orientation="Horizontal"
+                        ShowGrid="False" />
+                </StackPanel>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="20">
+                        <Slider
+                            x:Name="AppsSlider"
+                            Header="Apps (GB)"
+                            Maximum="256"
+                            Minimum="0"
+                            ValueChanged="OnStackedUsageChanged"
+                            Value="64" />
+                        <Slider
+                            x:Name="MediaSlider"
+                            Header="Media (GB)"
+                            Maximum="256"
+                            Minimum="0"
+                            ValueChanged="OnStackedUsageChanged"
+                            Value="96" />
+                        <TextBlock Style="{StaticResource ChartsDescriptionStyle}" Text="Apps and media share a 256 GB drive. Free space is the unfilled part of the meter." />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

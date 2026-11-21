@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <Authors>Jiri Polasek</Authors>
+    <Copyright>(c) Jiri Polasek</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>toolkit-icon.png</PackageIcon>
+    <PackageProjectUrl>https://desktoptoolkit.jiripolasek.com/components/$(ComponentSlug)/</PackageProjectUrl>
+    <PackageOutputPath>$(DesktopToolkitRoot)artifacts/packages</PackageOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(PackageReadmeFile)" Exclude="@(None)" />
+    <None Update="$(PackageReadmeFile)" Pack="true" PackagePath="/" />
+    <None Include="$(MSBuildThisFileDirectory)../art/$(PackageIcon)" Pack="true" PackagePath="/" />
+    <None Include="$(DesktopToolkitRoot)LICENSE" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>

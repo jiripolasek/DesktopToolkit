@@ -1,0 +1,146 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.LiveAreaGraphPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            MaxWidth="1600"
+            Spacing="32">
+            <demo:SamplePageHeader
+                Title="Live area graph"
+                ApiNotes="Bind SeriesSource or add series on the UI thread before sending samples. AppendSample accepts producer-thread calls and values in the configured series order. Bind HistoryDuration, ValueRange, and GridMode to customize the view. Clear removes history and preserves series."
+                Description="Display continuously scrolling time series with smooth transitions. Hover to inspect values, or focus the chart and use the arrow keys."
+                StylingControl="LiveAreaGraph"
+                StylingExample="SparklineExample" />
+            <sample:ExampleCard
+                x:Name="LiveExample"
+                Header="A continuously scrolling graph"
+                PreviewVerticalAlignment="Top">
+                <StackPanel Spacing="12">
+                    <charts:LiveAreaGraph
+                        x:Name="Graph"
+                        Height="260"
+                        AutomationProperties.Name="Sample CPU and memory history"
+                        Interpolation="Smooth"
+                        SeriesSource="{x:Bind LiveSeries}"
+                        TooltipValueFormat="0.0"
+                        TooltipValueSuffix="%" />
+                    <Grid>
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="60 seconds" />
+                        <TextBlock
+                            HorizontalAlignment="Right"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Text="Now" />
+                    </Grid>
+                    <TextBlock x:Name="CurrentValues" TextWrapping="Wrap" />
+                </StackPanel>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="20">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button
+                                x:Name="PauseButton"
+                                Click="OnPauseClick"
+                                Content="Pause" />
+                            <Button Click="OnClearClick" Content="Clear" />
+                        </StackPanel>
+                        <ComboBox
+                            x:Name="GridModeBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Grid"
+                            SelectedIndex="1"
+                            SelectionChanged="OnGridChanged">
+                            <x:String>None</x:String>
+                            <x:String>Cross</x:String>
+                            <x:String>Dot</x:String>
+                        </ComboBox>
+                        <ComboBox
+                            x:Name="CadenceBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Sample interval"
+                            SelectedIndex="0"
+                            SelectionChanged="OnCadenceChanged">
+                            <x:String>500 ms</x:String>
+                            <x:String>1 second</x:String>
+                            <x:String>5 seconds</x:String>
+                        </ComboBox>
+                        <ToggleSwitch
+                            Header="Interpolation"
+                            IsOn="True"
+                            OffContent="Eased"
+                            OnContent="Smooth"
+                            Toggled="OnInterpolationToggled" />
+                        <TextBlock Style="{StaticResource ChartsDescriptionStyle}" Text="Generated signals. Open System monitor for real readings." />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind Graph}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="EdgeExample" Header="Solid, dashed, and fill-only series">
+                <StackPanel Spacing="12">
+                    <charts:LiveAreaGraph
+                        x:Name="EdgeGraph"
+                        Height="200"
+                        AutomationProperties.Name="Examples of series edge styles"
+                        IsTooltipEnabled="False" />
+                    <TextBlock Text="Blue: solid edge · Purple: dashed edge · Teal: fill only" TextWrapping="Wrap" />
+                </StackPanel>
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="SparklineExample" Header="CPU dashboard tile">
+                <Border
+                    Width="224"
+                    Padding="14"
+                    HorizontalAlignment="Left"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <StackPanel Spacing="6">
+                        <Grid>
+                            <TextBlock Style="{ThemeResource CaptionTextBlockStyle}" Text="CPU usage" />
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{ThemeResource CaptionTextBlockStyle}"
+                                Text="Last 60 s" />
+                        </Grid>
+                        <TextBlock x:Name="SparklineValue" Style="{ThemeResource TitleTextBlockStyle}" />
+                        <charts:LiveAreaGraph
+                            x:Name="SparklineGraph"
+                            Height="56"
+                            charts:ChartInspection.IsEnabled="False"
+                            AutomationProperties.Name="CPU usage over the last 60 seconds"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Interpolation="Smooth"
+                            IsSparkline="True"
+                            IsTabStop="False"
+                            ShowLatestValueMarker="True" />
+                    </StackPanel>
+                </Border>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <CheckBox
+                            x:Name="SparklineFillBox"
+                            Click="OnSparklineFillClick"
+                            Content="Show area fill"
+                            IsChecked="True" />
+                        <CheckBox
+                            x:Name="SparklineMarkerBox"
+                            Click="OnSparklineMarkerClick"
+                            Content="Show latest value marker"
+                            IsChecked="True" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

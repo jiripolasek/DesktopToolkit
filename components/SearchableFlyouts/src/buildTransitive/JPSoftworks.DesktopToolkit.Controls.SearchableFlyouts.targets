@@ -1,0 +1,34 @@
+<Project>
+  <PropertyGroup>
+    <_SearchableFlyoutsPackageSpec>$(MSBuildThisFileDirectory)..\..\jpsoftworks.desktoptoolkit.controls.searchableflyouts.nuspec</_SearchableFlyoutsPackageSpec>
+  </PropertyGroup>
+  <Target Name="_SearchableFlyoutsSelectWindowsProjection" BeforeTargets="AddWindowsSdkKnownFrameworkReferences"
+          Condition="'$(TargetFrameworkVersion)' == 'v10.0' and '$(WindowsSdkPackageVersion)' == '' and
+                     '$(WindowsSdkPackageMinimumRevision)' == '' and '$(UseWindowsSDKPreview)' != 'true'">
+    <PropertyGroup>
+      <_SearchableFlyoutsWindowsPlatform>$([MSBuild]::GetTargetPlatformVersion('$(TargetFramework)', 3))</_SearchableFlyoutsWindowsPlatform>
+    </PropertyGroup>
+    <!-- Use the projection restored for this exact Windows target. -->
+    <XmlPeek XmlInputPath="$(_SearchableFlyoutsPackageSpec)"
+             Query="//*[@targetFramework='net10.0-windows$(_SearchableFlyoutsWindowsPlatform)']/*[@id='Microsoft.Windows.SDK.NET.Ref']/@version">
+      <Output TaskParameter="Result" PropertyName="_SearchableFlyoutsProjectionRange" />
+    </XmlPeek>
+    <PropertyGroup>
+      <_SearchableFlyoutsMinimumProjection>$(_SearchableFlyoutsProjectionRange.TrimStart('[').TrimEnd(']'))</_SearchableFlyoutsMinimumProjection>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(_SearchableFlyoutsMinimumProjection)' != ''">
+      <WindowsSdkSupportedTargetPlatformVersion Condition="'%(WindowsSdkSupportedTargetPlatformVersion.Identity)' == '$(_SearchableFlyoutsWindowsPlatform).0'">
+        <WindowsSdkPackageVersion Condition="$([MSBuild]::VersionLessThan('%(WindowsSdkSupportedTargetPlatformVersion.WindowsSdkPackageVersion)', '$(_SearchableFlyoutsMinimumProjection)'))">$(_SearchableFlyoutsMinimumProjection)</WindowsSdkPackageVersion>
+      </WindowsSdkSupportedTargetPlatformVersion>
+    </ItemGroup>
+  </Target>
+  <ItemGroup>
+    <!-- WinUI already indexes these resources in the library PRI. -->
+    <None Include="$(MSBuildThisFileDirectory)Controls\**\*.xbf">
+      <Link>JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts\Controls\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <TargetPath>JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts\Controls\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+</Project>

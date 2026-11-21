@@ -1,0 +1,153 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.MemoryAnalysisPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <Page.Resources>
+        <charts:LineChartViewportGroup x:Key="MemoryTimeline" IsSelectionSynchronized="True" />
+    </Page.Resources>
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Memory analysis"
+                ApiNotes="LineChartViewportGroup shares the time window and, with IsSelectionSynchronized enabled, the selected range. Drag the overview window to pan or either handle to resize it. Use Ctrl+wheel or pinch on either timeline or the overview to zoom. The interval picker controls the heap comparison and Sunburst."
+                Description="Follow a photo import, compare heap sizes at two points, and inspect the buffers that remain."
+                StylingControl="LineChartOverview"
+                StylingExample="TimelineExample" />
+            <StackPanel Spacing="8">
+                <CommandBar
+                    HorizontalAlignment="Left"
+                    Background="Transparent"
+                    DefaultLabelPosition="Right">
+                    <AppBarButton
+                        x:Name="CaptureButton"
+                        Click="OnCaptureClick"
+                        Icon="Play"
+                        Label="Capture managed workload" />
+                    <AppBarButton
+                        Click="OnReplayClick"
+                        Icon="Refresh"
+                        Label="Load example replay" />
+                </CommandBar>
+                <TextBlock
+                    x:Name="CaptureStatus"
+                    AutomationProperties.LiveSetting="Polite"
+                    Style="{StaticResource ChartsDescriptionStyle}" />
+            </StackPanel>
+            <sample:ExampleCard x:Name="TimelineExample" Header="Memory timelines">
+                <StackPanel Spacing="8">
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Managed heap by generation" />
+                    <charts:LineChart
+                        x:Name="HeapHistory"
+                        Height="215"
+                        AutomationProperties.Name="Heap timeline by generation"
+                        IsViewportInteractionEnabled="True"
+                        IsZoomEnabled="True"
+                        Mode="StackedArea"
+                        SelectionChanged="OnTimelineSelectionChanged"
+                        ValueFormat="0.#' MiB'"
+                        ViewportChanged="OnTimelineViewportChanged"
+                        ViewportGroup="{StaticResource MemoryTimeline}"
+                        XValueFormat="HH:mm:ss" />
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Workload buffer size" />
+                    <charts:LineChart
+                        x:Name="BufferHistory"
+                        Height="130"
+                        AutomationProperties.Name="Workload buffer timeline"
+                        IsViewportInteractionEnabled="True"
+                        IsZoomEnabled="True"
+                        SelectionChanged="OnTimelineSelectionChanged"
+                        ShowAreaFill="True"
+                        ShowLegend="False"
+                        ValueFormat="0.#' MiB'"
+                        ViewportGroup="{StaticResource MemoryTimeline}"
+                        XValueFormat="HH:mm:ss" />
+                    <charts:LineChartOverview
+                        AutomationProperties.Name="Heap timeline overview"
+                        Target="{x:Bind HeapHistory}"
+                        ToolTipService.ToolTip="Drag the window to pan or a handle to resize. Use Ctrl+wheel or pinch to zoom." />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button
+                            x:Name="ZoomInButton"
+                            AutomationProperties.Name="Zoom in timeline"
+                            Click="OnZoomInClick"
+                            ToolTipService.ToolTip="Zoom in (Ctrl+Up)">
+                            <SymbolIcon Symbol="ZoomIn" />
+                        </Button>
+                        <Button
+                            x:Name="ZoomOutButton"
+                            AutomationProperties.Name="Zoom out timeline"
+                            Click="OnZoomOutClick"
+                            ToolTipService.ToolTip="Zoom out (Ctrl+Down)">
+                            <SymbolIcon Symbol="ZoomOut" />
+                        </Button>
+                        <Button
+                            x:Name="FitTimelineButton"
+                            AutomationProperties.Name="Fit full timeline"
+                            Click="OnFitTimelineClick"
+                            Content="Fit"
+                            ToolTipService.ToolTip="Fit full timeline (Ctrl+Home)" />
+                        <TextBlock
+                            x:Name="VisibleDuration"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource ChartsDescriptionStyle}" />
+                    </StackPanel>
+                    <TextBlock
+                        x:Name="SelectionHint"
+                        AutomationProperties.LiveSetting="Polite"
+                        Style="{StaticResource ChartsDescriptionStyle}"
+                        Text="Drag either plot to select a range. Zoom with Ctrl+wheel or pinch."
+                        TextWrapping="Wrap" />
+                    <TextBlock x:Name="IntervalSummary" TextWrapping="Wrap" />
+                </StackPanel>
+                <sample:ExampleCard.SampleControls>
+                    <ComboBox
+                        x:Name="IntervalBox"
+                        HorizontalAlignment="Stretch"
+                        Header="Interval"
+                        SelectedIndex="0"
+                        SelectionChanged="OnIntervalChanged">
+                        <x:String>Full session</x:String>
+                        <x:String>Import</x:String>
+                        <x:String>Cleanup</x:String>
+                    </ComboBox>
+                </sample:ExampleCard.SampleControls>
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="DeltaExample" Header="Heap change over the selected interval">
+                <charts:BarChart
+                    x:Name="HeapDelta"
+                    Height="250"
+                    AutomationProperties.Name="Heap size change by generation"
+                    Orientation="Horizontal"
+                    ShowLegend="False"
+                    ValueFormat="+0.##' MiB';-0.##' MiB';0' MiB'" />
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="PayloadExample" Header="Retained workload buffers at the end of the interval">
+                <StackPanel Spacing="8">
+                    <charts:SunburstChart
+                        x:Name="RetainedPayload"
+                        Height="290"
+                        AutomationProperties.Name="Retained workload buffers by owner"
+                        MaxDepth="2"
+                        NodeInvoked="OnPayloadInvoked"
+                        ValueFormat="0.#' MiB'" />
+                    <Button
+                        x:Name="ResetBuffers"
+                        Click="OnResetBuffersClick"
+                        Content="Back to all buffers"
+                        IsEnabled="False" />
+                </StackPanel>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

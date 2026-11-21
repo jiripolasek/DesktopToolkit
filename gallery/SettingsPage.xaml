@@ -1,0 +1,101 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Gallery.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Center"
+        HorizontalScrollMode="Disabled">
+        <StackPanel
+            Width="{x:Bind PageScroll.ViewportWidth, Mode=OneWay}"
+            MaxWidth="1104"
+            Padding="32,28,32,40"
+            Spacing="24">
+            <TextBlock
+                AutomationProperties.HeadingLevel="Level1"
+                Style="{ThemeResource TitleLargeTextBlockStyle}"
+                Text="Settings" />
+            <StackPanel Spacing="8">
+                <TextBlock
+                    AutomationProperties.HeadingLevel="Level2"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="Appearance" />
+                <toolkit:SettingsCard Description="Choose how the gallery looks." Header="App theme">
+                    <toolkit:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE790;" />
+                    </toolkit:SettingsCard.HeaderIcon>
+                    <ComboBox x:Name="ThemePicker" AutomationProperties.Name="App theme" />
+                </toolkit:SettingsCard>
+            </StackPanel>
+            <StackPanel Spacing="8">
+                <TextBlock
+                    AutomationProperties.HeadingLevel="Level2"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="Diagnostics" />
+                <toolkit:SettingsCard Description="View the gallery's local log files." Header="Application logs">
+                    <toolkit:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE8A5;" />
+                    </toolkit:SettingsCard.HeaderIcon>
+                    <Button
+                        AutomationProperties.AutomationId="OpenLogFolderButton"
+                        Click="OnOpenLogFolder"
+                        Content="Open log folder" />
+                </toolkit:SettingsCard>
+                <InfoBar
+                    x:Name="LogFolderError"
+                    Title="Couldn't open the log folder."
+                    Severity="Warning" />
+                <toolkit:SettingsCard Description="Save the gallery's logs and crash reports to your desktop as a ZIP file." Header="Error report">
+                    <toolkit:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE74E;" />
+                    </toolkit:SettingsCard.HeaderIcon>
+                    <Button
+                        x:Name="ExportLogsButton"
+                        AutomationProperties.AutomationId="ExportLogsButton"
+                        Click="OnExportLogs"
+                        Content="Export logs" />
+                </toolkit:SettingsCard>
+                <InfoBar x:Name="LogExportStatus" IsClosable="True" />
+                <toolkit:SettingsCard Description="Open a new issue in the project's GitHub repository." Header="Bug reports">
+                    <toolkit:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xEBE8;" />
+                    </toolkit:SettingsCard.HeaderIcon>
+                    <HyperlinkButton
+                        AutomationProperties.AutomationId="ReportBugButton"
+                        Content="Report a bug"
+                        NavigateUri="{x:Bind NewIssueUri, Mode=OneTime}" />
+                </toolkit:SettingsCard>
+            </StackPanel>
+            <StackPanel Spacing="8">
+                <TextBlock
+                    AutomationProperties.HeadingLevel="Level2"
+                    Style="{ThemeResource SubtitleTextBlockStyle}"
+                    Text="About" />
+                <toolkit:SettingsExpander
+                    x:Name="AboutExpander"
+                    Description="Copyright &#xA9; 2026 Jiri Polasek"
+                    IsExpanded="True">
+                    <toolkit:SettingsExpander.HeaderIcon>
+                        <BitmapIcon ShowAsMonochrome="False" UriSource="ms-appx:///Assets/Square44x44Logo.png" />
+                    </toolkit:SettingsExpander.HeaderIcon>
+                    <toolkit:SettingsExpander.Content>
+                        <TextBlock x:Name="AboutVersion" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    </toolkit:SettingsExpander.Content>
+                    <toolkit:SettingsExpander.Items>
+                        <toolkit:SettingsCard Header="Website">
+                            <HyperlinkButton NavigateUri="{x:Bind WebsiteUri, Mode=OneTime}">
+                                <TextBlock Text="{x:Bind WebsiteUri.OriginalString, Mode=OneTime}" TextWrapping="Wrap" />
+                            </HyperlinkButton>
+                        </toolkit:SettingsCard>
+                        <toolkit:SettingsCard Header="Git repository">
+                            <HyperlinkButton NavigateUri="{x:Bind RepositoryUri, Mode=OneTime}">
+                                <TextBlock Text="{x:Bind RepositoryUri.OriginalString, Mode=OneTime}" TextWrapping="Wrap" />
+                            </HyperlinkButton>
+                        </toolkit:SettingsCard>
+                    </toolkit:SettingsExpander.Items>
+                </toolkit:SettingsExpander>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

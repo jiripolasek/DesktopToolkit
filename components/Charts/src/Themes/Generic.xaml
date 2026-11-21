@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:JPSoftworks.DesktopToolkit.Charts">
+
+    <Style x:Key="ChartInspectorCardStyle" TargetType="ContentControl">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="MaxWidth" Value="280" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border
+                        Padding="10,8"
+                        Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
+                        BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                        <ContentPresenter
+                            x:Name="PART_InspectorReadout"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            FontSize="{TemplateBinding FontSize}"
+                            Foreground="{TemplateBinding Foreground}"
+                            TextWrapping="Wrap" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:LiveAreaGraph">
+        <Setter Property="controls:ChartInspection.HoverDelay" Value="0:0:0" />
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:LiveAreaGraph">
+                    <Grid>
+                        <!--  Supplies a default desired height without constraining a caller-sized plot.  -->
+                        <Grid
+                            x:Name="GraphDefaultHeight"
+                            Height="180"
+                            IsHitTestVisible="False" />
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                            <Grid>
+                                <Grid x:Name="PART_CanvasHost" />
+                                <Canvas IsHitTestVisible="False">
+                                    <Border
+                                        x:Name="PART_Tooltip"
+                                        Width="190"
+                                        Padding="10,8"
+                                        Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="6"
+                                        Visibility="Collapsed">
+                                        <StackPanel Spacing="6">
+                                            <TextBlock
+                                                x:Name="PART_TooltipTime"
+                                                FontWeight="SemiBold"
+                                                Style="{StaticResource CaptionTextBlockStyle}" />
+                                            <StackPanel x:Name="PART_TooltipValues" Spacing="4" />
+                                        </StackPanel>
+                                    </Border>
+                                </Canvas>
+                            </Grid>
+                        </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="PresentationStates">
+                                <VisualState x:Name="Standard" />
+                                <VisualState x:Name="Sparkline">
+                                    <VisualState.Setters>
+                                        <Setter Target="GraphDefaultHeight.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CartesianChartStyle" TargetType="Control">
+        <Setter Property="MinHeight" Value="128" />
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+        <Setter Property="controls:ChartAxisAppearance.LabelBrush" Value="{ThemeResource TextFillColorSecondaryBrush}" />
+        <Setter Property="controls:ChartAxisAppearance.LineBrush" Value="{ThemeResource DividerStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="UseSystemFocusVisuals" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Control">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,*,Auto,Auto">
+                            <Canvas
+                                x:Name="PART_Plot"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                Background="Transparent" />
+                            <Grid
+                                x:Name="PART_Legend"
+                                Grid.Row="2"
+                                Grid.ColumnSpan="3"
+                                Margin="0,6,0,0" />
+                            <TextBlock
+                                x:Name="PART_Details"
+                                Grid.Row="3"
+                                Grid.ColumnSpan="3"
+                                Margin="0,6,0,0"
+                                FontFamily="{TemplateBinding FontFamily}"
+                                FontSize="{TemplateBinding FontSize}"
+                                Foreground="{TemplateBinding Foreground}"
+                                MaxLines="1"
+                                TextTrimming="CharacterEllipsis"
+                                Visibility="Collapsed" />
+                            <Popup x:Name="PART_Inspector" IsHitTestVisible="False">
+                                <ContentControl Style="{StaticResource ChartInspectorCardStyle}" />
+                            </Popup>
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="LegendStates">
+                                <VisualState x:Name="LegendBelow" />
+                                <VisualState x:Name="LegendAbove">
+                                    <VisualState.Setters>
+                                        <Setter Target="PART_Legend.(Grid.Row)" Value="0" />
+                                        <Setter Target="PART_Legend.Margin" Value="0,0,0,6" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="LegendStart">
+                                    <VisualState.Setters>
+                                        <Setter Target="PART_Legend.(Grid.Row)" Value="1" />
+                                        <Setter Target="PART_Legend.(Grid.ColumnSpan)" Value="1" />
+                                        <Setter Target="PART_Legend.MaxWidth" Value="180" />
+                                        <Setter Target="PART_Legend.Margin" Value="0,0,12,0" />
+                                        <Setter Target="PART_Legend.VerticalAlignment" Value="Center" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="LegendBeside">
+                                    <VisualState.Setters>
+                                        <Setter Target="PART_Legend.(Grid.Row)" Value="1" />
+                                        <Setter Target="PART_Legend.(Grid.Column)" Value="2" />
+                                        <Setter Target="PART_Legend.(Grid.ColumnSpan)" Value="1" />
+                                        <Setter Target="PART_Legend.MaxWidth" Value="180" />
+                                        <Setter Target="PART_Legend.Margin" Value="12,0,0,0" />
+                                        <Setter Target="PART_Legend.VerticalAlignment" Value="Center" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource CartesianChartStyle}" TargetType="controls:BarChart" />
+    <Style BasedOn="{StaticResource CartesianChartStyle}" TargetType="controls:LineChart" />
+    <Style TargetType="controls:ChartLegendView">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ChartLegendView">
+                    <ScrollViewer
+                        x:Name="PART_ScrollViewer"
+                        HorizontalContentAlignment="Stretch"
+                        AutomationProperties.Name="Chart legend"
+                        HorizontalScrollBarVisibility="Disabled"
+                        HorizontalScrollMode="Disabled"
+                        VerticalScrollBarVisibility="Auto" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:LineChartOverview">
+        <Setter Property="Height" Value="64" />
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="6,4" />
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="UseSystemFocusVisuals" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:LineChartOverview">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Canvas x:Name="PART_Track" Background="Transparent" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style BasedOn="{StaticResource CartesianChartStyle}" TargetType="controls:ScatterChart" />
+    <Style BasedOn="{StaticResource CartesianChartStyle}" TargetType="controls:HeatmapChart" />
+    <Style BasedOn="{StaticResource CartesianChartStyle}" TargetType="controls:SpiderChart" />
+
+    <Style
+        x:Key="HierarchyChartStyle"
+        BasedOn="{StaticResource CartesianChartStyle}"
+        TargetType="Control">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Control">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid>
+                            <Canvas x:Name="PART_Plot" Background="Transparent" />
+                            <Popup x:Name="PART_Inspector" IsHitTestVisible="False">
+                                <ContentControl Style="{StaticResource ChartInspectorCardStyle}" />
+                            </Popup>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource HierarchyChartStyle}" TargetType="controls:TreemapChart" />
+    <Style BasedOn="{StaticResource HierarchyChartStyle}" TargetType="controls:IcicleChart" />
+    <Style BasedOn="{StaticResource HierarchyChartStyle}" TargetType="controls:SunburstChart" />
+    <Style BasedOn="{StaticResource HierarchyChartStyle}" TargetType="controls:SankeyChart" />
+    <Style BasedOn="{StaticResource CartesianChartStyle}" TargetType="controls:FunnelChart" />
+
+    <Style TargetType="controls:VerticalUsageBar">
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="UseSystemFocusVisuals" Value="True" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="IndicatorBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
+        <Setter Property="GridBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:VerticalUsageBar">
+                    <Grid x:Name="MeterRoot">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border
+                            x:Name="PART_TrackFrame"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid x:Name="PART_Track" Background="Transparent">
+                                <Canvas x:Name="PART_IndicatorHost" IsHitTestVisible="False" />
+                                <Canvas x:Name="PART_Grid" IsHitTestVisible="False" />
+                                <Canvas IsHitTestVisible="False">
+                                    <Border
+                                        x:Name="PART_SegmentHighlight"
+                                        Background="{TemplateBinding Foreground}"
+                                        Opacity="0.20"
+                                        Visibility="Collapsed" />
+                                </Canvas>
+                            </Grid>
+                        </Border>
+
+                        <ContentControl
+                            x:Name="PART_Legend"
+                            HorizontalContentAlignment="Stretch"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            IsTabStop="False"
+                            Visibility="Collapsed" />
+                        <TextBlock
+                            x:Name="PART_ValueText"
+                            Grid.Row="3"
+                            Grid.ColumnSpan="3"
+                            Margin="0,7,0,0"
+                            HorizontalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{TemplateBinding ValueText}"
+                            TextAlignment="Center"
+                            TextTrimming="CharacterEllipsis" />
+                        <Popup x:Name="PART_Inspector" IsHitTestVisible="False">
+                            <ContentControl Style="{StaticResource ChartInspectorCardStyle}" />
+                        </Popup>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="OrientationStates">
+                                <VisualState x:Name="Vertical" />
+                                <VisualState x:Name="Horizontal" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="PresentationStates">
+                                <VisualState x:Name="Standard" />
+                                <VisualState x:Name="Compact">
+                                    <VisualState.Setters>
+                                        <Setter Target="PART_TrackFrame.BorderThickness" Value="0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:RadialGauge">
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="UseSystemFocusVisuals" Value="True" />
+        <Setter Property="MinHeight" Value="112" />
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
+        <Setter Property="IndicatorBrush" Value="{ThemeResource AccentFillColorDefaultBrush}" />
+        <Setter Property="TrackBrush" Value="{ThemeResource ControlStrokeColorDefaultBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:RadialGauge">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid>
+                            <Viewbox
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Stretch="Uniform"
+                                StretchDirection="DownOnly">
+                                <Grid
+                                    x:Name="GaugeFrame"
+                                    Width="240"
+                                    Height="128">
+                                    <Canvas x:Name="PART_Plot" Background="Transparent" />
+                                    <StackPanel
+                                        x:Name="PART_Labels"
+                                        Margin="64,0,64,16"
+                                        VerticalAlignment="Bottom"
+                                        IsHitTestVisible="False"
+                                        Spacing="2">
+                                        <StackPanel.RenderTransform>
+                                            <TranslateTransform />
+                                        </StackPanel.RenderTransform>
+                                        <TextBlock
+                                            x:Name="PART_ValueLabel"
+                                            AutomationProperties.AccessibilityView="Raw"
+                                            FontSize="28"
+                                            FontWeight="SemiBold"
+                                            Foreground="{TemplateBinding Foreground}"
+                                            TextAlignment="Center"
+                                            TextTrimming="CharacterEllipsis" />
+                                        <TextBlock
+                                            x:Name="PART_StatusLabel"
+                                            AutomationProperties.AccessibilityView="Raw"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Style="{StaticResource CaptionTextBlockStyle}"
+                                            TextAlignment="Center"
+                                            TextTrimming="CharacterEllipsis"
+                                            Visibility="Collapsed" />
+                                    </StackPanel>
+                                </Grid>
+                            </Viewbox>
+                            <Popup x:Name="PART_Inspector" IsHitTestVisible="False">
+                                <ContentControl Style="{StaticResource ChartInspectorCardStyle}" />
+                            </Popup>
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ArcStates">
+                                <VisualState x:Name="SemicircleArc" />
+                                <VisualState x:Name="CustomArc">
+                                    <VisualState.Setters>
+                                        <Setter Target="GaugeFrame.Height" Value="240" />
+                                        <Setter Target="PART_Plot.Margin" Value="0,0,0,54" />
+                                        <Setter Target="PART_Labels.Margin" Value="64,0,64,0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="CenteredArc">
+                                    <VisualState.Setters>
+                                        <Setter Target="GaugeFrame.Height" Value="240" />
+                                        <Setter Target="PART_Labels.Margin" Value="0" />
+                                        <Setter Target="PART_Labels.Width" Value="112" />
+                                        <Setter Target="PART_Labels.HorizontalAlignment" Value="Left" />
+                                        <Setter Target="PART_Labels.VerticalAlignment" Value="Top" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="controls:DoughnutGraph">
+        <Setter Property="IsTabStop" Value="True" />
+        <Setter Property="UseSystemFocusVisuals" Value="True" />
+        <Setter Property="MinWidth" Value="128" />
+        <Setter Property="MinHeight" Value="128" />
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:DoughnutGraph">
+                    <Grid>
+                        <Border
+                            Padding="12"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
+                            <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,*,Auto">
+                                <Grid
+                                    x:Name="GraphPlot"
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="3">
+                                    <Grid x:Name="PART_CanvasHost" Background="Transparent" />
+                                    <StackPanel
+                                        x:Name="GraphCenterText"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        IsHitTestVisible="False"
+                                        Spacing="1">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="24"
+                                            FontWeight="SemiBold"
+                                            Text="{TemplateBinding CenterValue}"
+                                            TextAlignment="Center" />
+                                        <TextBlock
+                                            MaxWidth="84"
+                                            HorizontalAlignment="Center"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Style="{StaticResource CaptionTextBlockStyle}"
+                                            Text="{TemplateBinding CenterLabel}"
+                                            TextAlignment="Center"
+                                            TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                </Grid>
+                                <ScrollViewer
+                                    x:Name="PART_Legend"
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="3"
+                                    Margin="0,8,0,0"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Stretch"
+                                    AutomationProperties.Name="Slice legend"
+                                    HorizontalScrollBarVisibility="Disabled"
+                                    HorizontalScrollMode="Disabled"
+                                    IsTabStop="True"
+                                    VerticalScrollBarVisibility="Auto"
+                                    Visibility="Collapsed">
+                                    <StackPanel />
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
+                        <Popup x:Name="PART_Inspector" IsHitTestVisible="False">
+                            <ContentControl Style="{StaticResource ChartInspectorCardStyle}" />
+                        </Popup>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ShapeStates">
+                                <VisualState x:Name="Doughnut" />
+                                <VisualState x:Name="Pie">
+                                    <VisualState.Setters>
+                                        <Setter Target="GraphCenterText.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="LegendStates">
+                                <VisualState x:Name="LegendBelow" />
+                                <VisualState x:Name="LegendAbove">
+                                    <VisualState.Setters>
+                                        <Setter Target="PART_Legend.(Grid.Row)" Value="0" />
+                                        <Setter Target="PART_Legend.Margin" Value="0,0,0,8" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="LegendStart">
+                                    <VisualState.Setters>
+                                        <Setter Target="GraphPlot.(Grid.Column)" Value="1" />
+                                        <Setter Target="GraphPlot.(Grid.ColumnSpan)" Value="1" />
+                                        <Setter Target="PART_Legend.(Grid.Row)" Value="1" />
+                                        <Setter Target="PART_Legend.(Grid.ColumnSpan)" Value="1" />
+                                        <Setter Target="PART_Legend.Width" Value="172" />
+                                        <Setter Target="PART_Legend.Margin" Value="0,0,12,0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="LegendBeside">
+                                    <VisualState.Setters>
+                                        <Setter Target="GraphPlot.(Grid.Column)" Value="1" />
+                                        <Setter Target="GraphPlot.(Grid.ColumnSpan)" Value="1" />
+                                        <Setter Target="PART_Legend.(Grid.Row)" Value="1" />
+                                        <Setter Target="PART_Legend.(Grid.Column)" Value="2" />
+                                        <Setter Target="PART_Legend.(Grid.ColumnSpan)" Value="1" />
+                                        <Setter Target="PART_Legend.Width" Value="172" />
+                                        <Setter Target="PART_Legend.Margin" Value="12,0,0,0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

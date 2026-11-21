@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="ChartsPackageConsumer.ChartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts">
+    <Page.Resources>
+        <DataTemplate x:Key="LegendEntry" x:DataType="charts:ChartLegendItem">
+            <TextBlock Text="{x:Bind Name, Mode=OneWay}" />
+        </DataTemplate>
+    </Page.Resources>
+    <StackPanel Width="360" Spacing="12">
+        <charts:DoughnutGraph x:Name="Doughnut" Height="140" />
+        <charts:LiveAreaGraph
+            x:Name="Timeline"
+            Height="140"
+            SeriesSource="{x:Bind TimelineSeries}" />
+        <charts:BarChart
+            x:Name="Bars"
+            Height="140"
+            charts:ChartLegend.ItemTemplate="{StaticResource LegendEntry}"
+            Mode="Stacked"
+            SegmentCornerRadius="4" />
+        <charts:LineChart x:Name="Line" Height="140" />
+        <ContentControl x:Name="ViewportReadout" Content="{x:Bind Line.VisibleViewport, Mode=OneWay}" />
+    </StackPanel>
+</Page>

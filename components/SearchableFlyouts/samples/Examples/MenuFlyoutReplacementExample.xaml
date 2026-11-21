@@ -1,0 +1,67 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.Samples.MenuFlyoutReplacementExample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:menus="using:JPSoftworks.DesktopToolkit.Controls">
+    <StackPanel Spacing="8">
+        <TextBlock FontWeight="SemiBold" Text="Project notes.docx" />
+        <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="8">
+            <DropDownButton Content="Built-in menu">
+                <DropDownButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Click="OnFileAction" Text="Open">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="OpenFile" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Click="OnFileAction" Text="Rename">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Edit" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Click="OnFileAction" Text="Duplicate">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Copy" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator />
+                        <ToggleMenuFlyoutItem
+                            Click="OnPinChanged"
+                            IsChecked="{x:Bind IsPinned, Mode=TwoWay}"
+                            Text="Pin to favorites" />
+                    </MenuFlyout>
+                </DropDownButton.Flyout>
+            </DropDownButton>
+            <DropDownButton Grid.Column="1" Content="Searchable menu">
+                <DropDownButton.Flyout>
+                    <menus:SearchableMenuFlyout FilterBoxAutomationName="Find a file action">
+                        <MenuFlyoutItem Click="OnFileAction" Text="Open">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="OpenFile" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Click="OnFileAction" Text="Rename">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Edit" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Click="OnFileAction" Text="Duplicate">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Copy" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator />
+                        <ToggleMenuFlyoutItem
+                            Click="OnPinChanged"
+                            IsChecked="{x:Bind IsPinned, Mode=TwoWay}"
+                            Text="Pin to favorites" />
+                    </menus:SearchableMenuFlyout>
+                </DropDownButton.Flyout>
+            </DropDownButton>
+        </Grid>
+        <TextBlock
+            x:Name="FileActionResult"
+            AutomationProperties.LiveSetting="Polite"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</Page>

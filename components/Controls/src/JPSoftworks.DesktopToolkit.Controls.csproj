@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../component.props" />
+  <PropertyGroup>
+    <ComponentDirectory>Controls</ComponentDirectory>
+    <TargetFrameworks>net10.0-windows10.0.19041;net11.0-windows10.0.19041</TargetFrameworks>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+  </PropertyGroup>
+  <Import Project="../../../eng/NuGetPackage.props" />
+  <ItemGroup>
+    <ProjectReference Include="../../DateRangePicker/src/JPSoftworks.DesktopToolkit.Controls.DateRangePicker.csproj" />
+    <ProjectReference Include="../../InfoLabel/src/JPSoftworks.DesktopToolkit.Controls.InfoLabel.csproj" />
+    <ProjectReference Include="../../KeyVisual/src/JPSoftworks.DesktopToolkit.Controls.KeyVisual.csproj" />
+    <ProjectReference Include="../../SearchableFlyouts/src/JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.csproj" />
+    <ProjectReference Include="../../Styles/src/JPSoftworks.DesktopToolkit.Styles.csproj" />
+    <_PackageFramework Include="$(TargetFrameworks)" />
+    <None Include="_._" Exclude="@(None)" />
+    <None Update="_._" Pack="true" PackagePath="@(_PackageFramework->'lib/%(Identity)/')" />
+  </ItemGroup>
+</Project>

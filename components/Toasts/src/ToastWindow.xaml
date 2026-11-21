@@ -1,0 +1,75 @@
+﻿<local:TransparentWindow
+    x:Class="JPSoftworks.DesktopToolkit.ToastWindows.ToastWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:JPSoftworks.DesktopToolkit.ToastWindows">
+    <Grid>
+        <Grid
+            x:Name="Surface"
+            MaxWidth="560"
+            Background="Transparent"
+            CornerRadius="8"
+            Opacity="0"
+            PointerEntered="OnPointerEntered"
+            PointerExited="OnPointerExited">
+            <Grid.RenderTransform>
+                <TranslateTransform x:Name="Slide" />
+            </Grid.RenderTransform>
+            <Grid.Shadow>
+                <ThemeShadow />
+            </Grid.Shadow>
+            <Grid.Translation>0,0,24</Grid.Translation>
+            <SystemBackdropElement
+                x:Name="SurfaceBackdrop"
+                CornerRadius="8"
+                IsHitTestVisible="False" />
+            <Grid
+                Padding="16,10,20,12"
+                BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Viewbox
+                    x:Name="ToastIconHost"
+                    Width="16"
+                    Height="16"
+                    Margin="0,0,8,0"
+                    VerticalAlignment="Center"
+                    AutomationProperties.AccessibilityView="Raw" />
+                <TextBlock
+                    x:Name="ToastMessage"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    AutomationProperties.LiveSetting="Polite"
+                    MaxLines="5"
+                    TextAlignment="Center"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap" />
+                <Button
+                    x:Name="ActionButton"
+                    Grid.Column="2"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    Click="OnActionClick">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <Viewbox
+                            x:Name="ActionIconHost"
+                            Width="16"
+                            Height="16"
+                            VerticalAlignment="Center"
+                            AutomationProperties.AccessibilityView="Raw" />
+                        <TextBlock
+                            x:Name="ActionLabel"
+                            MaxWidth="160"
+                            VerticalAlignment="Center"
+                            TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</local:TransparentWindow>

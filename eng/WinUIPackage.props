@@ -1,0 +1,20 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)WinUI.props" />
+  <Import Project="$(MSBuildThisFileDirectory)NuGetPackage.props" />
+  <PropertyGroup>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>$(WarningsAsErrors);CS1591</WarningsAsErrors>
+    <Platforms>AnyCPU;x64;ARM64</Platforms>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsAotCompatible>true</IsAotCompatible>
+    <CsWinRTGenerateProjection>false</CsWinRTGenerateProjection>
+    <CsWinRTAotWarningLevel>3</CsWinRTAotWarningLevel>
+    <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+  </PropertyGroup>
+</Project>

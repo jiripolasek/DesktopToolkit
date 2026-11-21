@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>JPSoftworks.DesktopToolkit.ToastWindows</PackageId>
+    <Version>0.1.0-preview.1</Version>
+    <Title>Toast Windows</Title>
+    <Description>Non-activating WinUI 3 toast windows with acrylic and Windows indicator placement.</Description>
+    <PackageTags>WinUI;WinUI3;toast;notification;acrylic</PackageTags>
+    <ComponentSlug>toasts</ComponentSlug>
+    <ComponentStage>preview</ComponentStage>
+  </PropertyGroup>
+</Project>

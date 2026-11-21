@@ -1,0 +1,130 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Samples.KeyVisualExample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:keys="using:JPSoftworks.DesktopToolkit.Controls">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///JPSoftworks.DesktopToolkit.Controls.KeyVisual/Themes/KeyVisualStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <StackPanel x:Name="SampleLayout" Spacing="16">
+        <Grid
+            ColumnDefinitions="Auto,*"
+            ColumnSpacing="16"
+            RowDefinitions="Auto,Auto,Auto,Auto"
+            RowSpacing="8">
+            <TextBlock VerticalAlignment="Center" Text="Default" />
+            <StackPanel
+                Grid.Column="1"
+                Orientation="Horizontal"
+                Spacing="6">
+                <keys:KeyVisual Content="Windows" />
+                <TextBlock VerticalAlignment="Center" Text="+" />
+                <keys:KeyVisual Content="Shift" RenderKeyAsGlyph="True" />
+                <TextBlock VerticalAlignment="Center" Text="+" />
+                <keys:KeyVisual x:Name="ArrowKey" RenderKeyAsGlyph="{x:Bind GlyphSwitch.IsOn, Mode=OneWay}" />
+            </StackPanel>
+            <TextBlock
+                Grid.Row="1"
+                VerticalAlignment="Center"
+                Text="Small" />
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Orientation="Horizontal"
+                Spacing="4">
+                <keys:KeyVisual Content="Windows" Style="{StaticResource SmallKeyVisualStyle}" />
+                <keys:KeyVisual
+                    Content="Shift"
+                    RenderKeyAsGlyph="True"
+                    Style="{StaticResource SmallKeyVisualStyle}" />
+                <keys:KeyVisual Content="A" Style="{StaticResource SmallKeyVisualStyle}" />
+            </StackPanel>
+            <TextBlock
+                Grid.Row="2"
+                VerticalAlignment="Center"
+                Text="Large" />
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="1"
+                Orientation="Horizontal"
+                Spacing="8">
+                <keys:KeyVisual
+                    Content="Shift"
+                    RenderKeyAsGlyph="True"
+                    Style="{StaticResource LargeKeyVisualStyle}" />
+                <keys:KeyVisual
+                    Content="Left"
+                    RenderKeyAsGlyph="True"
+                    Style="{StaticResource LargeKeyVisualStyle}" />
+                <keys:KeyVisual Content="Space" Style="{StaticResource LargeKeyVisualStyle}" />
+            </StackPanel>
+            <TextBlock
+                Grid.Row="3"
+                VerticalAlignment="Center"
+                Text="Text only" />
+            <keys:KeyVisual
+                Grid.Row="3"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                Content="Ctrl+Shift+P"
+                Style="{StaticResource TextOnlyKeyVisualStyle}" />
+        </Grid>
+        <StackPanel Spacing="8">
+            <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="Keycap states" />
+            <Grid
+                ColumnDefinitions="Auto,*"
+                ColumnSpacing="16"
+                RowDefinitions="Auto,Auto,Auto,Auto"
+                RowSpacing="8">
+                <TextBlock VerticalAlignment="Center" Text="Accent" />
+                <keys:KeyVisual
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Content="Enter"
+                    Style="{StaticResource AccentKeyVisualStyle}" />
+                <TextBlock
+                    Grid.Row="1"
+                    VerticalAlignment="Center"
+                    Text="Warning" />
+                <keys:KeyVisual
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Content="Esc"
+                    State="Warning" />
+                <TextBlock
+                    Grid.Row="2"
+                    VerticalAlignment="Center"
+                    Text="Invalid" />
+                <keys:KeyVisual
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Content="F1"
+                    State="Error" />
+                <TextBlock
+                    Grid.Row="3"
+                    VerticalAlignment="Center"
+                    Text="Disabled" />
+                <keys:KeyVisual
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    Content="Tab"
+                    IsEnabled="False" />
+            </Grid>
+        </StackPanel>
+        <StackPanel x:Name="SampleOptions">
+            <ToggleSwitch
+                x:Name="GlyphSwitch"
+                Header="Arrow key display"
+                IsOn="True"
+                OffContent="Text"
+                OnContent="Symbol" />
+        </StackPanel>
+    </StackPanel>
+</Page>

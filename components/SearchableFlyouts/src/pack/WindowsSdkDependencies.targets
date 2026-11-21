@@ -1,0 +1,42 @@
+<Project>
+  <UsingTask TaskName="CreateWindowsSdkKnownFrameworkReferences" AssemblyFile="$(MicrosoftNETBuildTasksAssembly)" />
+  <Target Name="_PrepareWindowsProjectionDependencies" BeforeTargets="GenerateNuspec"
+          Condition="'$(NuspecFile)' == '' and '$(_FlyoutsBaseManifest)' != 'true' and '$(IsPackable)' == 'true'">
+    <!-- Ask the SDK which Windows projections apply to a .NET 10 app. -->
+    <CreateWindowsSdkKnownFrameworkReferences TargetFrameworkIdentifier=".NETCoreApp" TargetFrameworkVersion="10.0"
+        TargetPlatformIdentifier="Windows" TargetPlatformVersion="$(TargetPlatformMinVersion)"
+        WindowsSdkSupportedTargetPlatformVersions="@(WindowsSdkSupportedTargetPlatformVersion)">
+      <Output TaskParameter="KnownFrameworkReferences" ItemName="_FlyoutsKnownReference" />
+    </CreateWindowsSdkKnownFrameworkReferences>
+    <ItemGroup>
+      <_FlyoutsWindowsReference Include="@(_FlyoutsKnownReference->WithMetadataValue('Identity', 'Microsoft.Windows.SDK.NET.Ref.Windows'))" />
+      <_FlyoutsStablePlatform Include="@(_FlyoutsWindowsReference)"
+          Condition="$([System.String]::Copy('%(_FlyoutsWindowsReference.TargetFramework)').EndsWith('.0')) and
+                     !$([System.String]::Copy('%(_FlyoutsWindowsReference.TargetingPackVersion)').Contains('-'))">
+        <PlatformVersion>$([MSBuild]::GetTargetPlatformVersion('%(_FlyoutsWindowsReference.TargetFramework)', 3))</PlatformVersion>
+      </_FlyoutsStablePlatform>
+      <_FlyoutsProjection Include="@(_FlyoutsStablePlatform)"
+          Condition="$([MSBuild]::VersionGreaterThanOrEquals('%(_FlyoutsStablePlatform.PlatformVersion).0', '$(TargetPlatformMinVersion)')) and
+                     $([MSBuild]::VersionGreaterThanOrEquals('%(_FlyoutsStablePlatform.TargetingPackVersion)', '%(_FlyoutsStablePlatform.PlatformVersion).$(_FlyoutsMinimumProjectionRevision)'))" />
+      <NuGetPackInput Include="pack/WindowsSdkDependencies.xslt" />
+      <_FlyoutsManifest Include="@(NuGetPackOutput)" Condition="'%(NuGetPackOutput.Extension)' == '.nuspec'" />
+      <_FlyoutsManifest Remove="@(_FlyoutsManifest->'%(RootDir)%(Directory)%(Filename).symbols.nuspec')" />
+    </ItemGroup>
+    <Error Condition="!@(_FlyoutsProjection->AnyHaveMetadataValue('PlatformVersion', '$([System.Version]::Parse('$(TargetPlatformMinVersion)').ToString(3))'))"
+           Text="The packing SDK must provide the .NET 10 Windows $(TargetPlatformMinVersion) projection at revision $(_FlyoutsMinimumProjectionRevision) or later." />
+    <PropertyGroup>
+      <_FlyoutsManifestSuffix Condition="'$(IncludeSymbols)' == 'true' or '$(IncludeSource)' == 'true'">.symbols</_FlyoutsManifestSuffix>
+    </PropertyGroup>
+    <!-- Let NuGet generate the assembly, XAML, documentation, and dependency entries. -->
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="_GetRestoreProjectStyle;GenerateNuspec"
+             Properties="_FlyoutsBaseManifest=true;NoBuild=true;ContinuePackingAfterGeneratingNuspec=false;SymbolPackageFormat=symbols.nupkg;NuspecOutputPath=$(NuspecOutputAbsolutePath)/base/" />
+    <XslTransformation XmlInputPaths="@(_FlyoutsManifest->'%(RootDir)%(Directory)base/%(Filename)$(_FlyoutsManifestSuffix)%(Extension)')"
+                       XslInputPath="pack/WindowsSdkDependencies.xslt" OutputPaths="@(_FlyoutsManifest)"
+                       Parameters="&lt;Parameter Name='projections' Value='@(_FlyoutsProjection->'net10.0-windows%(PlatformVersion)=%(TargetingPackVersion)', ' ')' /&gt;" />
+    <!-- The extra dependency groups intentionally share the 19041 assemblies. -->
+    <PropertyGroup>
+      <NuspecFile>@(_FlyoutsManifest)</NuspecFile>
+      <NoWarn>$(NoWarn);NU5128</NoWarn>
+    </PropertyGroup>
+  </Target>
+</Project>

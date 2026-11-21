@@ -1,0 +1,102 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.ChartLegendsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            MaxWidth="1600"
+            Spacing="32">
+            <demo:SamplePageHeader
+                Title="Chart legends"
+                ApiNotes="Set ChartLegend.Placement to Auto, Top, Bottom, Start, or End for a built-in legend. To place a legend in your page layout, bind ChartLegendView.Chart to the chart and set ShowLegend to False on the chart."
+                Description="Move the legend inside a chart or place it in a separate panel. Hover over a legend entry to highlight its series or slice." />
+
+            <sample:ExampleCard x:Name="BuiltInExample" Header="Built-in placement">
+                <charts:LineChart
+                    x:Name="ThroughputChart"
+                    Height="245"
+                    charts:ChartLegend.HighlightOnHover="True"
+                    charts:ChartLegend.Placement="End"
+                    charts:ChartLegend.ValueMode="Value"
+                    AutomationProperties.Name="Throughput by service"
+                    Data="{x:Bind ThroughputData}"
+                    ShowLegend="True"
+                    ValueFormat="0' req/s'" />
+                <sample:ExampleCard.SampleControls>
+                    <ComboBox
+                        HorizontalAlignment="Stretch"
+                        AutomationProperties.Name="Built-in legend placement"
+                        Header="Legend placement"
+                        SelectedIndex="4"
+                        SelectionChanged="OnPlacementChanged">
+                        <ComboBoxItem Content="Automatic" />
+                        <ComboBoxItem Content="Top" />
+                        <ComboBoxItem Content="Bottom" />
+                        <ComboBoxItem Content="Start" />
+                        <ComboBoxItem Content="End" />
+                    </ComboBox>
+                </sample:ExampleCard.SampleControls>
+            </sample:ExampleCard>
+
+            <sample:ExampleCard
+                x:Name="DetachedExample"
+                Description="Change the storage values to update the chart and the separate legend together."
+                Header="Detached legend">
+                <Grid
+                    x:Name="StorageLayout"
+                    ColumnDefinitions="Auto,*,Auto"
+                    RowDefinitions="*,Auto"
+                    SizeChanged="OnStorageLayoutSizeChanged">
+                    <charts:DoughnutGraph
+                        x:Name="StorageChart"
+                        Grid.Column="1"
+                        Height="220"
+                        charts:ChartLegend.HighlightOnHover="True"
+                        charts:ChartLegend.ValueMode="Value"
+                        AutomationProperties.Name="Storage usage"
+                        ShowLegend="False"
+                        ValueFormat="0' GB'" />
+                    <Border
+                        x:Name="LegendPanel"
+                        Grid.Column="2"
+                        Margin="12,0,0,0"
+                        Padding="12"
+                        VerticalAlignment="Center"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                        <StackPanel Spacing="8">
+                            <TextBlock FontWeight="SemiBold" Text="Storage breakdown" />
+                            <charts:ChartLegendView MaxHeight="145" Chart="{x:Bind StorageChart}" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ComboBox
+                            x:Name="DetachedPlacement"
+                            HorizontalAlignment="Stretch"
+                            AutomationProperties.Name="Detached legend placement"
+                            Header="Panel placement"
+                            SelectedIndex="1"
+                            SelectionChanged="OnDetachedPlacementChanged">
+                            <ComboBoxItem Content="Start" />
+                            <ComboBoxItem Content="End" />
+                            <ComboBoxItem Content="Below" />
+                        </ComboBox>
+                        <Button Click="OnChangeValues" Content="Change storage values" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

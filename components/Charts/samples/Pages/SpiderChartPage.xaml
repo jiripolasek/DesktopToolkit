@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.SpiderChartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Spider chart"
+                ApiNotes="Bind a SpiderChartData snapshot with at least three axes. Each axis has its own numeric range. Hover or use arrow keys to inspect all series on a spoke."
+                Description="Compare the strengths of two laptop configurations across six dimensions."
+                StylingControl="SpiderChart"
+                StylingExample="ComparisonExample" />
+            <sample:ExampleCard
+                x:Name="ComparisonExample"
+                Header="Laptop comparison"
+                PreviewVerticalAlignment="Top">
+                <charts:SpiderChart
+                    x:Name="ComparisonChart"
+                    Height="340"
+                    AutomationProperties.Name="Laptop comparison by dimension"
+                    Data="{x:Bind ComparisonData}"
+                    RingCount="{x:Bind GetRingCount(RingCountSlider.Value), Mode=OneWay}"
+                    ShowAreaFill="{x:Bind FillToggle.IsOn, Mode=OneWay}" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ToggleSwitch
+                            x:Name="FillToggle"
+                            Header="Area fill"
+                            IsOn="True" />
+                        <Slider
+                            x:Name="RingCountSlider"
+                            Header="Grid rings"
+                            Maximum="12"
+                            Minimum="1"
+                            Value="4" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind ComparisonChart}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

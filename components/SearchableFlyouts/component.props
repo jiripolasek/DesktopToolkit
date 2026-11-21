@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts</PackageId>
+    <Version>0.1.0-preview.1</Version>
+    <Title>Searchable Flyouts</Title>
+    <Description>Searchable menus and single-select dropdowns for WinUI 3, with virtualization for large item lists.</Description>
+    <PackageTags>WinUI;WinUI3;menu;flyout;dropdown;combobox;filter;search;virtualization;accessibility</PackageTags>
+    <ComponentSlug>searchable-flyouts</ComponentSlug>
+    <ComponentStage>preview</ComponentStage>
+    <ComponentTestProject>tests/SearchableFlyouts.ControlTests/JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.ControlTests.csproj</ComponentTestProject>
+    <ComponentPackageCheck>scripts/Test-Package.ps1</ComponentPackageCheck>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:JPSoftworks.DesktopToolkit.Controls"
+    xmlns:primitives="using:JPSoftworks.DesktopToolkit.Controls.Primitives">
+    <Style
+        x:Key="SearchableMenuPresenterStyle"
+        BasedOn="{StaticResource DefaultMenuFlyoutPresenterStyle}"
+        TargetType="MenuFlyoutPresenter">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <controls:NativeMenuItemsPanel />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuFlyoutPresenter">
+                    <Grid primitives:NativeMenuSearch.IsEnabled="True" Background="Transparent">
+                        <!--  Keep the chrome on the popup's single-child path for backdrop clipping.  -->
+                        <Grid x:Name="SearchMenuSurface">
+                            <Border
+                                x:Name="SearchMenuChrome"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                                <Grid CornerRadius="{TemplateBinding CornerRadius}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Border
+                                        x:Name="SearchMenuBackdrop"
+                                        Grid.RowSpan="2"
+                                        AutomationProperties.AccessibilityView="Raw"
+                                        Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                                        CornerRadius="{TemplateBinding CornerRadius}"
+                                        IsHitTestVisible="False"
+                                        Visibility="Collapsed" />
+                                    <ScrollViewer
+                                        x:Name="MenuFlyoutPresenterScrollViewer"
+                                        MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.FlyoutContentMinWidth}"
+                                        Margin="{TemplateBinding Padding}"
+                                        AutomationProperties.AccessibilityView="Raw"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        HorizontalScrollMode="Disabled"
+                                        IsHorizontalRailEnabled="False"
+                                        IsVerticalRailEnabled="False"
+                                        VerticalScrollBarVisibility="Auto"
+                                        VerticalScrollMode="Auto"
+                                        ZoomMode="Disabled">
+                                        <ItemsPresenter />
+                                    </ScrollViewer>
+                                    <Border
+                                        Grid.Row="1"
+                                        BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                                        BorderThickness="0,1,0,0"
+                                        Visibility="{Binding ElementName=SearchResultCount, Path=Visibility}">
+                                        <TextBlock
+                                            x:Name="SearchResultCount"
+                                            Margin="12,1,12,6"
+                                            AutomationProperties.LiveSetting="Polite"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Style="{StaticResource CaptionTextBlockStyle}"
+                                            Visibility="Collapsed" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SearchFilterItemStyle" TargetType="MenuFlyoutItem">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="UseSystemFocusVisuals" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuFlyoutItem">
+                    <Grid>
+                        <Border
+                            x:Name="SearchFilterThemedBackground"
+                            AutomationProperties.AccessibilityView="Raw"
+                            Background="{ThemeResource SolidBackgroundFillColorTertiaryBrush}"
+                            IsHitTestVisible="False" />
+                        <Border
+                            x:Name="SearchFilterBackdrop"
+                            AutomationProperties.AccessibilityView="Raw"
+                            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                            IsHitTestVisible="False"
+                            Visibility="Collapsed" />
+                        <Border
+                            x:Name="SearchFilterHost"
+                            Background="{ThemeResource MenuFlyoutPresenterBackground}"
+                            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                            BorderThickness="0,0,0,1">
+                            <Border.Resources>
+                                <ResourceDictionary Source="ms-appx:///JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts/Controls/MenuFilterBox.xaml" />
+                            </Border.Resources>
+                            <TextBox x:Name="SearchFilterBox" Style="{StaticResource MenuFilterBoxStyle}" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SearchEmptyItemStyle" TargetType="MenuFlyoutItem">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="IsEnabled" Value="False" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuFlyoutItem">
+                    <TextBlock
+                        Margin="12,12"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Text="{TemplateBinding Text}"
+                        TextWrapping="Wrap" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

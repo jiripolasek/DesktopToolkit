@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../component.props" />
+  <PropertyGroup>
+    <RootNamespace>JPSoftworks.DesktopToolkit.Charts</RootNamespace>
+    <ComponentDirectory>Charts</ComponentDirectory>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <Win2DWarnNoPlatform>false</Win2DWarnNoPlatform>
+  </PropertyGroup>
+  <Import Project="../../../eng/WinUIPackage.props" />
+  <PropertyGroup>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Graphics.Win2D" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" PrivateAssets="all" />
+    <None Update="ThirdParty/DevDrive.LICENSE.txt" Pack="true" PackagePath="licenses/DevDrive.LICENSE.txt" />
+  </ItemGroup>
+</Project>

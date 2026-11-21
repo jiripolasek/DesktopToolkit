@@ -1,0 +1,35 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Packing also uses this minimum Windows projection revision. -->
+    <_FlyoutsMinimumProjectionRevision>87</_FlyoutsMinimumProjectionRevision>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.251219" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.14" />
+    <PackageVersion Include="Microsoft.Graphics.Win2D" Version="1.4.0" />
+    <PackageVersion Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />
+    <PackageVersion Update="Microsoft.Windows.CsWinRT" Version="2.2.0"
+                    Condition="'$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.Charts'" />
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2957" />
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools.WinApp" Version="0.8.0" />
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools.WinUIAnalyzer" Version="0.8.0" />
+    <PackageVersion Include="Microsoft.Windows.SDK.NET.Ref" Version="[10.0.19041.$(_FlyoutsMinimumProjectionRevision)]"
+                    Condition="'$(TargetFramework)' == 'net10.0-windows10.0.19041'" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="2.6.5" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK.WinUI" Version="1.8.260224000" />
+    <PackageVersion Update="Microsoft.WindowsAppSDK.WinUI" Version="2.6.5"
+                    Condition="'$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.ToastWindows'" />
+    <PackageVersion Include="Serilog" Version="4.4.0" />
+    <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
+    <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageVersion Include="WinUIEdit" Version="0.0.5-prerelease" />
+    <PackageVersion Update="Microsoft.WindowsAppSDK" Version="1.8.260317003"
+                    Condition="'$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.ControlTests' or
+                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.KeyVisual.ControlTests' or
+                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.Charts' or
+                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.Charts.Samples' or
+                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.Charts.DevApp'" />
+  </ItemGroup>
+</Project>

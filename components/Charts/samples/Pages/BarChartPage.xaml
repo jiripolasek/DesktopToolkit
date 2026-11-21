@@ -1,0 +1,171 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.BarChartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Bar chart"
+                ApiNotes="Bind a BarChartData snapshot and choose Grouped, Stacked, or Stacked100 in either orientation. SegmentCornerRadius rounds stack ends, and SegmentRounding can round every segment. Use ChartPalette.Colors for series colors and InspectionMode to compare a bar, category, or series."
+                Description="Compare grouped bars, stacked totals, or percentage shares. Hover a bar or focus the chart and use the arrow keys to inspect a value."
+                StylingControl="BarChart"
+                StylingExample="PercentStackExample" />
+            <sample:ExampleCard
+                x:Name="CpuExample"
+                Description="The dashed line marks an 85% threshold and rotates with the bars."
+                Header="CPU usage by logical processor"
+                PreviewVerticalAlignment="Top">
+                <charts:BarChart
+                    x:Name="CpuChart"
+                    Height="245"
+                    AutomationProperties.Name="Grouped CPU utilization by logical processor"
+                    Data="{x:Bind CpuData}"
+                    Maximum="100"
+                    Mode="{x:Bind GetMode(ModeBox.SelectedIndex), Mode=OneWay}"
+                    Orientation="{x:Bind GetOrientation(HorizontalSwitch.IsOn), Mode=OneWay}"
+                    ValueAxis="{x:Bind GetCpuAxis(ModeBox.SelectedIndex), Mode=OneWay}"
+                    ValueFormat="0'%'" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ComboBox
+                            x:Name="ModeBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Mode"
+                            SelectedIndex="0">
+                            <x:String>Grouped</x:String>
+                            <x:String>Stacked</x:String>
+                            <x:String>100% stacked</x:String>
+                        </ComboBox>
+                        <ToggleSwitch
+                            x:Name="HorizontalSwitch"
+                            Header="Orientation"
+                            OffContent="Vertical"
+                            OnContent="Horizontal" />
+                        <ComboBox
+                            x:Name="InspectionModeBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Inspect by"
+                            SelectedIndex="0"
+                            SelectionChanged="OnInspectionModeChanged">
+                            <x:String>Bar</x:String>
+                            <x:String>Category</x:String>
+                            <x:String>Series</x:String>
+                        </ComboBox>
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind CpuChart}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard
+                x:Name="CompactCpuExample"
+                Description="Rounded bars, hidden axes, and a vertical legend for the same CPU data."
+                Header="Compact CPU comparison">
+                <charts:BarChart
+                    x:Name="CompactCpuChart"
+                    Height="128"
+                    charts:ChartAxisAppearance.Presentation="Hidden"
+                    charts:ChartLegend.ItemSpacing="4"
+                    charts:ChartLegend.Layout="Vertical"
+                    AutomationProperties.Name="Compact CPU comparison by logical processor"
+                    Data="{x:Bind CpuData}"
+                    Maximum="100"
+                    ValueFormat="0'%'" />
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind CompactCpuChart}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="StorageExample" Header="Weekly storage changes">
+                <charts:BarChart
+                    x:Name="StorageChart"
+                    Height="245"
+                    AutomationProperties.Name="Grouped weekly storage changes by category"
+                    Orientation="Horizontal"
+                    ValueFormat="0.#' GB'" />
+            </sample:ExampleCard>
+            <sample:ExampleCard
+                x:Name="SignedStackExample"
+                Header="Revenue and deductions by month"
+                PreviewVerticalAlignment="Top">
+                <charts:BarChart
+                    x:Name="SignedStackChart"
+                    Height="245"
+                    AutomationProperties.Name="Monthly revenue and deductions in thousands"
+                    Mode="Stacked"
+                    SegmentCornerRadius="4"
+                    ValueFormat="0'k'" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ToggleSwitch
+                            x:Name="SignedOrientationSwitch"
+                            Header="Orientation"
+                            OffContent="Vertical"
+                            OnContent="Horizontal"
+                            Toggled="OnSignedOrientationChanged" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind SignedStackChart}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard
+                x:Name="PercentStackExample"
+                Header="Sign-ups by platform"
+                PreviewVerticalAlignment="Top">
+                <charts:BarChart
+                    x:Name="PercentStackChart"
+                    Height="245"
+                    AutomationProperties.Name="Share of sign-ups by platform and month"
+                    Mode="Stacked100"
+                    Orientation="Horizontal"
+                    SegmentCornerRadius="{x:Bind PercentRadiusSlider.Value, Mode=OneWay}"
+                    SegmentGap="{x:Bind PercentGapSlider.Value, Mode=OneWay}"
+                    SegmentRounding="{x:Bind GetSegmentRounding(PercentRoundingBox.SelectedIndex), Mode=OneWay}"
+                    ValueFormat="0" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ToggleSwitch
+                            x:Name="PercentOrientationSwitch"
+                            Header="Orientation"
+                            IsOn="True"
+                            OffContent="Vertical"
+                            OnContent="Horizontal"
+                            Toggled="OnPercentOrientationChanged" />
+                        <Slider
+                            x:Name="PercentGapSlider"
+                            Header="Segment gap"
+                            Maximum="12"
+                            Value="0" />
+                        <Slider
+                            x:Name="PercentRadiusSlider"
+                            Header="Segment corner radius"
+                            Maximum="16"
+                            Value="4" />
+                        <ComboBox
+                            x:Name="PercentRoundingBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Round corners"
+                            SelectedIndex="0">
+                            <x:String>Stack ends</x:String>
+                            <x:String>Every segment</x:String>
+                        </ComboBox>
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind PercentStackChart}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

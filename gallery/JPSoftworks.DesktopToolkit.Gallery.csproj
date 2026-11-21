@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../eng/PackagedApp.props" />
+  <PropertyGroup>
+    <Version>0.1.0-preview.1</Version>
+    <DefaultItemExcludes>$(DefaultItemExcludes);ui/**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Update="Assets\AppIcon.ico" CopyToOutputDirectory="PreserveNewest" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Extensions.Logging" />
+    <PackageReference Include="Serilog.Sinks.File" />
+    <PackageReference Include="WinUIEdit" />
+    <ProjectReference Include="ui/JPSoftworks.DesktopToolkit.Gallery.UI.csproj" />
+    <Content Include="../components/Charts/dev/ThirdParty/*.txt" Link="ThirdParty/Charts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="../components/Charts/samples/JPSoftworks.DesktopToolkit.Controls.Charts.Samples.csproj" />
+    <ProjectReference Include="../components/DateRangePicker/samples/JPSoftworks.DesktopToolkit.Controls.DateRangePicker.Samples.csproj" />
+    <ProjectReference Include="../components/InfoLabel/samples/JPSoftworks.DesktopToolkit.Controls.InfoLabel.Samples.csproj" />
+    <ProjectReference Include="../components/KeyVisual/samples/JPSoftworks.DesktopToolkit.Controls.KeyVisual.Samples.csproj" />
+    <ProjectReference Include="../components/SearchableFlyouts/samples/JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.Samples.csproj" />
+    <ProjectReference Include="../components/Styles/samples/JPSoftworks.DesktopToolkit.Styles.Samples.csproj" />
+    <ProjectReference Include="../components/Styles/src/JPSoftworks.DesktopToolkit.Styles.csproj" />
+    <ProjectReference Include="../components/Toasts/samples/JPSoftworks.DesktopToolkit.ToastWindows.Samples.csproj" />
+  </ItemGroup>
+</Project>

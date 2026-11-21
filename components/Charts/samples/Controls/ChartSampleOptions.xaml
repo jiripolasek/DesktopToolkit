@@ -1,0 +1,127 @@
+﻿<UserControl
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Controls.ChartSampleOptions"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="8">
+        <SelectorBar
+            x:Name="Sections"
+            AutomationProperties.Name="Chart options sections"
+            SelectionChanged="OnSectionChanged">
+            <SelectorBarItem x:Name="DisplayItem" Text="Display" />
+            <SelectorBarItem x:Name="LegendItem" Text="Legend" />
+            <SelectorBarItem x:Name="InspectorItem" Text="Inspector" />
+        </SelectorBar>
+        <StackPanel
+            x:Name="DisplaySection"
+            Spacing="12"
+            Visibility="Collapsed">
+            <ComboBox
+                x:Name="AxesBox"
+                HorizontalAlignment="Stretch"
+                Header="Axes"
+                SelectionChanged="OnAxesChanged">
+                <ComboBoxItem Content="Standard" />
+                <ComboBoxItem x:Name="SubtleAxesItem" Content="Labels only" />
+                <ComboBoxItem Content="Hidden" />
+            </ComboBox>
+            <ToggleSwitch
+                x:Name="GridSwitch"
+                AutomationProperties.Name="Grid lines"
+                OffContent="Grid lines"
+                OnContent="Grid lines"
+                Toggled="OnGridToggled" />
+            <ComboBox
+                x:Name="PaletteBox"
+                HorizontalAlignment="Stretch"
+                Header="Color palette"
+                SelectionChanged="OnPaletteChanged">
+                <x:String>Default</x:String>
+                <x:String>Vivid</x:String>
+                <x:String>Soft</x:String>
+                <x:String>Earth</x:String>
+                <x:String>Generated from indigo</x:String>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel
+            x:Name="LegendSection"
+            Spacing="12"
+            Visibility="Collapsed">
+            <ToggleSwitch
+                x:Name="LegendSwitch"
+                AutomationProperties.Name="Show legend"
+                OffContent="Show legend"
+                OnContent="Show legend"
+                Toggled="OnLegendToggled" />
+            <ContentControl
+                x:Name="LegendOptions"
+                HorizontalContentAlignment="Stretch"
+                IsEnabled="{x:Bind LegendSwitch.IsOn, Mode=OneWay}">
+                <StackPanel Spacing="8">
+                    <ComboBox
+                        x:Name="LegendLayoutBox"
+                        HorizontalAlignment="Stretch"
+                        Header="Layout"
+                        SelectionChanged="OnLegendLayoutChanged">
+                        <x:String>Automatic</x:String>
+                        <x:String>Wrapping rows</x:String>
+                        <x:String>Column</x:String>
+                    </ComboBox>
+                    <ComboBox
+                        x:Name="LegendAlignmentBox"
+                        HorizontalAlignment="Stretch"
+                        Header="Alignment"
+                        SelectionChanged="OnLegendAlignmentChanged">
+                        <x:String>Left</x:String>
+                        <x:String>Center</x:String>
+                        <x:String>Right</x:String>
+                    </ComboBox>
+                    <Slider
+                        x:Name="LegendSpacingSlider"
+                        Header="Item spacing"
+                        Maximum="32"
+                        ValueChanged="OnLegendSpacingChanged" />
+                    <ComboBox
+                        x:Name="LegendValueBox"
+                        HorizontalAlignment="Stretch"
+                        Header="Values"
+                        SelectionChanged="OnLegendValueChanged">
+                        <x:String>Default</x:String>
+                        <x:String>Hidden</x:String>
+                        <x:String>Show value</x:String>
+                    </ComboBox>
+                    <ToggleSwitch
+                        x:Name="LegendHighlightSwitch"
+                        AutomationProperties.Name="Highlight on hover"
+                        OffContent="Highlight on hover"
+                        OnContent="Highlight on hover"
+                        Toggled="OnLegendHighlightToggled" />
+                </StackPanel>
+            </ContentControl>
+        </StackPanel>
+        <StackPanel
+            x:Name="InspectorSection"
+            Spacing="12"
+            Visibility="Collapsed">
+            <ToggleSwitch
+                x:Name="InspectorSwitch"
+                AutomationProperties.Name="Data inspector"
+                OffContent="Data inspector"
+                OnContent="Data inspector"
+                Toggled="OnInspectorToggled" />
+            <Slider
+                x:Name="HoverDelaySlider"
+                Header="Hover delay (ms)"
+                IsEnabled="{x:Bind InspectorSwitch.IsOn, Mode=OneWay}"
+                Maximum="600"
+                StepFrequency="50"
+                ValueChanged="OnHoverDelayChanged" />
+            <Slider
+                x:Name="SlideDurationSlider"
+                Header="Slide duration (ms)"
+                IsEnabled="{x:Bind InspectorSwitch.IsOn, Mode=OneWay}"
+                Maximum="250"
+                StepFrequency="10"
+                ValueChanged="OnSlideDurationChanged" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,71 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Samples.ShortcutHelpExample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:keys="using:JPSoftworks.DesktopToolkit.Controls">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///JPSoftworks.DesktopToolkit.Controls.KeyVisual/Themes/KeyVisualStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Border
+        MaxWidth="520"
+        Padding="16,12"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{ThemeResource ControlCornerRadius}">
+        <Grid
+            ColumnDefinitions="*,Auto"
+            ColumnSpacing="20"
+            RowDefinitions="Auto,Auto,Auto,Auto"
+            RowSpacing="12">
+            <TextBlock
+                VerticalAlignment="Center"
+                Text="Previous result"
+                TextWrapping="Wrap" />
+            <keys:KeyVisual
+                Grid.Column="1"
+                Content="Up"
+                RenderKeyAsGlyph="True"
+                Style="{StaticResource SmallKeyVisualStyle}" />
+            <TextBlock
+                Grid.Row="1"
+                VerticalAlignment="Center"
+                Text="Next result"
+                TextWrapping="Wrap" />
+            <keys:KeyVisual
+                Grid.Row="1"
+                Grid.Column="1"
+                Content="Down"
+                RenderKeyAsGlyph="True"
+                Style="{StaticResource SmallKeyVisualStyle}" />
+            <TextBlock
+                Grid.Row="2"
+                VerticalAlignment="Center"
+                Text="Preview result"
+                TextWrapping="Wrap" />
+            <keys:ShortcutPresenter
+                Grid.Row="2"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                KeycapStyle="{StaticResource SmallKeyVisualStyle}"
+                Shortcut="{x:Bind PreviewResultShortcut}" />
+            <TextBlock
+                Grid.Row="3"
+                VerticalAlignment="Center"
+                Text="Open shortcut help"
+                TextWrapping="Wrap" />
+            <keys:ShortcutPresenter
+                Grid.Row="3"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                KeycapStyle="{StaticResource SmallKeyVisualStyle}"
+                Shortcut="{x:Bind ShortcutHelpShortcut}" />
+        </Grid>
+    </Border>
+</Page>

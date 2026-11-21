@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Flyout
+    x:Class="JPSoftworks.DesktopToolkit.Controls.SearchableItemsFlyout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:JPSoftworks.DesktopToolkit.Controls"
+    AreOpenCloseAnimationsEnabled="False"
+    Closed="OnClosed"
+    Opened="OnOpened"
+    Opening="OnOpening"
+    Placement="BottomEdgeAlignedLeft"
+    ShouldConstrainToRootBounds="False"
+    ShowMode="Standard">
+    <Flyout.FlyoutPresenterStyle>
+        <Style TargetType="FlyoutPresenter">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="MaxWidth" Value="1000" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Shadow" Value="{x:Null}" />
+            <Setter Property="IsDefaultShadowEnabled" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="FlyoutPresenter">
+                        <ContentPresenter
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Flyout.FlyoutPresenterStyle>
+
+    <Flyout.Content>
+        <Grid
+            x:Name="LayoutRoot"
+            Width="280"
+            Background="Transparent"
+            KeyDown="OnRootKeyDown"
+            PointerPressed="OnSlotPointerPressed">
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="ms-appx:///JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts/Controls/ItemStyles.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                    <BitmapIconSource x:Key="EmptyIconSource" />
+                </ResourceDictionary>
+            </Grid.Resources>
+            <Grid
+                x:Name="MenuSurface"
+                VerticalAlignment="Top"
+                AutomationProperties.AutomationId="MenuSurface">
+                <Border
+                    x:Name="MenuThemedBackground"
+                    AutomationProperties.AccessibilityView="Raw"
+                    Background="{ThemeResource SolidBackgroundFillColorTertiaryBrush}"
+                    CornerRadius="{ThemeResource OverlayCornerRadius}"
+                    IsHitTestVisible="False" />
+                <Border
+                    x:Name="MenuBackdrop"
+                    AutomationProperties.AccessibilityView="Raw"
+                    Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                    CornerRadius="{ThemeResource OverlayCornerRadius}"
+                    IsHitTestVisible="False"
+                    Visibility="Collapsed" />
+                <Border
+                    x:Name="SurfaceBorder"
+                    Background="{ThemeResource MenuFlyoutPresenterBackground}"
+                    BorderBrush="{ThemeResource MenuFlyoutPresenterBorderBrush}"
+                    BorderThickness="{ThemeResource MenuFlyoutPresenterBorderThemeThickness}"
+                    CornerRadius="{ThemeResource OverlayCornerRadius}"
+                    Translation="0,0,32">
+                    <Border.Shadow>
+                        <ThemeShadow />
+                    </Border.Shadow>
+                    <Grid CornerRadius="{ThemeResource OverlayCornerRadius}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Border
+                            x:Name="FilterHost"
+                            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                            BorderThickness="0,0,0,1">
+                            <Border.Resources>
+                                <ResourceDictionary Source="ms-appx:///JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts/Controls/MenuFilterBox.xaml" />
+                            </Border.Resources>
+                            <TextBox
+                                x:Name="FilterBox"
+                                AutomationProperties.AutomationId="MenuFilterBox"
+                                AutomationProperties.Name="Filter commands"
+                                PlaceholderText="Search commands..."
+                                PreviewKeyDown="OnFilterKeyDown"
+                                Style="{StaticResource MenuFilterBoxStyle}"
+                                TextChanged="OnFilterTextChanged" />
+                        </Border>
+
+                        <Grid Grid.Row="1">
+                            <controls:FlyoutItemsListView
+                                x:Name="ItemsList"
+                                MaxHeight="320"
+                                Padding="0,1"
+                                AutomationProperties.AutomationId="FilteredMenuItems"
+                                AutomationProperties.Name="Commands"
+                                CharacterReceived="OnListCharacterReceived"
+                                ContainerContentChanging="OnContainerContentChanging"
+                                IsItemClickEnabled="True"
+                                ItemClick="OnItemClick"
+                                ItemContainerStyle="{StaticResource SearchableFlyoutItemStyle}"
+                                PreviewKeyDown="OnListKeyDown"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                ScrollViewer.HorizontalScrollMode="Disabled"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                SelectionMode="Single"
+                                SingleSelectionFollowsFocus="True"
+                                SizeChanged="OnListSizeChanged">
+                                <ListView.ItemContainerTransitions>
+                                    <TransitionCollection />
+                                </ListView.ItemContainerTransitions>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="controls:FlyoutItemEntry">
+                                        <Grid>
+                                            <Border
+                                                Height="1"
+                                                VerticalAlignment="Center"
+                                                Background="{ThemeResource MenuFlyoutSeparatorBackground}"
+                                                Visibility="{x:Bind SeparatorVisibility, Mode=OneTime}" />
+                                            <ContentPresenter
+                                                x:Name="TemplatedChoice"
+                                                HorizontalContentAlignment="Stretch"
+                                                x:Load="{x:Bind HasTemplatedContent, Mode=OneTime}"
+                                                Content="{x:Bind Item.Tag, Mode=OneTime}"
+                                                ContentTemplate="{x:Bind ChoiceTemplate, Mode=OneTime}" />
+                                            <Grid x:Name="DefaultItemContent" x:Load="{x:Bind HasDefaultContent, Mode=OneTime}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="{x:Bind CheckColumnWidth, Mode=OneTime}" />
+                                                    <ColumnDefinition Width="{x:Bind IconColumnWidth, Mode=OneTime}" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <FontIcon
+                                                    HorizontalAlignment="Left"
+                                                    AutomationProperties.AccessibilityView="Raw"
+                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                    FontSize="16"
+                                                    Glyph="&#xE73E;"
+                                                    Visibility="{x:Bind controls:FlyoutItemEntry.CheckVisibility(Item.IsCheckable, Item.IsChecked), Mode=OneWay}" />
+                                                <Grid
+                                                    Grid.Column="1"
+                                                    Width="16"
+                                                    Height="16"
+                                                    HorizontalAlignment="Left">
+                                                    <Viewbox Stretch="Uniform">
+                                                        <IconSourceElement AutomationProperties.AccessibilityView="Raw" IconSource="{x:Bind Item.IconSource, Mode=OneWay, TargetNullValue={StaticResource EmptyIconSource}}" />
+                                                    </Viewbox>
+                                                    <FontIcon
+                                                        AutomationProperties.AccessibilityView="Raw"
+                                                        FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                        FontSize="16"
+                                                        Glyph="{x:Bind Item.Glyph, Mode=OneWay}"
+                                                        Visibility="{x:Bind controls:FlyoutItemEntry.GlyphVisibility(Item), Mode=OneWay}" />
+                                                </Grid>
+                                                <TextBlock
+                                                    Grid.Column="2"
+                                                    VerticalAlignment="Center"
+                                                    AutomationProperties.AccessibilityView="Raw"
+                                                    Text="{x:Bind Item.Text, Mode=OneWay}"
+                                                    TextTrimming="CharacterEllipsis" />
+                                                <TextBlock
+                                                    Grid.Column="3"
+                                                    Margin="24,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    AutomationProperties.AccessibilityView="Raw"
+                                                    Foreground="{ThemeResource MenuFlyoutItemKeyboardAcceleratorTextForeground}"
+                                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                                    Text="{x:Bind Item.KeyboardAcceleratorText, Mode=OneWay}"
+                                                    TextAlignment="Right"
+                                                    Visibility="{x:Bind controls:FlyoutItemEntry.TextVisibility(Item.KeyboardAcceleratorText), Mode=OneWay}" />
+                                                <FontIcon
+                                                    Grid.Column="4"
+                                                    Margin="16,0,0,0"
+                                                    AutomationProperties.AccessibilityView="Raw"
+                                                    FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                                                    FontSize="12"
+                                                    Glyph="{x:Bind SubmenuGlyph, Mode=OneTime}"
+                                                    Visibility="{x:Bind controls:FlyoutItemEntry.TextVisibility(SubmenuGlyph), Mode=OneTime}" />
+                                            </Grid>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </controls:FlyoutItemsListView>
+
+                            <TextBlock
+                                x:Name="EmptyMessage"
+                                Margin="12,12"
+                                AutomationProperties.AutomationId="MenuEmptyMessage"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Text="No matching commands"
+                                TextWrapping="Wrap"
+                                Visibility="Collapsed" />
+                        </Grid>
+
+                        <Border
+                            Grid.Row="3"
+                            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                            BorderThickness="0,1,0,0"
+                            Visibility="{Binding ElementName=ResultCount, Path=Visibility}">
+                            <TextBlock
+                                x:Name="ResultCount"
+                                Margin="12,1,12,6"
+                                AutomationProperties.AutomationId="MenuResultCount"
+                                AutomationProperties.LiveSetting="Polite"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Visibility="Collapsed" />
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Flyout.Content>
+</Flyout>

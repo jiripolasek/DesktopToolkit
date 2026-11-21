@@ -1,0 +1,114 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.SystemMonitorPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            MaxWidth="1600"
+            Spacing="32">
+            <demo:SamplePageHeader
+                Title="System monitor"
+                ApiNotes="The page owns sampling and pauses both graphs together. Network rates are measured from consecutive counters for active adapters. The graph uses the selected history window and scales to its recent peak."
+                Description="Watch CPU load and physical memory on this PC. Expand network throughput to see transfer rates." />
+            <sample:ExampleCard x:Name="MonitorExample" Header="CPU and physical memory">
+                <StackPanel Spacing="24">
+                    <charts:LiveAreaGraph
+                        x:Name="History"
+                        Height="240"
+                        AutomationProperties.Name="Live CPU and memory history"
+                        HistoryDuration="{x:Bind GetHistoryDuration(HistoryBox.SelectedIndex), Mode=OneWay}"
+                        TooltipValueSuffix="%" />
+                    <TextBlock
+                        x:Name="Readings"
+                        FontWeight="SemiBold"
+                        TextWrapping="Wrap" />
+                    <VariableSizedWrapGrid
+                        HorizontalAlignment="Left"
+                        ItemHeight="250"
+                        ItemWidth="132"
+                        Orientation="Horizontal">
+                        <StackPanel Spacing="12">
+                            <TextBlock FontWeight="SemiBold" Text="CPU" />
+                            <charts:VerticalUsageBar
+                                x:Name="CpuBar"
+                                Width="64"
+                                Height="190"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="CPU usage" />
+                        </StackPanel>
+                        <StackPanel Spacing="12">
+                            <TextBlock FontWeight="SemiBold" Text="Memory" />
+                            <charts:VerticalUsageBar
+                                x:Name="MemoryBar"
+                                Width="64"
+                                Height="190"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="Physical memory usage" />
+                        </StackPanel>
+                        <StackPanel Spacing="12" VariableSizedWrapGrid.ColumnSpan="2">
+                            <TextBlock FontWeight="SemiBold" Text="Memory composition" />
+                            <charts:DoughnutGraph
+                                x:Name="MemoryGraph"
+                                Width="190"
+                                Height="190"
+                                HorizontalAlignment="Left"
+                                AutomationProperties.Name="Physical memory composition"
+                                CenterLabel="used" />
+                        </StackPanel>
+                    </VariableSizedWrapGrid>
+                    <TextBlock x:Name="MemoryDetail" Style="{StaticResource ChartsDescriptionStyle}" />
+                </StackPanel>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="20">
+                        <Button
+                            x:Name="PauseButton"
+                            HorizontalAlignment="Stretch"
+                            Click="OnPauseClick"
+                            Content="Pause" />
+                        <ComboBox
+                            x:Name="HistoryBox"
+                            HorizontalAlignment="Stretch"
+                            Header="History window"
+                            SelectedIndex="1">
+                            <x:String>30 seconds</x:String>
+                            <x:String>60 seconds</x:String>
+                            <x:String>120 seconds</x:String>
+                        </ComboBox>
+                        <TextBlock
+                            x:Name="SamplingStatus"
+                            Style="{StaticResource ChartsDescriptionStyle}"
+                            Text="Sampling every 500 ms" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+            </sample:ExampleCard>
+            <Expander
+                x:Name="NetworkSection"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Header="Network throughput">
+                <StackPanel Spacing="8">
+                    <TextBlock
+                        x:Name="NetworkReadings"
+                        Text="Waiting for adapter samples"
+                        TextWrapping="Wrap" />
+                    <charts:LiveAreaGraph
+                        x:Name="NetworkHistory"
+                        Height="200"
+                        AutomationProperties.Name="Live receive and send rates in kibibytes per second"
+                        HistoryDuration="{x:Bind GetHistoryDuration(HistoryBox.SelectedIndex), Mode=OneWay}"
+                        IsPaused="True"
+                        TooltipValueFormat="0.##"
+                        TooltipValueSuffix=" KiB/s" />
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

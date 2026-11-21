@@ -1,0 +1,103 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.TreemapChartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Treemap"
+                ApiNotes="Set Layout to a built-in strategy or an ITreemapLayout implementation. Bind a HierarchyChartData snapshot and give deferred branches a known total until their children are available."
+                Description="Select a tile to dive into its folder, or right-click it for folder commands. Use arrow keys to inspect, Enter to open, or Shift+F10 for the menu. Select a folder in the path to zoom back out."
+                StylingControl="TreemapChart"
+                StylingExample="FolderExample" />
+            <sample:ExampleCard
+                x:Name="FolderExample"
+                Header="Workspace folder sizes"
+                PreviewVerticalAlignment="Top">
+                <demo:HierarchyDrillDown x:Name="FolderNavigation">
+                    <charts:TreemapChart
+                        x:Name="Folders"
+                        Height="360"
+                        AutomationProperties.Name="Workspace folder sizes in gigabytes"
+                        BranchPadding="{x:Bind BranchPaddingSlider.Value, Mode=OneWay}"
+                        ShowValueLabels="{x:Bind ShowValueLabelsSwitch.IsOn, Mode=OneWay}"
+                        TileCornerRadius="{x:Bind CornerRadiusBox.Value, Mode=OneWay}"
+                        TileSpacing="{x:Bind TileSpacingSlider.Value, Mode=OneWay}"
+                        ValueFormat="0.#' GB'"
+                        ValueLabelOpacity="{x:Bind ValueLabelOpacitySlider.Value, Mode=OneWay}" />
+                </demo:HierarchyDrillDown>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ComboBox
+                            x:Name="LayoutBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Layout"
+                            SelectedIndex="0"
+                            SelectionChanged="OnLayoutChanged">
+                            <x:String>Squarified</x:String>
+                            <x:String>Slice and dice</x:String>
+                            <x:String>Binary</x:String>
+                        </ComboBox>
+                        <ComboBox
+                            x:Name="LevelsBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Visible levels"
+                            SelectedIndex="2"
+                            SelectionChanged="OnLevelsChanged">
+                            <x:String>1 level</x:String>
+                            <x:String>2 levels</x:String>
+                            <x:String>3 levels</x:String>
+                        </ComboBox>
+                        <Button
+                            x:Name="LoadPackageFoldersButton"
+                            Click="OnLoadPackageFolders"
+                            Content="Load package folders" />
+                        <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="Tile layout" />
+                        <Slider
+                            x:Name="TileSpacingSlider"
+                            Header="Tile spacing"
+                            Maximum="16"
+                            Value="2" />
+                        <Slider
+                            x:Name="BranchPaddingSlider"
+                            Header="Branch padding"
+                            Maximum="24"
+                            Value="8" />
+                        <NumberBox
+                            x:Name="CornerRadiusBox"
+                            Header="Tile corner radius"
+                            Maximum="24"
+                            Minimum="0"
+                            PlaceholderText="Automatic"
+                            SpinButtonPlacementMode="Compact" />
+                        <ToggleSwitch
+                            x:Name="ShowValueLabelsSwitch"
+                            Header="Show size labels"
+                            IsOn="True" />
+                        <Slider
+                            x:Name="ValueLabelOpacitySlider"
+                            Header="Size label opacity"
+                            IsEnabled="{x:Bind ShowValueLabelsSwitch.IsOn, Mode=OneWay}"
+                            Maximum="1"
+                            StepFrequency="0.01"
+                            Value="0.83" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind Folders}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

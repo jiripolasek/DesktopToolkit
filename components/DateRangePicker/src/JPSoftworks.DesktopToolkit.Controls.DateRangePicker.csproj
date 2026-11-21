@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../component.props" />
+  <PropertyGroup>
+    <RootNamespace>JPSoftworks.DesktopToolkit.Controls</RootNamespace>
+    <ComponentDirectory>DateRangePicker</ComponentDirectory>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+  </PropertyGroup>
+  <Import Project="../../../eng/WinUIPackage.props" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

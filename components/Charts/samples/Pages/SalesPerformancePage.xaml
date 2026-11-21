@@ -1,0 +1,89 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.SalesPerformancePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Sales performance"
+                ApiNotes="Both filters apply to all charts. The line compares net revenue and planned revenue. The stacked bars show each region's signed contribution to the monthly variance. The heatmap divides returned orders by all orders and leaves gaps for channels that had not launched."
+                Description="Compare retail revenue with plan, then see which markets and sales channels explain the difference." />
+            <StackPanel Spacing="12">
+                <Grid
+                    MaxWidth="480"
+                    HorizontalAlignment="Left"
+                    ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox
+                        x:Name="RegionBox"
+                        MinWidth="0"
+                        HorizontalAlignment="Stretch"
+                        Header="Region"
+                        SelectedIndex="0"
+                        SelectionChanged="OnFilterChanged">
+                        <x:String>All regions</x:String>
+                        <x:String>North America</x:String>
+                        <x:String>Europe</x:String>
+                        <x:String>Asia Pacific</x:String>
+                    </ComboBox>
+                    <ComboBox
+                        x:Name="PeriodBox"
+                        Grid.Column="1"
+                        MinWidth="0"
+                        HorizontalAlignment="Stretch"
+                        Header="Quarter"
+                        SelectedIndex="0"
+                        SelectionChanged="OnFilterChanged">
+                        <x:String>Full year</x:String>
+                        <x:String>Q1</x:String>
+                        <x:String>Q2</x:String>
+                        <x:String>Q3</x:String>
+                        <x:String>Q4</x:String>
+                    </ComboBox>
+                </Grid>
+                <TextBlock
+                    x:Name="SalesSummary"
+                    AutomationProperties.LiveSetting="Polite"
+                    FontWeight="SemiBold"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+            <sample:ExampleCard x:Name="RevenueExample" Header="Net revenue versus plan">
+                <charts:LineChart
+                    x:Name="RevenueHistory"
+                    Height="235"
+                    AutomationProperties.Name="Monthly net revenue and plan in thousands of US dollars"
+                    ValueFormat="0.#' k USD'"
+                    XValueFormat="MMM" />
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="VarianceExample" Header="Monthly variance by region">
+                <charts:BarChart
+                    x:Name="RegionalVariance"
+                    Height="235"
+                    AutomationProperties.Name="Monthly revenue above or below plan by region"
+                    Mode="Stacked"
+                    ValueFormat="+0.#' k USD';-0.#' k USD';0' k USD'" />
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="ReturnsExample" Header="Return rate by channel">
+                <charts:HeatmapChart
+                    x:Name="ReturnRates"
+                    Height="195"
+                    AutomationProperties.Name="Percentage of orders returned by sales channel and month"
+                    ValueFormat="0.#'%'" />
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
