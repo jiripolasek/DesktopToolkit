@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.DevApp (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.DevApp (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

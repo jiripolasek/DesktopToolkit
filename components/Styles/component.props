@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>JPSoftworks.DesktopToolkit.Styles</PackageId>
+    <Version>0.1.0-preview.2</Version>
+    <Title>WinUI Styles</Title>
+    <Description>Opt-in styles for built-in WinUI 3 controls, including a pill-shaped search box.</Description>
+    <PackageTags>WinUI;WinUI3;XAML;styles;search;AutoSuggestBox</PackageTags>
+    <ComponentSlug>styles</ComponentSlug>
+    <ComponentStage>preview</ComponentStage>
+  </PropertyGroup>
+</Project>

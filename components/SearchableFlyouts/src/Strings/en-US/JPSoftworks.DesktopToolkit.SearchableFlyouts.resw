@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="DefaultFilterBoxAutomationName" xml:space="preserve">
+    <value>Filter commands</value>
+  </data>
+  <data name="DefaultFilterPlaceholderText" xml:space="preserve">
+    <value>Search commands...</value>
+  </data>
+  <data name="DefaultNoResultsText" xml:space="preserve">
+    <value>No matching commands</value>
+  </data>
+  <data name="CommandsName" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="ChoicesName" xml:space="preserve">
+    <value>Choices</value>
+  </data>
+  <data name="MatchingCommandCountFormat" xml:space="preserve">
+    <value>Matching commands: {0:N0}</value>
+    <comment>Used for all counts. Keep the numbered placeholder and its format specifier.</comment>
+  </data>
+  <data name="MatchingChoiceCountFormat" xml:space="preserve">
+    <value>Matching choices: {0:N0}</value>
+    <comment>Used for all counts. Keep the numbered placeholder and its format specifier.</comment>
+  </data>
+  <data name="CommandCountFormat" xml:space="preserve">
+    <value>Commands: {0:N0} of {1:N0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="ChoiceCountFormat" xml:space="preserve">
+    <value>Choices: {0:N0} of {1:N0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="FilterSubmenuFormat" xml:space="preserve">
+    <value>Filter {0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="KeyboardHelp" xml:space="preserve">
+    <value>Type to filter. Use Up or Down to move between search and results. Press Enter to choose or Escape to close.</value>
+  </data>
+  <data name="DropDownDefaultPlaceholderText" xml:space="preserve">
+    <value>Select an item</value>
+  </data>
+  <data name="DropDownDefaultFilterPlaceholderText" xml:space="preserve">
+    <value>Search...</value>
+  </data>
+  <data name="DropDownDefaultFilterBoxAutomationName" xml:space="preserve">
+    <value>Filter choices</value>
+  </data>
+  <data name="DropDownDefaultNoResultsText" xml:space="preserve">
+    <value>No matching choices</value>
+  </data>
+  <data name="ChooseDropDownValue" xml:space="preserve">
+    <value>Choose a value from the dropdown.</value>
+  </data>
+</root>

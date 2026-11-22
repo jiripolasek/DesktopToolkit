@@ -1,0 +1,29 @@
+<Project>
+  <!-- Adds XAML library layout, WinRT analysis, and localization support for WinUI packages. -->
+  <Import Project="$(MSBuildThisFileDirectory)WinUI.props" />
+  <Import Project="$(MSBuildThisFileDirectory)NuGet.Library.props" />
+  <PropertyGroup>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
+    <!-- WinUI supplies the XAML extension in framework-specific builds. -->
+    <AllowedOutputExtensionsInPackageBuildOutputFolder Condition="'$(TargetFramework)' == ''">$(AllowedOutputExtensionsInPackageBuildOutputFolder);.xaml</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <CsWinRTGenerateProjection>false</CsWinRTGenerateProjection>
+    <CsWinRTAotWarningLevel>3</CsWinRTAotWarningLevel>
+    <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWinRT" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools.WinUIAnalyzer" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_WinUINeutralCatalog Include="Strings/en-US/JPSoftworks.DesktopToolkit.*.resw" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'@(_WinUINeutralCatalog)' != ''">
+    <EmbeddedResource Include="@(_WinUINeutralCatalog)" LogicalName="%(Filename)%(Extension)" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)../components/Core/src/JPSoftworks.DesktopToolkit.Core.csproj" />
+  </ItemGroup>
+</Project>

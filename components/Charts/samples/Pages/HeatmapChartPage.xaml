@@ -1,0 +1,96 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.HeatmapChartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Heatmap"
+                ApiNotes="Bind a HeatmapChartData matrix. A null cell leaves a blank space and zero is a measurement. Use the arrow keys to move in two dimensions."
+                Description="See patterns across two categories or track daily activity over time."
+                StylingControl="HeatmapChart"
+                StylingExample="MatrixExample" />
+            <sample:ExampleCard x:Name="CalendarExample" Header="Daily contributions">
+                <StackPanel Spacing="8">
+                    <TextBlock Style="{StaticResource ChartsDescriptionStyle}" Text="{x:Bind CalendarRange}" />
+                    <charts:HeatmapChart
+                        x:Name="Calendar"
+                        Height="180"
+                        AutomationProperties.Name="Daily contributions, by week and weekday"
+                        Data="{x:Bind CalendarData}"
+                        KeepCellsSquare="True"
+                        ValueFormat="0" />
+                </StackPanel>
+            </sample:ExampleCard>
+            <sample:ExampleCard
+                x:Name="MatrixExample"
+                Header="Request latency by region"
+                PreviewVerticalAlignment="Top">
+                <charts:HeatmapChart
+                    x:Name="Latency"
+                    Height="230"
+                    AutomationProperties.Name="Median request latency by region and period"
+                    CellCornerRadius="{x:Bind CellRadiusSlider.Value, Mode=OneWay}"
+                    CellSpacing="{x:Bind CellSpacingSlider.Value, Mode=OneWay}"
+                    Data="{x:Bind LatencyData}"
+                    KeepCellsSquare="{x:Bind SquareCellsSwitch.IsOn, Mode=OneWay}"
+                    ValueFormat="0' ms'" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ComboBox
+                            x:Name="ScaleBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Color scale"
+                            SelectedIndex="0"
+                            SelectionChanged="OnScaleChanged">
+                            <x:String>Automatic</x:String>
+                            <x:String>Latency bands</x:String>
+                        </ComboBox>
+                        <ToggleSwitch x:Name="SquareCellsSwitch" Header="Square cells" />
+                        <Slider
+                            x:Name="CellSpacingSlider"
+                            Header="Cell spacing"
+                            Maximum="12"
+                            Value="2" />
+                        <Slider
+                            x:Name="CellRadiusSlider"
+                            Header="Cell corner radius"
+                            Maximum="12"
+                            Value="2" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind Latency}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard
+                x:Name="TilesExample"
+                Description="Rounded cells with hidden axis labels and a visible color scale."
+                Header="Request latency tiles">
+                <charts:HeatmapChart
+                    x:Name="LatencyTiles"
+                    Height="154"
+                    charts:ChartAxisAppearance.Presentation="Hidden"
+                    AutomationProperties.Name="Compact heatmap of request latency by region and period"
+                    CellCornerRadius="6"
+                    CellSpacing="5"
+                    Data="{x:Bind LatencyData}"
+                    ValueFormat="0' ms'" />
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind LatencyTiles}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

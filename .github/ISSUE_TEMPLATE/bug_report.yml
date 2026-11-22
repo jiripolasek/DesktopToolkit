@@ -1,0 +1,72 @@
+name: Bug report
+description: Report a problem with a Desktop Toolkit component or the toolkit itself.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report security vulnerabilities privately using the [security policy](https://github.com/jiripolasek/DesktopToolkit/security/policy).
+        Remove personal information and credentials from logs and attachments.
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Choose General issue if no single component applies.
+      options:
+        - General issue
+        - Charts
+        - Controls bundle
+        - Date and Time Controls
+        - InfoLabel
+        - KeyVisual
+        - Searchable Flyouts
+        - Toast Windows
+        - WinUI Styles
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the behavior you observed. Include any error message.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include a small XAML or C# example if it helps reproduce the issue.
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: For runtime, build, or installation issues, include the details that apply.
+      placeholder: |
+        Package version or Git commit:
+        .NET target framework:
+        Windows App SDK version:
+        Windows version and build:
+        CPU architecture:
+
+  - type: upload
+    id: attachments
+    attributes:
+      label: Screenshots, recordings, or logs
+      description: Attach any files that help reproduce or explain the issue.

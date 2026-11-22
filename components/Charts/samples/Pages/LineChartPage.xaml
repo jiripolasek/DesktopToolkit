@@ -1,0 +1,163 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.LineChartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <Page.Resources>
+        <Style x:Key="CompactTrend" TargetType="charts:LineChart">
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="ShowAreaFill" Value="True" />
+            <Setter Property="Interpolation" Value="Monotone" />
+            <Setter Property="ShowLegend" Value="False" />
+            <Setter Property="charts:ChartAxisAppearance.Presentation" Value="Hidden" />
+        </Style>
+        <DataTemplate x:Key="LatencyLegendTemplate" x:DataType="charts:ChartLegendItem">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+                <Border
+                    Width="8"
+                    Height="8"
+                    VerticalAlignment="Center"
+                    Background="{x:Bind Fill, Mode=OneWay}"
+                    CornerRadius="4" />
+                <TextBlock Text="{x:Bind Name, Mode=OneWay}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="LatencyInspectorTemplate" x:DataType="charts:ChartInspectionContent">
+            <TextBlock Text="{x:Bind Text, Mode=OneWay}" TextWrapping="Wrap" />
+        </DataTemplate>
+    </Page.Resources>
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Line chart"
+                ApiNotes="Bind Data to a LineChartData snapshot. Supply ascending X values within each series. A null Y value breaks the line and its fill. In the latency example, drag to select a range, then drag it or resize it by either fence."
+                Description="Plot supplied measurements against numeric coordinates or timestamps. Series can have different sampling positions."
+                StylingControl="LineChart"
+                StylingExample="CompactLatencyExample" />
+            <sample:ExampleCard
+                x:Name="NumericExample"
+                Description="Turn off Y-axis labels to keep the horizontal labels, grid, and dashed 80 ms budget line visible."
+                Header="Latency by request rate"
+                PreviewVerticalAlignment="Top">
+                <charts:LineChart
+                    x:Name="NumericChart"
+                    Height="250"
+                    AutomationProperties.Name="Latency in milliseconds by requests per second"
+                    Data="{x:Bind NumericData}"
+                    IsSelectionEnabled="{x:Bind RangeSelectionSwitch.IsOn, Mode=OneWay}"
+                    IsViewportInteractionEnabled="True"
+                    ValueFormat="0' ms'"
+                    XValueFormat="0' r/s'"
+                    YAxis="{x:Bind GetLatencyAxis(LatencyBudgetSwitch.IsOn, YAxisLabelsSwitch.IsOn), Mode=OneWay}" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ToggleSwitch
+                            x:Name="LatencyBudgetSwitch"
+                            Header="Latency budget"
+                            IsOn="True" />
+                        <ToggleSwitch
+                            x:Name="YAxisLabelsSwitch"
+                            Header="Y-axis labels"
+                            IsOn="True" />
+                        <ToggleSwitch
+                            x:Name="RangeSelectionSwitch"
+                            Header="Range selection"
+                            IsOn="True" />
+                        <ToggleSwitch
+                            x:Name="CustomReadoutsSwitch"
+                            Header="Custom legend and inspector"
+                            Toggled="OnCustomReadoutsToggled" />
+                        <TextBlock
+                            x:Name="ViewportSummary"
+                            Text="{x:Bind GetViewportSummary(NumericChart.VisibleViewport, NumericChart.SelectedRange), Mode=OneWay}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind NumericChart}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard
+                x:Name="CompactLatencyExample"
+                Description="Smooth lines and area fill with the latency budget as the only guide."
+                Header="Compact latency trend">
+                <charts:LineChart
+                    x:Name="CompactLatencyChart"
+                    Height="140"
+                    AutomationProperties.Name="Compact latency comparison by request rate"
+                    Data="{x:Bind NumericData}"
+                    Style="{StaticResource CompactTrend}"
+                    ValueFormat="0' ms'"
+                    XValueFormat="0' r/s'"
+                    YAxis="{x:Bind LatencyAxis}" />
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind CompactLatencyChart}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard
+                x:Name="TimeExample"
+                Description="Diamonds mark maintenance events."
+                Header="Sensor temperatures by time (UTC)"
+                PreviewVerticalAlignment="Top">
+                <charts:LineChart
+                    x:Name="TemperatureChart"
+                    Height="250"
+                    charts:ChartLegend.HighlightOnHover="True"
+                    charts:ChartLegend.ValueMode="Value"
+                    AutomationProperties.Name="Sensor temperatures in Celsius over one hour in UTC"
+                    Data="{x:Bind TemperatureData}"
+                    Milestones="{x:Bind GetTemperatureMilestones(MilestoneSwitch.IsOn), Mode=OneWay}"
+                    ShowAreaFill="True"
+                    ValueFormat="0.#' C'"
+                    XValueFormat="HH:mm" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ToggleSwitch
+                            x:Name="InterpolationSwitch"
+                            Header="Interpolation"
+                            OffContent="Straight"
+                            OnContent="Monotone"
+                            Toggled="OnInterpolationToggled" />
+                        <CheckBox
+                            Click="OnAreaFillClick"
+                            Content="Show area fill"
+                            IsChecked="True" />
+                        <ToggleSwitch
+                            x:Name="MilestoneSwitch"
+                            Header="Maintenance milestones"
+                            IsOn="True" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind TemperatureChart}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="StackedExample" Header="Hourly requests by service (UTC)">
+                <StackPanel Spacing="8">
+                    <charts:LineChart
+                        Height="250"
+                        AutomationProperties.Name="Stacked hourly requests by service in UTC"
+                        Data="{x:Bind RequestData}"
+                        Interpolation="Monotone"
+                        Mode="StackedArea"
+                        ValueFormat="0"
+                        XValueFormat="HH:mm" />
+                    <TextBlock Style="{StaticResource ChartsDescriptionStyle}" Text="The gap in API measurements also breaks the Media band above it." />
+                </StackPanel>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

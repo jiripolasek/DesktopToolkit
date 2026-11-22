@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../component.props" />
+
+  <PropertyGroup>
+    <RootNamespace>JPSoftworks.DesktopToolkit.Charts</RootNamespace>
+    <TargetFrameworks>$(DesktopToolkitWinUITargetFrameworks)</TargetFrameworks>
+    <Win2DWarnNoPlatform>false</Win2DWarnNoPlatform>
+  </PropertyGroup>
+
+  <Import Project="../../../eng/WinUI.Package.props" />
+  <Import Project="../../../shared/WinUI.Localization/JPSoftworks.DesktopToolkit.WinUI.Localization.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
+    <PackageReference Include="Microsoft.Graphics.Win2D" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ThirdParty/DevDrive.LICENSE.txt" Exclude="@(None)" />
+    <None Update="ThirdParty/DevDrive.LICENSE.txt" Pack="true" PackagePath="licenses/DevDrive.LICENSE.txt" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.ToastWindows.Samples.ToastWindowExample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:JPSoftworks.DesktopToolkit.ToastWindows.Samples"
+    Unloaded="OnUnloaded">
+    <StackPanel x:Name="SampleLayout" Spacing="12">
+        <StackPanel HorizontalAlignment="Left" Spacing="8">
+            <Button
+                Click="OnShowToast"
+                Content="Show toast"
+                IsEnabled="{x:Bind local:ToastWindowExample.HasMessage(MessageBox.Text), Mode=OneWay}" />
+            <Button
+                Click="OnShowActionToast"
+                Content="Show toast with action"
+                IsEnabled="{x:Bind local:ToastWindowExample.HasMessage(MessageBox.Text), Mode=OneWay}" />
+        </StackPanel>
+        <TextBlock
+            x:Name="ActionStatus"
+            AutomationProperties.LiveSetting="Polite"
+            Visibility="Collapsed" />
+        <StackPanel x:Name="SampleOptions" Spacing="12">
+            <ComboBox
+                x:Name="PositionPicker"
+                HorizontalAlignment="Stretch"
+                AutomationProperties.Name="Toast preview position"
+                Header="Position"
+                SelectedIndex="0">
+                <ComboBoxItem Content="Use system setting" />
+                <ComboBoxItem Content="Bottom center" />
+                <ComboBoxItem Content="Top left" />
+                <ComboBoxItem Content="Top center" />
+            </ComboBox>
+            <ComboBox
+                x:Name="IconPicker"
+                HorizontalAlignment="Stretch"
+                AutomationProperties.Name="Toast preview icon"
+                Header="Icon"
+                SelectedIndex="0">
+                <ComboBoxItem Content="None" />
+                <ComboBoxItem Content="Check mark" />
+                <ComboBoxItem Content="Information" />
+                <ComboBoxItem Content="Document" />
+            </ComboBox>
+            <TextBox
+                x:Name="MessageBox"
+                AutomationProperties.Name="Toast preview message"
+                Header="Message"
+                Text="Your report is ready."
+                TextWrapping="Wrap" />
+        </StackPanel>
+    </StackPanel>
+</Page>

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Desktop Toolkit Gallery (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Desktop Toolkit Gallery (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

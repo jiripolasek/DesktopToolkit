@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../../eng/WinUI.Samples.props" />
+
+  <PropertyGroup>
+    <RootNamespace>JPSoftworks.DesktopToolkit.Controls.Samples</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../src/JPSoftworks.DesktopToolkit.Controls.InfoLabel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Examples/*.xaml;Examples/*.xaml.cs"
+                      LogicalName="ExampleSource.%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

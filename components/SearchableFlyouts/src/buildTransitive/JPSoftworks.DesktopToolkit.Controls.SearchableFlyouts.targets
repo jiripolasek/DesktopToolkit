@@ -1,0 +1,11 @@
+<Project>
+  <ItemGroup>
+    <!-- WinUI already indexes these resources in the library PRI. -->
+    <None Include="$(MSBuildThisFileDirectory)Controls\**\*.xbf">
+      <Link>JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts\Controls\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <TargetPath>JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts\Controls\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="BarChartName" xml:space="preserve">
+    <value>Bar chart</value>
+  </data>
+  <data name="BarDescriptionFormat" xml:space="preserve">
+    <value>{0}, {1}: {2}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="ChartLegendName" xml:space="preserve">
+    <value>Chart legend</value>
+  </data>
+  <data name="ChartOverviewName" xml:space="preserve">
+    <value>Chart overview</value>
+  </data>
+  <data name="ChildDetailsPending" xml:space="preserve">
+    <value>Child details pending</value>
+  </data>
+  <data name="FunnelChartName" xml:space="preserve">
+    <value>Funnel chart</value>
+  </data>
+  <data name="FunnelFirstStageFormat" xml:space="preserve">
+    <value>{0:P1} of first stage</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="FunnelPreviousStageFormat" xml:space="preserve">
+    <value>{0:P1} of previous stage</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="GaugeRangeFormat" xml:space="preserve">
+    <value>Range: {0} - {1}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="GaugeThresholdFormat" xml:space="preserve">
+    <value>{0}: {1} - {2}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="GaugeValueFormat" xml:space="preserve">
+    <value>Value: {0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="GaugeValueWithStatusFormat" xml:space="preserve">
+    <value>Value: {0} ({1})</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="HeatmapColumnFormat" xml:space="preserve">
+    <value>Column {0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="HeatmapName" xml:space="preserve">
+    <value>Heatmap</value>
+  </data>
+  <data name="HeatmapRowFormat" xml:space="preserve">
+    <value>Row {0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="HierarchyShareFormat" xml:space="preserve">
+    <value>{0} ({1:P1} of {2})</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="IcicleChartName" xml:space="preserve">
+    <value>Icicle chart</value>
+  </data>
+  <data name="LabelValueFormat" xml:space="preserve">
+    <value>{0}: {1}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="LineChartName" xml:space="preserve">
+    <value>Line chart</value>
+  </data>
+  <data name="ListPairFormat" xml:space="preserve">
+    <value>{0}, {1}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="LiveGraphNow" xml:space="preserve">
+    <value>Now</value>
+  </data>
+  <data name="LiveGraphSecondsAgoFormat" xml:space="preserve">
+    <value>{0:0.0} s ago</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>No data</value>
+  </data>
+  <data name="RadialGaugeName" xml:space="preserve">
+    <value>Radial gauge</value>
+  </data>
+  <data name="ReadOnlyUsageBar" xml:space="preserve">
+    <value>VerticalUsageBar is a read-only value indicator.</value>
+  </data>
+  <data name="SankeyChartName" xml:space="preserve">
+    <value>Sankey chart</value>
+  </data>
+  <data name="SankeyInflowFormat" xml:space="preserve">
+    <value>In: {0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="SankeyLinkFormat" xml:space="preserve">
+    <value>{0} to {1}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="SankeyOutflowFormat" xml:space="preserve">
+    <value>Out: {0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="ScatterChartName" xml:space="preserve">
+    <value>Scatter chart</value>
+  </data>
+  <data name="ScatterPointFormat" xml:space="preserve">
+    <value>{0} / {1}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="ScatterPointTitleFormat" xml:space="preserve">
+    <value>{0} - {1}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="ScatterXReadout" xml:space="preserve">
+    <value>X: {0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="ScatterYReadout" xml:space="preserve">
+    <value>Y: {0}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="SliceDescriptionFormat" xml:space="preserve">
+    <value>{0}: {1} ({2})</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="SliceLegendName" xml:space="preserve">
+    <value>Slice legend</value>
+  </data>
+  <data name="SpiderChartName" xml:space="preserve">
+    <value>Spider chart</value>
+  </data>
+  <data name="StackedAreaNeedsMatchingCoordinates" xml:space="preserve">
+    <value>Stacked area needs matching X coordinates in every series.</value>
+  </data>
+  <data name="SunburstChartName" xml:space="preserve">
+    <value>Sunburst chart</value>
+  </data>
+  <data name="ThresholdLabel" xml:space="preserve">
+    <value>Threshold</value>
+  </data>
+  <data name="TreemapChartName" xml:space="preserve">
+    <value>Treemap chart</value>
+  </data>
+  <data name="ValueLabel" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="ValueWithShareFormat" xml:space="preserve">
+    <value>{0} ({1:P1})</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="ZoomBeforeScrolling" xml:space="preserve">
+    <value>Zoom the chart before scrolling.</value>
+  </data>
+  <data name="UtcTooltipTimeFormat" xml:space="preserve">
+    <value>yyyy-MM-dd HH:mm:ss.FFFFFFF 'UTC'</value>
+    <comment>Use .NET custom date and time format specifiers. Keep the UTC designation.</comment>
+  </data>
+  <data name="SubMillisecondTickFormat" xml:space="preserve">
+    <value>HH:mm:ss.fffffff</value>
+  </data>
+  <data name="MillisecondTickFormat" xml:space="preserve">
+    <value>HH:mm:ss.fff</value>
+  </data>
+  <data name="SecondTickFormat" xml:space="preserve">
+    <value>HH:mm:ss</value>
+  </data>
+  <data name="MinuteTickFormat" xml:space="preserve">
+    <value>HH:mm</value>
+  </data>
+  <data name="DateAndTimeTickFormat" xml:space="preserve">
+    <value>MMM d HH:mm</value>
+  </data>
+  <data name="DateTickFormat" xml:space="preserve">
+    <value>MMM d yyyy</value>
+  </data>
+  <data name="HierarchyPathSeparator" xml:space="preserve">
+    <value> / </value>
+  </data>
+</root>

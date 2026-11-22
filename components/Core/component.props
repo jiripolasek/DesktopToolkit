@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>JPSoftworks.DesktopToolkit.Core</PackageId>
+    <Version>0.1.0-preview.2</Version>
+    <Title>Core</Title>
+    <Description>Shared localization configuration for Desktop Toolkit components.</Description>
+    <PackageTags>WinUI;WinUI3;localization;resw;toolkit</PackageTags>
+    <ComponentSlug>core</ComponentSlug>
+    <ComponentStage>preview</ComponentStage>
+    <ComponentTestProject>tests/JPSoftworks.DesktopToolkit.Core.CompatibilityTests.csproj</ComponentTestProject>
+  </PropertyGroup>
+</Project>

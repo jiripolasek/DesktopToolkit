@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <DesktopToolkitRoot>$(MSBuildThisFileDirectory)</DesktopToolkitRoot>
+    <DesktopToolkitAppTargetFramework>net11.0-windows10.0.26100.0</DesktopToolkitAppTargetFramework>
+    <DesktopToolkitWinUITargetFrameworks>net8.0-windows10.0.19041;net10.0-windows10.0.19041;net11.0-windows10.0.19041</DesktopToolkitWinUITargetFrameworks>
+    <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+    <Company>JPSoftworks</Company>
+    <Authors>JPSoftworks</Authors>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl Condition="'$(GITHUB_REPOSITORY)' != ''">https://github.com/$(GITHUB_REPOSITORY)</RepositoryUrl>
+    <RepositoryUrl Condition="'$(RepositoryUrl)' == ''">https://github.com/jiripolasek/DesktopToolkit</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+  </PropertyGroup>
+</Project>

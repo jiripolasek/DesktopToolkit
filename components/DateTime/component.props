@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>JPSoftworks.DesktopToolkit.Controls.DateTime</PackageId>
+    <Version>0.1.0-preview.2</Version>
+    <Title>Date and Time Controls</Title>
+    <Description>Date and time controls for WinUI 3, including a calendar date range picker with presets and blackout dates.</Description>
+    <PackageTags>WinUI;WinUI3;calendar;date-range;date-time;controls</PackageTags>
+    <ComponentSlug>date-time</ComponentSlug>
+    <ComponentStage>preview</ComponentStage>
+    <ComponentTestProject>tests/JPSoftworks.DesktopToolkit.Controls.DateTime.ControlTests.csproj</ComponentTestProject>
+  </PropertyGroup>
+</Project>

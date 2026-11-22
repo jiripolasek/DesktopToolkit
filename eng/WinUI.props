@@ -1,0 +1,9 @@
+<Project>
+  <!-- Sets the minimum Windows version and common build settings for WinUI projects. -->
+  <PropertyGroup>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <UseWinUI>true</UseWinUI>
+    <WinUISDKReferences>false</WinUISDKReferences>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+</Project>

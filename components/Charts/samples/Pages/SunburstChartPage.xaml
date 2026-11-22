@@ -1,0 +1,66 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.SunburstChartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Sunburst"
+                ApiNotes="Bind a HierarchyChartData snapshot. MaxDepth sets the ring limit and StartAngle rotates the first segment. Use the arrow keys to inspect and Enter to drill in."
+                Description="Explore folder sizes from the workspace at the center to its files in the outer rings. Hover to inspect a segment, or select it to zoom into its folder."
+                StylingControl="SunburstChart"
+                StylingExample="FolderExample" />
+            <sample:ExampleCard
+                x:Name="FolderExample"
+                Header="Workspace folder sizes"
+                PreviewVerticalAlignment="Top">
+                <demo:HierarchyDrillDown x:Name="FolderNavigation">
+                    <charts:SunburstChart
+                        x:Name="Folders"
+                        Height="400"
+                        AutomationProperties.Name="Workspace folder sizes in concentric rings"
+                        StartAngle="{x:Bind StartAngleSlider.Value, Mode=OneWay}"
+                        ValueFormat="0.#' GB'" />
+                </demo:HierarchyDrillDown>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ComboBox
+                            x:Name="LevelsBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Visible rings"
+                            SelectedIndex="2"
+                            SelectionChanged="OnLevelsChanged">
+                            <x:String>1 ring</x:String>
+                            <x:String>2 rings</x:String>
+                            <x:String>3 rings</x:String>
+                        </ComboBox>
+                        <Slider
+                            x:Name="StartAngleSlider"
+                            Header="Start angle (degrees)"
+                            Maximum="270"
+                            Minimum="-90"
+                            Value="-90" />
+                        <Button
+                            x:Name="LoadPackageFoldersButton"
+                            Click="OnLoadPackageFolders"
+                            Content="Load package folders" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind Folders}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

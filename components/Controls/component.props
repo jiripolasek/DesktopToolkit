@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>JPSoftworks.DesktopToolkit.Controls</PackageId>
+    <Version>0.1.0-preview.2</Version>
+    <Title>Controls</Title>
+    <Description>The starting package for Desktop Toolkit WinUI controls and styles.</Description>
+    <PackageTags>WinUI;WinUI3;controls;styles;toolkit</PackageTags>
+    <ComponentSlug>controls</ComponentSlug>
+    <ComponentStage>preview</ComponentStage>
+    <IncludeSymbols>false</IncludeSymbols>
+  </PropertyGroup>
+</Project>

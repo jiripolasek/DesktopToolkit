@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.ToastWindows.Samples.ToastPositionSettingsExample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls">
+    <toolkit:SettingsCard Header="Toast position">
+        <toolkit:SettingsCard.HeaderIcon>
+            <FontIcon Glyph="&#xE91C;" />
+        </toolkit:SettingsCard.HeaderIcon>
+        <toolkit:SettingsCard.Description>
+            <HyperlinkButton
+                x:Name="SystemSettingsLink"
+                Padding="0"
+                Content="Open Windows notification settings"
+                NavigateUri="ms-settings:notifications" />
+        </toolkit:SettingsCard.Description>
+        <ComboBox
+            x:Name="PositionPicker"
+            MinWidth="190"
+            AutomationProperties.Name="Saved toast position">
+            <ComboBoxItem Content="Use system setting" />
+            <ComboBoxItem Content="Bottom center" />
+            <ComboBoxItem Content="Top left" />
+            <ComboBoxItem Content="Top center" />
+        </ComboBox>
+    </toolkit:SettingsCard>
+</Page>

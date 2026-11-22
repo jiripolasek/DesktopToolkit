@@ -1,0 +1,42 @@
+﻿<UserControl
+    x:Class="JPSoftworks.DesktopToolkit.Controls.ShortcutEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:JPSoftworks.DesktopToolkit.Controls">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///JPSoftworks.DesktopToolkit.Controls.KeyVisual/Themes/KeyVisualStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Button
+        x:Name="EditButton"
+        MinHeight="32"
+        Padding="8,4"
+        Click="OnEditClick"
+        Style="{StaticResource SubtleButtonStyle}">
+        <Grid>
+            <StackPanel
+                x:Name="AssignedContent"
+                Orientation="Horizontal"
+                Spacing="8">
+                <local:ShortcutPresenter x:Name="AssignedPreview" AutomationProperties.AccessibilityView="Raw" />
+                <FontIcon
+                    AutomationProperties.AccessibilityView="Raw"
+                    FontSize="12"
+                    Glyph="&#xE70F;" />
+            </StackPanel>
+            <StackPanel
+                x:Name="AssignContent"
+                Orientation="Horizontal"
+                Spacing="8">
+                <FontIcon
+                    AutomationProperties.AccessibilityView="Raw"
+                    FontSize="12"
+                    Glyph="&#xE710;" />
+                <TextBlock x:Name="AssignText" VerticalAlignment="Center" />
+            </StackPanel>
+        </Grid>
+    </Button>
+</UserControl>

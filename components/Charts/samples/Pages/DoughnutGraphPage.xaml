@@ -1,0 +1,124 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.DoughnutGraphPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            MaxWidth="1600"
+            Spacing="32">
+            <demo:SamplePageHeader
+                Title="Doughnut and pie"
+                ApiNotes="Bind a DoughnutGraphData snapshot containing series colors and finite, non-negative values. ShowLegend adapts to the available width. ValueFormat formats the inspected amount. Use Mode=Pie for filled sectors, or CenterValue and CenterLabel for a doughnut."
+                Description="Compare parts of a whole with a ring or filled pie. Hover a slice to see its value and share, or focus the chart and use the arrow keys."
+                StylingControl="DoughnutGraph"
+                StylingExample="ShapeExample" />
+            <sample:ExampleCard
+                x:Name="ValuesExample"
+                Header="Storage composition as a doughnut"
+                PreviewVerticalAlignment="Top">
+                <charts:DoughnutGraph
+                    x:Name="Graph"
+                    Width="240"
+                    Height="285"
+                    HorizontalAlignment="Center"
+                    AutomationProperties.Name="Storage composition doughnut"
+                    CenterLabel="used"
+                    ShowLegend="True"
+                    ValueFormat="0.#' GB'" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="16">
+                        <NumberBox
+                            x:Name="AppsValue"
+                            Header="Applications (GB)"
+                            Maximum="1000"
+                            Minimum="0"
+                            SpinButtonPlacementMode="Compact"
+                            ValueChanged="OnValuesChanged"
+                            Value="42" />
+                        <NumberBox
+                            x:Name="DocsValue"
+                            Header="Documents (GB)"
+                            Maximum="1000"
+                            Minimum="0"
+                            SpinButtonPlacementMode="Compact"
+                            ValueChanged="OnValuesChanged"
+                            Value="26" />
+                        <NumberBox
+                            x:Name="FreeValue"
+                            Header="Available (GB)"
+                            Maximum="1000"
+                            Minimum="0"
+                            SpinButtonPlacementMode="Compact"
+                            ValueChanged="OnValuesChanged"
+                            Value="32" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind Graph}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+            <sample:ExampleCard x:Name="PieExample" Header="Storage composition as a pie">
+                <charts:DoughnutGraph
+                    x:Name="PieGraph"
+                    Height="270"
+                    MaxWidth="540"
+                    AutomationProperties.Name="Storage composition pie"
+                    Mode="Pie"
+                    ShowLegend="True"
+                    ValueFormat="0.#' GB'" />
+            </sample:ExampleCard>
+            <sample:ExampleCard
+                x:Name="ShapeExample"
+                Header="Customize ring thickness and slice gaps"
+                PreviewVerticalAlignment="Top">
+                <charts:DoughnutGraph
+                    x:Name="ShapeGraph"
+                    Width="240"
+                    Height="240"
+                    HorizontalAlignment="Center"
+                    AutomationProperties.Name="Ring appearance preview"
+                    CenterLabel="used"
+                    CenterValue="68%"
+                    ValueFormat="0.#' GB'" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="20">
+                        <Slider
+                            x:Name="ThicknessSlider"
+                            Header="Ring thickness"
+                            Maximum="36"
+                            Minimum="4"
+                            ValueChanged="OnShapeChanged"
+                            Value="18" />
+                        <Slider
+                            x:Name="GapSlider"
+                            Header="Gap angle"
+                            Maximum="16"
+                            Minimum="0"
+                            ValueChanged="OnShapeChanged"
+                            Value="3" />
+                        <CheckBox
+                            x:Name="AnimationBox"
+                            Click="OnAnimationClick"
+                            Content="Animate changes"
+                            IsChecked="True" />
+                        <Button
+                            HorizontalAlignment="Stretch"
+                            Click="OnRetargetClick"
+                            Content="Change values" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind ShapeGraph}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

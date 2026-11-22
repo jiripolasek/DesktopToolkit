@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="PickerName" xml:space="preserve">
+    <value>Date range</value>
+  </data>
+  <data name="PlaceholderText" xml:space="preserve">
+    <value>Select dates</value>
+  </data>
+  <data name="PresetPlaceholderText" xml:space="preserve">
+    <value>Choose a preset</value>
+  </data>
+  <data name="ApplyButtonText" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="EndDateLabel" xml:space="preserve">
+    <value>End date</value>
+  </data>
+  <data name="StartCalendarName" xml:space="preserve">
+    <value>Start date calendar</value>
+  </data>
+  <data name="EndCalendarName" xml:space="preserve">
+    <value>End date calendar</value>
+  </data>
+  <data name="PresetLabel" xml:space="preserve">
+    <value>Preset</value>
+  </data>
+  <data name="PreviousPeriodError" xml:space="preserve">
+    <value>The previous period is outside the calendar.</value>
+  </data>
+  <data name="MissingDatesError" xml:space="preserve">
+    <value>Choose a start and end date.</value>
+  </data>
+  <data name="ReversedDatesError" xml:space="preserve">
+    <value>The end date must be on or after the start date.</value>
+  </data>
+  <data name="OutOfBoundsError" xml:space="preserve">
+    <value>Choose dates within the allowed range.</value>
+  </data>
+  <data name="UnavailableEndpointError" xml:space="preserve">
+    <value>Choose an available start and end date.</value>
+  </data>
+  <data name="UnavailableDateError" xml:space="preserve">
+    <value>The range includes an unavailable date.</value>
+  </data>
+  <data name="UnavailableDateStatus" xml:space="preserve">
+    <value>Unavailable date</value>
+  </data>
+  <data name="SingleDateStatus" xml:space="preserve">
+    <value>Start and end of range</value>
+  </data>
+  <data name="StartDateStatus" xml:space="preserve">
+    <value>Start of range</value>
+  </data>
+  <data name="EndDateStatus" xml:space="preserve">
+    <value>End of range</value>
+  </data>
+  <data name="InRangeStatus" xml:space="preserve">
+    <value>In selected range</value>
+  </data>
+  <data name="DateRangeFormat" xml:space="preserve">
+    <value>{0:d} - {1:d}</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="DayCountFormat" xml:space="preserve">
+    <value>Days: {0:N0}</value>
+    <comment>Used for all counts. Keep the numbered placeholder and its format specifier.</comment>
+  </data>
+  <data name="SummaryFormat" xml:space="preserve">
+    <value>{0} ({1})</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="SummaryWithExcludedDaysFormat" xml:space="preserve">
+    <value>{0} ({1}, excluded: {2:N0})</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+</root>

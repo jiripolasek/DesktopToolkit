@@ -1,0 +1,33 @@
+<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Samples.DateRangeCalendarStyleExample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dates="using:JPSoftworks.DesktopToolkit.Controls">
+    <Page.Resources>
+        <Style
+            x:Key="CalendarStyle"
+            BasedOn="{StaticResource DefaultCalendarViewStyle}"
+            TargetType="CalendarView" />
+    </Page.Resources>
+    <dates:CalendarDateRangePicker
+        x:Name="StyledDates"
+        MinWidth="220"
+        HorizontalAlignment="Left"
+        Header="Dates">
+        <dates:CalendarDateRangePicker.FlyoutHeader>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <ComboBox
+                    x:Name="WeekStartBox"
+                    HorizontalAlignment="Stretch"
+                    Header="First day of the week"
+                    SelectionChanged="OnStyleOptionChanged" />
+                <ComboBox
+                    x:Name="VisibleWeeksBox"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    Header="Visible weeks"
+                    SelectionChanged="OnStyleOptionChanged" />
+            </Grid>
+        </dates:CalendarDateRangePicker.FlyoutHeader>
+    </dates:CalendarDateRangePicker>
+</Page>

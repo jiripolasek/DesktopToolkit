@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../../eng/WinUI.Samples.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="../src/JPSoftworks.DesktopToolkit.Styles.csproj" />
+    <ProjectReference Include="../../../gallery/ui/JPSoftworks.DesktopToolkit.Gallery.UI.csproj" />
+  </ItemGroup>
+</Project>

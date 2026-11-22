@@ -1,0 +1,15 @@
+<Project>
+  <!-- Sets default frameworks, platforms, and SDK references for WinUI sample libraries. -->
+  <Import Project="$(MSBuildThisFileDirectory)WinUI.props" />
+
+  <PropertyGroup>
+    <TargetFramework Condition="'$(TargetFramework)' == '' and '$(TargetFrameworks)' == ''">$(DesktopToolkitAppTargetFramework)</TargetFramework>
+    <Platforms>x64;ARM64</Platforms>
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

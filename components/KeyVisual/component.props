@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>JPSoftworks.DesktopToolkit.Controls.KeyVisual</PackageId>
+    <Version>0.1.0-preview.2</Version>
+    <Title>KeyVisual</Title>
+    <Description>WinUI 3 controls for displaying keycaps and editing keyboard shortcuts.</Description>
+    <PackageTags>WinUI;WinUI3;keyboard;keycap;shortcut</PackageTags>
+    <ComponentSlug>key-visual</ComponentSlug>
+    <ComponentStage>preview</ComponentStage>
+    <ComponentTestProject>tests/JPSoftworks.DesktopToolkit.Controls.KeyVisual.ControlTests.csproj</ComponentTestProject>
+  </PropertyGroup>
+</Project>

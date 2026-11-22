@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackCompiledXaml</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+
+  <Target Name="_PackCompiledXaml" DependsOnTargets="GetTargetPath">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="buildTransitive/$(PackageId).targets"
+                              PackagePath="buildTransitive/$(TargetFramework)/$(PackageId).targets" />
+      <TfmSpecificPackageFile Include="$(TargetDir)$(AssemblyName)/%(Page.RelativeDir)%(Page.Filename).xbf"
+                              PackagePath="buildTransitive/$(TargetFramework)/%(Page.RelativeDir)%(Page.Filename).xbf"
+                              Condition="'%(Page.Pack)' != 'false'" />
+    </ItemGroup>
+  </Target>
+</Project>

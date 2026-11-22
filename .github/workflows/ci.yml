@@ -1,0 +1,112 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    runs-on: windows-2025
+    timeout-minutes: 60
+    env:
+      NET8_CONSUMER_SDK: '8.0.428'
+      NET10_CONSUMER_SDK: '10.0.404'
+      FULL_VALIDATION: ${{ github.event_name != 'pull_request' }}
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: |
+            ${{ env.NET8_CONSUMER_SDK }}
+            ${{ env.NET10_CONSUMER_SDK }}
+            11.0.x
+      - name: Test NuGet publication checks
+        run: |
+          ./eng/tests/PackagePublication.Tests.ps1
+          ./eng/tests/ReleasePackages.Tests.ps1
+      - name: Cache NuGet dependencies
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('global.json', '**/*.csproj', '**/*.props', '**/*.targets', '**/[Nn]u[Gg]et.[Cc]onfig') }}
+          restore-keys: nuget-${{ runner.os }}-${{ runner.arch }}-
+      - name: Ensure Windows SDK 10.0.19041.0 is installed
+        run: |
+          $kitsRoot = (Get-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows Kits\Installed Roots' -Name KitsRoot10).KitsRoot10
+          $uapProps = Join-Path $kitsRoot 'DesignTime\CommonConfiguration\Neutral\UAP\10.0.19041.0\UAP.props'
+          if (!(Test-Path -LiteralPath $uapProps -PathType Leaf)) {
+            # The Controls project needs this SDK for PRI generation.
+            $installer = Join-Path $env:RUNNER_TEMP 'winsdksetup-19041.exe'
+            Invoke-WebRequest -Uri 'https://go.microsoft.com/fwlink/?linkid=2120843' -OutFile $installer
+            $setup = Start-Process -FilePath $installer -ArgumentList '/quiet /norestart /ceip off /features OptionId.UWPManaged OptionId.UWPCPP' -PassThru -Wait -WindowStyle Hidden
+            if ($setup.ExitCode -notin 0, 3010) {
+              throw "Windows SDK 10.0.19041.0 setup failed with exit code $($setup.ExitCode)."
+            }
+          }
+          if (!(Test-Path -LiteralPath $uapProps -PathType Leaf)) {
+            throw "Windows SDK 10.0.19041.0 setup did not install $uapProps."
+          }
+      - name: Build apps, run control tests, and validate packages
+        run: ./eng/Build.ps1 -TestPackage:($env:FULL_VALIDATION -eq 'true')
+      - name: Check Searchable Flyouts package contents on pull requests
+        if: github.event_name == 'pull_request'
+        run: |
+          $component = ./eng/Get-Components.ps1 | Where-Object slug -eq 'searchable-flyouts'
+          & (Join-Path $PWD $component.packageCheck) -Flavor Archive -PackagePath "artifacts/packages/$($component.packageId).$($component.version).nupkg"
+      - name: Verify trimmed and Native AOT Searchable Flyouts consumers on SDK 8
+        if: env.FULL_VALIDATION == 'true'
+        run: |
+          $component = ./eng/Get-Components.ps1 | Where-Object slug -eq 'searchable-flyouts'
+          $check = @{
+            PackagePath = "artifacts/packages/$($component.packageId).$($component.version).nupkg"
+            DotNetSdkVersion = $env:NET8_CONSUMER_SDK
+            TargetFramework = 'net8.0-windows10.0.19041'
+            ColdRestore = $true
+          }
+          foreach ($flavor in 'Trimmed', 'Aot') {
+            & (Join-Path $PWD $component.packageCheck) @check -Flavor $flavor
+          }
+      - name: Verify cold trimmed Searchable Flyouts consumer on SDK 10 and WinUI 1.8
+        if: env.FULL_VALIDATION == 'true'
+        run: |
+          $component = ./eng/Get-Components.ps1 | Where-Object slug -eq 'searchable-flyouts'
+          $check = @{
+            PackagePath = "artifacts/packages/$($component.packageId).$($component.version).nupkg"
+            DotNetSdkVersion = $env:NET10_CONSUMER_SDK
+            TargetFramework = 'net10.0-windows10.0.26100.0'
+            WindowsAppSdkVersion = '1.8.260317003'
+            Flavor = 'Trimmed'
+            WindowsSdkPackageMinimumRevision = 87
+            ColdRestore = $true
+          }
+          & (Join-Path $PWD $component.packageCheck) @check
+      - name: Verify standalone and combined WinUI consumers on SDK 10
+        if: env.FULL_VALIDATION == 'true'
+        run: ./eng/Test-Net10WinUIConsumers.ps1 -DotNetSdkVersion $env:NET10_CONSUMER_SDK
+      - name: Publish portable x64 and ARM64 galleries
+        if: env.FULL_VALIDATION == 'true'
+        run: ./eng/Publish-Gallery.ps1
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: env.FULL_VALIDATION == 'true'
+        with:
+          name: release-assets
+          path: |
+            artifacts/packages/*.nupkg
+            artifacts/packages/*.snupkg
+            artifacts/gallery/*.zip
+          compression-level: 0
+          if-no-files-found: error

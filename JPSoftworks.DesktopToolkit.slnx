@@ -1,0 +1,54 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="ARM64" />
+  </Configurations>
+  <Folder Name="/components/Controls/">
+    <Project Path="components/Controls/src/JPSoftworks.DesktopToolkit.Controls.csproj"><Platform Project="*" /></Project>
+  </Folder>
+  <Folder Name="/components/DateTime/">
+    <Project Path="components/DateTime/src/JPSoftworks.DesktopToolkit.Controls.DateTime.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/DateTime/samples/JPSoftworks.DesktopToolkit.Controls.DateTime.Samples.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/DateTime/tests/JPSoftworks.DesktopToolkit.Controls.DateTime.ControlTests.csproj"><Platform Project="*" /></Project>
+  </Folder>
+  <Folder Name="/components/InfoLabel/">
+    <Project Path="components/InfoLabel/src/JPSoftworks.DesktopToolkit.Controls.InfoLabel.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/InfoLabel/samples/JPSoftworks.DesktopToolkit.Controls.InfoLabel.Samples.csproj"><Platform Project="*" /></Project>
+  </Folder>
+  <Folder Name="/components/Core/">
+    <Project Path="components/Core/src/JPSoftworks.DesktopToolkit.Core.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/Core/tests/JPSoftworks.DesktopToolkit.Core.CompatibilityTests.csproj"><Platform Project="*" /></Project>
+  </Folder>
+  <Folder Name="/components/KeyVisual/">
+    <Project Path="components/KeyVisual/src/JPSoftworks.DesktopToolkit.Controls.KeyVisual.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/KeyVisual/samples/JPSoftworks.DesktopToolkit.Controls.KeyVisual.Samples.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/KeyVisual/dev/JPSoftworks.DesktopToolkit.Controls.KeyVisual.DevApp.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/KeyVisual/tests/JPSoftworks.DesktopToolkit.Controls.KeyVisual.ControlTests.csproj"><Platform Project="*" /></Project>
+  </Folder>
+  <Folder Name="/components/SearchableFlyouts/">
+    <Project Path="components/SearchableFlyouts/src/JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/SearchableFlyouts/samples/JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.Samples.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/SearchableFlyouts/dev/JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.DevApp.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/SearchableFlyouts/tests/SearchableFlyouts.ControlTests/JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.ControlTests.csproj"><Platform Project="*" /></Project>
+  </Folder>
+  <Folder Name="/components/Toasts/">
+    <Project Path="components/Toasts/src/JPSoftworks.DesktopToolkit.ToastWindows.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/Toasts/samples/JPSoftworks.DesktopToolkit.ToastWindows.Samples.csproj"><Platform Project="*" /></Project>
+  </Folder>
+  <Folder Name="/components/Styles/">
+    <Project Path="components/Styles/src/JPSoftworks.DesktopToolkit.Styles.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/Styles/samples/JPSoftworks.DesktopToolkit.Styles.Samples.csproj"><Platform Project="*" /></Project>
+  </Folder>
+  <Folder Name="/components/Charts/">
+    <Project Path="components/Charts/src/JPSoftworks.DesktopToolkit.Controls.Charts.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/Charts/samples/JPSoftworks.DesktopToolkit.Controls.Charts.Samples.csproj"><Platform Project="*" /></Project>
+    <Project Path="components/Charts/dev/JPSoftworks.DesktopToolkit.Controls.Charts.DevApp.csproj"><Platform Project="*" /></Project>
+  </Folder>
+  <Folder Name="/shared/">
+    <Project Path="shared/WinUI.Localization/JPSoftworks.DesktopToolkit.WinUI.Localization.shproj" />
+  </Folder>
+  <Folder Name="/gallery/">
+    <Project Path="gallery/ui/JPSoftworks.DesktopToolkit.Gallery.UI.csproj"><Platform Project="*" /></Project>
+    <Project DefaultStartup="true" Path="gallery/app/JPSoftworks.DesktopToolkit.Gallery.csproj"><Platform Project="*" /></Project>
+  </Folder>
+</Solution>

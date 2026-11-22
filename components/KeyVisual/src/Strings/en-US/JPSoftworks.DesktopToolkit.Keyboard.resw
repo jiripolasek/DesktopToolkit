@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <data name="SaveButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ReplaceButtonText" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="DialogTitle" xml:space="preserve">
+    <value>Edit keyboard shortcut</value>
+  </data>
+  <data name="AssignButtonText" xml:space="preserve">
+    <value>Assign shortcut</value>
+  </data>
+  <data name="EditButtonText" xml:space="preserve">
+    <value>Edit shortcut</value>
+  </data>
+  <data name="CancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="UseDefaultButtonText" xml:space="preserve">
+    <value>Use default</value>
+  </data>
+  <data name="ClearButtonText" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="CaptureName" xml:space="preserve">
+    <value>Shortcut input</value>
+  </data>
+  <data name="UnassignedText" xml:space="preserve">
+    <value>No shortcut assigned</value>
+  </data>
+  <data name="CaptureInstructions" xml:space="preserve">
+    <value>Press a key together with Ctrl, Alt, Shift, or Windows.</value>
+  </data>
+  <data name="CaptureWithWindowsKeyInstructions" xml:space="preserve">
+    <value>Press a key or combination. The Windows key is included automatically.</value>
+  </data>
+  <data name="AltGrWarning" xml:space="preserve">
+    <value>Ctrl+Alt can conflict with AltGr on some keyboard layouts.</value>
+  </data>
+  <data name="ConflictMessageFormat" xml:space="preserve">
+    <value>Already assigned to {0}.</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="ReplaceableConflictMessageFormat" xml:space="preserve">
+    <value>Already assigned to {0}. Select {1} to reassign it.</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="CheckingMessage" xml:space="preserve">
+    <value>Checking shortcut...</value>
+  </data>
+  <data name="CheckFailedMessage" xml:space="preserve">
+    <value>Could not check this shortcut. Choose another shortcut or reopen the editor.</value>
+  </data>
+  <data name="ReplacingMessageFormat" xml:space="preserve">
+    <value>Replacing the shortcut for {0}...</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="ReplacementFailedMessageFormat" xml:space="preserve">
+    <value>Could not replace the shortcut for {0}. Try again or choose another shortcut.</value>
+    <comment>Keep the numbered placeholders and their format specifiers.</comment>
+  </data>
+  <data name="KeyAccept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="KeyAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="KeyAlt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="KeyApplication" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="KeyBackspace" xml:space="preserve">
+    <value>Backspace</value>
+  </data>
+  <data name="KeyCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="KeyCapitalLock" xml:space="preserve">
+    <value>CapitalLock</value>
+  </data>
+  <data name="KeyClear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="KeyConvert" xml:space="preserve">
+    <value>Convert</value>
+  </data>
+  <data name="KeyCtrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="KeyDecimal" xml:space="preserve">
+    <value>Decimal</value>
+  </data>
+  <data name="KeyDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="KeyDivide" xml:space="preserve">
+    <value>Divide</value>
+  </data>
+  <data name="KeyDown" xml:space="preserve">
+    <value>Down</value>
+  </data>
+  <data name="KeyEnd" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="KeyEnter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="KeyEscape" xml:space="preserve">
+    <value>Escape</value>
+  </data>
+  <data name="KeyExecute" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="KeyFavorites" xml:space="preserve">
+    <value>Favorites</value>
+  </data>
+  <data name="KeyFinal" xml:space="preserve">
+    <value>Final</value>
+  </data>
+  <data name="KeyGamepadA" xml:space="preserve">
+    <value>GamepadA</value>
+  </data>
+  <data name="KeyGamepadB" xml:space="preserve">
+    <value>GamepadB</value>
+  </data>
+  <data name="KeyGamepadDPadDown" xml:space="preserve">
+    <value>GamepadDPadDown</value>
+  </data>
+  <data name="KeyGamepadDPadLeft" xml:space="preserve">
+    <value>GamepadDPadLeft</value>
+  </data>
+  <data name="KeyGamepadDPadRight" xml:space="preserve">
+    <value>GamepadDPadRight</value>
+  </data>
+  <data name="KeyGamepadDPadUp" xml:space="preserve">
+    <value>GamepadDPadUp</value>
+  </data>
+  <data name="KeyGamepadLeftShoulder" xml:space="preserve">
+    <value>GamepadLeftShoulder</value>
+  </data>
+  <data name="KeyGamepadLeftThumbstickButton" xml:space="preserve">
+    <value>GamepadLeftThumbstickButton</value>
+  </data>
+  <data name="KeyGamepadLeftThumbstickDown" xml:space="preserve">
+    <value>GamepadLeftThumbstickDown</value>
+  </data>
+  <data name="KeyGamepadLeftThumbstickLeft" xml:space="preserve">
+    <value>GamepadLeftThumbstickLeft</value>
+  </data>
+  <data name="KeyGamepadLeftThumbstickRight" xml:space="preserve">
+    <value>GamepadLeftThumbstickRight</value>
+  </data>
+  <data name="KeyGamepadLeftThumbstickUp" xml:space="preserve">
+    <value>GamepadLeftThumbstickUp</value>
+  </data>
+  <data name="KeyGamepadLeftTrigger" xml:space="preserve">
+    <value>GamepadLeftTrigger</value>
+  </data>
+  <data name="KeyGamepadMenu" xml:space="preserve">
+    <value>GamepadMenu</value>
+  </data>
+  <data name="KeyGamepadRightShoulder" xml:space="preserve">
+    <value>GamepadRightShoulder</value>
+  </data>
+  <data name="KeyGamepadRightThumbstickButton" xml:space="preserve">
+    <value>GamepadRightThumbstickButton</value>
+  </data>
+  <data name="KeyGamepadRightThumbstickDown" xml:space="preserve">
+    <value>GamepadRightThumbstickDown</value>
+  </data>
+  <data name="KeyGamepadRightThumbstickLeft" xml:space="preserve">
+    <value>GamepadRightThumbstickLeft</value>
+  </data>
+  <data name="KeyGamepadRightThumbstickRight" xml:space="preserve">
+    <value>GamepadRightThumbstickRight</value>
+  </data>
+  <data name="KeyGamepadRightThumbstickUp" xml:space="preserve">
+    <value>GamepadRightThumbstickUp</value>
+  </data>
+  <data name="KeyGamepadRightTrigger" xml:space="preserve">
+    <value>GamepadRightTrigger</value>
+  </data>
+  <data name="KeyGamepadView" xml:space="preserve">
+    <value>GamepadView</value>
+  </data>
+  <data name="KeyGamepadX" xml:space="preserve">
+    <value>GamepadX</value>
+  </data>
+  <data name="KeyGamepadY" xml:space="preserve">
+    <value>GamepadY</value>
+  </data>
+  <data name="KeyGoBack" xml:space="preserve">
+    <value>GoBack</value>
+  </data>
+  <data name="KeyGoForward" xml:space="preserve">
+    <value>GoForward</value>
+  </data>
+  <data name="KeyGoHome" xml:space="preserve">
+    <value>GoHome</value>
+  </data>
+  <data name="KeyHangul" xml:space="preserve">
+    <value>Hangul</value>
+  </data>
+  <data name="KeyHanja" xml:space="preserve">
+    <value>Hanja</value>
+  </data>
+  <data name="KeyHelp" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="KeyHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="KeyInsert" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="KeyJunja" xml:space="preserve">
+    <value>Junja</value>
+  </data>
+  <data name="KeyKana" xml:space="preserve">
+    <value>Kana</value>
+  </data>
+  <data name="KeyKanji" xml:space="preserve">
+    <value>Kanji</value>
+  </data>
+  <data name="KeyLeft" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="KeyLeftButton" xml:space="preserve">
+    <value>LeftButton</value>
+  </data>
+  <data name="KeyMiddleButton" xml:space="preserve">
+    <value>MiddleButton</value>
+  </data>
+  <data name="KeyModeChange" xml:space="preserve">
+    <value>ModeChange</value>
+  </data>
+  <data name="KeyMultiply" xml:space="preserve">
+    <value>Multiply</value>
+  </data>
+  <data name="KeyNavigationAccept" xml:space="preserve">
+    <value>NavigationAccept</value>
+  </data>
+  <data name="KeyNavigationCancel" xml:space="preserve">
+    <value>NavigationCancel</value>
+  </data>
+  <data name="KeyNavigationDown" xml:space="preserve">
+    <value>NavigationDown</value>
+  </data>
+  <data name="KeyNavigationLeft" xml:space="preserve">
+    <value>NavigationLeft</value>
+  </data>
+  <data name="KeyNavigationMenu" xml:space="preserve">
+    <value>NavigationMenu</value>
+  </data>
+  <data name="KeyNavigationRight" xml:space="preserve">
+    <value>NavigationRight</value>
+  </data>
+  <data name="KeyNavigationUp" xml:space="preserve">
+    <value>NavigationUp</value>
+  </data>
+  <data name="KeyNavigationView" xml:space="preserve">
+    <value>NavigationView</value>
+  </data>
+  <data name="KeyNonConvert" xml:space="preserve">
+    <value>NonConvert</value>
+  </data>
+  <data name="KeyNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="KeyNumberKeyLock" xml:space="preserve">
+    <value>NumberKeyLock</value>
+  </data>
+  <data name="KeyPageDown" xml:space="preserve">
+    <value>PageDown</value>
+  </data>
+  <data name="KeyPageUp" xml:space="preserve">
+    <value>PageUp</value>
+  </data>
+  <data name="KeyPause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="KeyPrint" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="KeyRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="KeyRight" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="KeyRightButton" xml:space="preserve">
+    <value>RightButton</value>
+  </data>
+  <data name="KeyScroll" xml:space="preserve">
+    <value>Scroll</value>
+  </data>
+  <data name="KeySearch" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="KeySelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="KeySeparator" xml:space="preserve">
+    <value>Separator</value>
+  </data>
+  <data name="KeyShift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="KeySleep" xml:space="preserve">
+    <value>Sleep</value>
+  </data>
+  <data name="KeySnapshot" xml:space="preserve">
+    <value>Snapshot</value>
+  </data>
+  <data name="KeySpace" xml:space="preserve">
+    <value>Space</value>
+  </data>
+  <data name="KeyStop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="KeySubtract" xml:space="preserve">
+    <value>Subtract</value>
+  </data>
+  <data name="KeyTab" xml:space="preserve">
+    <value>Tab</value>
+  </data>
+  <data name="KeyUp" xml:space="preserve">
+    <value>Up</value>
+  </data>
+  <data name="KeyWindows" xml:space="preserve">
+    <value>Windows</value>
+  </data>
+  <data name="KeyXButton1" xml:space="preserve">
+    <value>XButton1</value>
+  </data>
+  <data name="KeyXButton2" xml:space="preserve">
+    <value>XButton2</value>
+  </data>
+  <data name="NumberPadKeyFormat" xml:space="preserve">
+    <value>NumberPad{0}</value>
+    <comment>{0} is the numeric keypad digit.</comment>
+  </data>
+  <data name="ShortcutSeparator" xml:space="preserve">
+    <value> + </value>
+  </data>
+</root>

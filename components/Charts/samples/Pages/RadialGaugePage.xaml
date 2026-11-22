@@ -1,0 +1,82 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.RadialGaugePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Radial gauge"
+                ApiNotes="StartAngle sets where the arc starts, clockwise from the right. SweepAngle sets its span in degrees. IsDirectionReversed swaps the minimum and maximum endpoints. Bind BandsSource for thresholds and enable UseActiveBandColor to color the fill."
+                Description="Show a current value and its status. Hover the gauge to inspect its range, or hover a threshold band to read its limits."
+                StylingControl="RadialGauge"
+                StylingExample="BatteryExample" />
+            <sample:ExampleCard
+                x:Name="BatteryExample"
+                Header="Battery charge"
+                PreviewVerticalAlignment="Top">
+                <charts:RadialGauge
+                    x:Name="Gauge"
+                    Height="224"
+                    MaxWidth="360"
+                    ArcThickness="{x:Bind ArcThicknessSlider.Value, Mode=OneWay}"
+                    AutomationProperties.Name="Battery charge"
+                    BandsSource="{x:Bind GetBatteryBands(ThresholdsSwitch.IsOn), Mode=OneWay}"
+                    IsDirectionReversed="{x:Bind ReverseDirectionSwitch.IsOn, Mode=OneWay}"
+                    IsValueLabelCentered="{x:Bind CenterLabelSwitch.IsOn, Mode=OneWay}"
+                    Maximum="100"
+                    StartAngle="{x:Bind StartAngleSlider.Value, Mode=OneWay}"
+                    SweepAngle="{x:Bind SweepAngleSlider.Value, Mode=OneWay}"
+                    UseActiveBandColor="{x:Bind BandColorSwitch.IsOn, Mode=OneWay}"
+                    ValueFormat="0'%'"
+                    Value="{x:Bind ChargeSlider.Value, Mode=OneWay}" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="16">
+                        <Slider
+                            x:Name="ChargeSlider"
+                            Header="Charge (%)"
+                            Maximum="100"
+                            Value="68" />
+                        <Slider
+                            x:Name="StartAngleSlider"
+                            Header="Start angle (degrees)"
+                            Maximum="360"
+                            Minimum="0"
+                            Value="180" />
+                        <Slider
+                            x:Name="SweepAngleSlider"
+                            Header="Sweep angle (degrees)"
+                            Maximum="360"
+                            Minimum="1"
+                            Value="180" />
+                        <Slider
+                            x:Name="ArcThicknessSlider"
+                            Header="Arc thickness (0 = automatic)"
+                            Maximum="40"
+                            Minimum="0" />
+                        <ToggleSwitch x:Name="ReverseDirectionSwitch" Header="Reverse direction" />
+                        <ToggleSwitch x:Name="CenterLabelSwitch" Header="Center value and status" />
+                        <ToggleSwitch
+                            x:Name="ThresholdsSwitch"
+                            Header="Threshold bands"
+                            IsOn="True" />
+                        <ToggleSwitch x:Name="BandColorSwitch" Header="Match threshold color" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind Gauge}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

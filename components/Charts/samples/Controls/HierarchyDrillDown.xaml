@@ -1,0 +1,23 @@
+﻿<UserControl
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Controls.HierarchyDrillDown"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    IsTabStop="False"
+    Unloaded="OnUnloaded">
+    <StackPanel Spacing="12">
+        <BreadcrumbBar
+            x:Name="FolderTrail"
+            AutomationProperties.Name="Folder path"
+            ItemClicked="OnFolderTrailItemClicked" />
+        <Grid SizeChanged="OnViewportSizeChanged">
+            <Grid.Clip>
+                <RectangleGeometry x:Name="ViewportClip" />
+            </Grid.Clip>
+            <ContentPresenter x:Name="ChartHost" HorizontalContentAlignment="Stretch">
+                <ContentPresenter.RenderTransform>
+                    <CompositeTransform x:Name="ZoomTransform" />
+                </ContentPresenter.RenderTransform>
+            </ContentPresenter>
+        </Grid>
+    </StackPanel>
+</UserControl>

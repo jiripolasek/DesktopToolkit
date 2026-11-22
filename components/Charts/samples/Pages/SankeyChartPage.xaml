@@ -1,0 +1,62 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.SankeyChartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Sankey chart"
+                ApiNotes="Bind SankeyChartData with unique node keys and weighted links. Positive links must form a directed acyclic network. Hover a node or ribbon, or use the arrow keys, to inspect its flow."
+                Description="Follow visitors from acquisition channels through landing pages to outcomes."
+                StylingControl="SankeyChart"
+                StylingExample="FlowExample" />
+            <sample:ExampleCard
+                x:Name="FlowExample"
+                Header="Website acquisition paths"
+                PreviewVerticalAlignment="Top">
+                <charts:SankeyChart
+                    x:Name="Diagram"
+                    Height="356"
+                    AutomationProperties.Name="Visitors by channel, landing page, and outcome"
+                    Data="{x:Bind Acquisition}"
+                    NodeSpacing="{x:Bind NodeSpacingSlider.Value, Mode=OneWay}"
+                    NodeWidth="{x:Bind NodeWidthSlider.Value, Mode=OneWay}"
+                    ShowLabels="{x:Bind LabelsSwitch.IsOn, Mode=OneWay}"
+                    ValueFormat="N0" />
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <Slider
+                            x:Name="NodeWidthSlider"
+                            Header="Node width"
+                            Maximum="32"
+                            Minimum="6"
+                            Value="16" />
+                        <Slider
+                            x:Name="NodeSpacingSlider"
+                            Header="Node spacing"
+                            Maximum="32"
+                            Value="14" />
+                        <ToggleSwitch
+                            x:Name="LabelsSwitch"
+                            Header="Node labels"
+                            IsOn="True" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind Diagram}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

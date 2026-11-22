@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../../eng/WinUI.PackagedApp.props" />
+
+  <PropertyGroup>
+    <RootNamespace>JPSoftworks.DesktopToolkit.Controls.KeyVisualDevApp</RootNamespace>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../samples/JPSoftworks.DesktopToolkit.Controls.KeyVisual.Samples.csproj" />
+  </ItemGroup>
+</Project>

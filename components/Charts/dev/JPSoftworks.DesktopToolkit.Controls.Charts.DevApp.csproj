@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../../eng/WinUI.props" />
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <RootNamespace>JPSoftworks.DesktopToolkit.Controls.Demo</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets/AppIcon.ico</ApplicationIcon>
+    <Platforms>x86;x64;ARM64</Platforms>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' and ('$(Platform)' == 'x64' or '$(Platform)' == 'ARM64' or '$(Platform)' == 'x86')">win-$(Platform.ToLowerInvariant())</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture.ToString().ToLowerInvariant())</RuntimeIdentifier>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DefineConstants Condition="'$(EnableSmokeTests)' == 'true'">$(DefineConstants);SMOKE_TESTS</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Update="Assets/AppIcon.ico;Assets/Icons/*" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="ThirdParty/*.txt" CopyToOutputDirectory="PreserveNewest" />
+    <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" />
+    <PackageReference Include="WinUIEdit" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../samples/JPSoftworks.DesktopToolkit.Controls.Charts.Samples.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(EnableSmokeTests)' == 'true'">
+    <Compile Include="../tests/PackageSmokeTests.cs" Link="Diagnostics/PackageSmokeTests.cs" />
+  </ItemGroup>
+</Project>

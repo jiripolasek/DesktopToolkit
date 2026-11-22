@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../../eng/WinUI.ControlTests.props" />
+
+  <PropertyGroup>
+    <RootNamespace>JPSoftworks.DesktopToolkit.Controls.KeyVisualControlTests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../src/JPSoftworks.DesktopToolkit.Controls.KeyVisual.csproj" />
+  </ItemGroup>
+</Project>

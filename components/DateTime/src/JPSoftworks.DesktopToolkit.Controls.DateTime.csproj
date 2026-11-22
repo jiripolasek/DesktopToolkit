@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../component.props" />
+
+  <PropertyGroup>
+    <RootNamespace>JPSoftworks.DesktopToolkit.Controls</RootNamespace>
+    <TargetFrameworks>$(DesktopToolkitWinUITargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="../../../eng/WinUI.Package.props" />
+  <Import Project="../../../shared/WinUI.Localization/JPSoftworks.DesktopToolkit.WinUI.Localization.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
+  </ItemGroup>
+</Project>

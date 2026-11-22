@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../../../eng/WinUI.ControlTests.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.csproj" />
+  </ItemGroup>
+
+  <!-- Unpackaged WinUI publish needs the app's generated resource index. -->
+  <Target Name="PublishTestAppResources" BeforeTargets="ComputeResolvedFilesToPublishList" DependsOnTargets="$(GenerateProjectPriFile)">
+    <ItemGroup>
+      <ResolvedFileToPublish Include="$(ProjectPriFullPath)" RelativePath="$(ProjectPriFileName)"
+                             CopyToPublishDirectory="PreserveNewest" Condition="Exists('$(ProjectPriFullPath)')" />
+    </ItemGroup>
+  </Target>
+</Project>

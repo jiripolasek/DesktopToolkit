@@ -1,0 +1,34 @@
+<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Samples.DateRangeAvailabilityExample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dates="using:JPSoftworks.DesktopToolkit.Controls">
+    <StackPanel x:Name="SampleLayout" Spacing="12">
+        <TextBlock Text="{x:Bind Availability}" TextWrapping="Wrap" />
+        <ComboBox
+            x:Name="BlackoutModePicker"
+            HorizontalAlignment="Stretch"
+            Header="Ranges with blackout dates"
+            SelectedIndex="0"
+            SelectionChanged="OnBlackoutModeChanged">
+            <x:String>Reject range</x:String>
+            <x:String>Include in day count</x:String>
+            <x:String>Exclude from day count</x:String>
+        </ComboBox>
+        <dates:CalendarDateRangePicker
+            x:Name="BookingDates"
+            MinWidth="220"
+            HorizontalAlignment="Left"
+            BlackoutDates="{x:Bind BlackoutDates}"
+            Header="Booking dates"
+            MaximumDate="{x:Bind MaximumDate}"
+            MinimumDate="{x:Bind MinimumDate}"
+            SelectionApplying="OnSelectionApplying"
+            SelectionChanged="OnSelectionChanged"
+            Strings="{x:Bind BookingStrings}" />
+        <TextBlock
+            x:Name="AppliedCount"
+            AutomationProperties.LiveSetting="Polite"
+            Visibility="Collapsed" />
+    </StackPanel>
+</Page>

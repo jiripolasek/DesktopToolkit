@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../component.props" />
+  <Import Project="../../../eng/NuGet.Library.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ApiCompatRespectInternals>true</ApiCompatRespectInternals>
+    <!-- Enforce both API snapshots, including missing or malformed baseline files. -->
+    <WarningsAsErrors>$(WarningsAsErrors);RS0016;RS0017;RS0024;RS0025;RS0048;RS0051;RS0052;RS0053;RS0054;RS0058</WarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all" />
+    <AdditionalFiles Include="InternalAPI.Shipped.txt;InternalAPI.Unshipped.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="JPSoftworks.DesktopToolkit.Controls.Charts" />
+    <InternalsVisibleTo Include="JPSoftworks.DesktopToolkit.Controls.DateTime" />
+    <InternalsVisibleTo Include="JPSoftworks.DesktopToolkit.Controls.InfoLabel" />
+    <InternalsVisibleTo Include="JPSoftworks.DesktopToolkit.Controls.KeyVisual" />
+    <InternalsVisibleTo Include="JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts" />
+    <InternalsVisibleTo Include="JPSoftworks.DesktopToolkit.Core.CompatibilityTests" />
+  </ItemGroup>
+</Project>

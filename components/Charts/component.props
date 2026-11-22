@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <PackageId>JPSoftworks.DesktopToolkit.Controls.Charts</PackageId>
+    <Version>0.1.0-preview.2</Version>
+    <Title>Charts</Title>
+    <Description>Fluent charts, graphs, usage meters, and radial gauges for WinUI 3.</Description>
+    <PackageTags>WinUI;WinUI3;charts;graphs;controls;Win2D;fluent</PackageTags>
+    <ComponentSlug>charts</ComponentSlug>
+    <ComponentStage>preview</ComponentStage>
+    <ComponentPackageCheck>scripts/Test-Package.ps1</ComponentPackageCheck>
+  </PropertyGroup>
+</Project>

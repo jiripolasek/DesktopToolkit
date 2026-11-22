@@ -1,0 +1,7 @@
+#nullable enable
+JPSoftworks.DesktopToolkit.Localization.IStringResourceLoader
+JPSoftworks.DesktopToolkit.Localization.IStringResourceLoader.GetString(string! catalogName, string! key) -> string?
+JPSoftworks.DesktopToolkit.Localization.ToolkitLocalization
+static JPSoftworks.DesktopToolkit.Localization.ToolkitLocalization.InvalidateStringResources() -> void
+static JPSoftworks.DesktopToolkit.Localization.ToolkitLocalization.StringResourceLoader.get -> JPSoftworks.DesktopToolkit.Localization.IStringResourceLoader?
+static JPSoftworks.DesktopToolkit.Localization.ToolkitLocalization.StringResourceLoader.set -> void

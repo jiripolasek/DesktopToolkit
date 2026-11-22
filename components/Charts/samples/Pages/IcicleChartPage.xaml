@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.IcicleChartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            Padding="0,0,0,40"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Icicle"
+                ApiNotes="Bind the same HierarchyChartData used by Treemap. Toggle the level direction or load the Packages branch to reveal its children at the next level."
+                Description="Select a tile to dive into its folder, or use the arrow keys to inspect and Enter to open. Select a folder in the path to zoom back out."
+                StylingControl="IcicleChart"
+                StylingExample="FolderExample" />
+            <sample:ExampleCard
+                x:Name="FolderExample"
+                Header="Workspace folder sizes"
+                PreviewVerticalAlignment="Top">
+                <demo:HierarchyDrillDown x:Name="FolderNavigation">
+                    <charts:IcicleChart
+                        x:Name="Folders"
+                        Height="360"
+                        AutomationProperties.Name="Workspace folder sizes by hierarchy level"
+                        ShowValueLabels="{x:Bind ValueLabelsSwitch.IsOn, Mode=OneWay}"
+                        ValueFormat="0.#' GB'" />
+                </demo:HierarchyDrillDown>
+                <sample:ExampleCard.SampleControls>
+                    <StackPanel Spacing="12">
+                        <ToggleSwitch
+                            x:Name="OrientationSwitch"
+                            Header="Level direction"
+                            OffContent="Top to bottom"
+                            OnContent="Left to right"
+                            Toggled="OnOrientationToggled" />
+                        <ComboBox
+                            x:Name="LevelsBox"
+                            HorizontalAlignment="Stretch"
+                            Header="Visible levels"
+                            SelectedIndex="2"
+                            SelectionChanged="OnLevelsChanged">
+                            <x:String>1 level</x:String>
+                            <x:String>2 levels</x:String>
+                            <x:String>3 levels</x:String>
+                        </ComboBox>
+                        <ToggleSwitch
+                            x:Name="ValueLabelsSwitch"
+                            Header="Show values in tiles"
+                            IsOn="True" />
+                        <Button
+                            x:Name="LoadPackageFoldersButton"
+                            Click="OnLoadPackageFolders"
+                            Content="Load package folders" />
+                    </StackPanel>
+                </sample:ExampleCard.SampleControls>
+                <sample:ExampleCard.Options>
+                    <demo:ChartSampleOptions Target="{x:Bind Folders}" />
+                </sample:ExampleCard.Options>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

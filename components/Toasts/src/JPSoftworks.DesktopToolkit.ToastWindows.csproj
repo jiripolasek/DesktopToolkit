@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../component.props" />
+
+  <PropertyGroup>
+    <TargetFrameworks>$(DesktopToolkitWinUITargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="../../../eng/WinUI.Package.props" />
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ThirdParty/PowerToys.LICENSE.txt" Exclude="@(None)" />
+    <None Update="ThirdParty/PowerToys.LICENSE.txt" Pack="true" PackagePath="licenses/PowerToys.LICENSE.txt" />
+  </ItemGroup>
+
+  <Import Project="../../../eng/PackCompiledXaml.targets" />
+</Project>

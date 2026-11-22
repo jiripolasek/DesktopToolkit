@@ -1,0 +1,236 @@
+﻿<Page
+    x:Class="JPSoftworks.DesktopToolkit.Controls.Demo.Pages.DashboardWidgetsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:JPSoftworks.DesktopToolkit.Charts"
+    xmlns:demo="using:JPSoftworks.DesktopToolkit.Controls.Demo.Controls"
+    xmlns:sample="using:JPSoftworks.DesktopToolkit.Gallery.UI">
+    <Page.Resources>
+        <Style x:Key="WidgetCard" TargetType="Border">
+            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+    </Page.Resources>
+    <ScrollViewer
+        x:Name="PageScroll"
+        HorizontalContentAlignment="Left"
+        HorizontalScrollBarVisibility="Disabled"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            Width="{Binding ViewportWidth, ElementName=PageScroll}"
+            MaxWidth="1050"
+            HorizontalAlignment="Left"
+            Spacing="24">
+            <demo:SamplePageHeader
+                Title="Dashboard widgets"
+                ApiNotes="Use ChartAxisAppearance.Presentation to simplify a whole chart. ChartAxisOptions can still set the numeric bounds and reduce label opacity on one axis. BarSpacing sets the gap between columns and lets the first and last columns reach the edges of the plot."
+                Description="Show the current reading at a glance and let the chart inspector reveal the details." />
+            <sample:ExampleCard x:Name="WidgetExample" Header="Memory and service metrics">
+                <Grid
+                    x:Name="Tiles"
+                    RowSpacing="16"
+                    SizeChanged="OnTilesSizeChanged">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition x:Name="LatencyColumn" Width="0" />
+                    </Grid.ColumnDefinitions>
+                    <Border VerticalAlignment="Stretch" Style="{StaticResource WidgetCard}">
+                        <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto" RowSpacing="10">
+                            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Memory" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Style="{StaticResource TitleTextBlockStyle}"
+                                Text="{x:Bind UsedMemoryLabel}" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="Used over the last minute" />
+                            <charts:LineChart
+                                x:Name="MemoryHistory"
+                                Grid.Row="3"
+                                MinHeight="104"
+                                Padding="0"
+                                charts:ChartAxisAppearance.Presentation="Hidden"
+                                AutomationProperties.Name="Memory use over the last minute"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Data="{x:Bind MemorySamples}"
+                                ShowAreaFill="True"
+                                ShowLegend="False"
+                                ValueFormat="0.#' GB'"
+                                XAxis="{x:Bind ElapsedAxis}"
+                                XValueFormat="0' s'"
+                                YAxis="{x:Bind MemoryUsageAxis}" />
+                            <Grid Grid.Row="4" ColumnSpacing="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                                    Text="Memory composition"
+                                    TextWrapping="Wrap" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="{x:Bind InstalledMemoryLabel}" />
+                            </Grid>
+                            <charts:BarChart
+                                x:Name="MemorySplit"
+                                Grid.Row="5"
+                                Height="48"
+                                MinHeight="0"
+                                Padding="0"
+                                charts:ChartAxisAppearance.Presentation="Hidden"
+                                AutomationProperties.Name="Installed memory split"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Data="{x:Bind MemoryComposition}"
+                                InspectionMode="Category"
+                                Mode="Stacked100"
+                                Orientation="Horizontal"
+                                SegmentCornerRadius="4"
+                                SegmentGap="3"
+                                ValueFormat="0.#' GB'" />
+                        </Grid>
+                    </Border>
+                    <StackPanel
+                        x:Name="SecondaryTiles"
+                        Grid.Row="1"
+                        Spacing="16">
+                        <Border Style="{StaticResource WidgetCard}">
+                            <StackPanel Spacing="6">
+                                <Grid ColumnSpacing="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                                        Text="API latency" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Style="{StaticResource SubtitleTextBlockStyle}"
+                                        Text="{x:Bind LatencyLabel}" />
+                                </Grid>
+                                <TextBlock
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    Text="95th percentile over the last hour"
+                                    TextWrapping="Wrap" />
+                                <charts:LineChart
+                                    x:Name="LatencyHistory"
+                                    Height="74"
+                                    MinHeight="0"
+                                    Padding="0"
+                                    charts:ChartAxisAppearance.Presentation="Subtle"
+                                    AutomationProperties.Name="API latency over the last hour"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Data="{x:Bind LatencySamples}"
+                                    ShowAreaFill="True"
+                                    ShowLegend="False"
+                                    ValueFormat="0' ms'"
+                                    XAxis="{x:Bind SubtleTimeAxis}"
+                                    XValueFormat="0' min'"
+                                    YAxis="{x:Bind UnlabeledAxis}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Padding="0" Style="{StaticResource WidgetCard}">
+                            <StackPanel>
+                                <StackPanel Margin="20,14,20,8" Spacing="4">
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource BodyStrongTextBlockStyle}"
+                                            Text="Requests" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Style="{StaticResource SubtitleTextBlockStyle}"
+                                            Text="{x:Bind RequestsLabel}" />
+                                    </Grid>
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="Per minute over the last hour" />
+                                </StackPanel>
+                                <charts:LineChart
+                                    x:Name="RequestsHistory"
+                                    Height="78"
+                                    MinHeight="0"
+                                    Padding="0"
+                                    charts:ChartAxisAppearance.Presentation="Hidden"
+                                    AutomationProperties.Name="Request volume over the last hour"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    CornerRadius="0,0,11,11"
+                                    Data="{x:Bind RequestsSamples}"
+                                    Interpolation="Monotone"
+                                    ShowAreaFill="True"
+                                    ShowLegend="False"
+                                    ValueFormat="N0"
+                                    XAxis="{x:Bind ElapsedAxis}"
+                                    XValueFormat="0' min'" />
+                            </StackPanel>
+                        </Border>
+                        <Border Padding="0" Style="{StaticResource WidgetCard}">
+                            <StackPanel>
+                                <StackPanel Margin="20,14,20,8" Spacing="4">
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource BodyStrongTextBlockStyle}"
+                                            Text="Completed jobs"
+                                            TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Style="{StaticResource SubtitleTextBlockStyle}"
+                                            Text="{x:Bind CompletedJobsLabel}" />
+                                    </Grid>
+                                    <TextBlock
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        Text="Last seven days" />
+                                </StackPanel>
+                                <charts:BarChart
+                                    x:Name="WeeklyJobs"
+                                    Height="80"
+                                    MinHeight="0"
+                                    Padding="0"
+                                    charts:ChartAxisAppearance.Presentation="Hidden"
+                                    AutomationProperties.Name="Completed jobs by day over the last seven days"
+                                    Background="Transparent"
+                                    BarSpacing="2"
+                                    BorderThickness="0"
+                                    CornerRadius="0,0,11,11"
+                                    Data="{x:Bind WeeklyJobCounts}"
+                                    ShowLegend="False"
+                                    ValueFormat="N0" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+            </sample:ExampleCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

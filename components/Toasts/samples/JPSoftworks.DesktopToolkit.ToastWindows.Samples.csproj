@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../../eng/WinUI.Samples.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="../src/JPSoftworks.DesktopToolkit.ToastWindows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Examples/*.xaml;Examples/*.xaml.cs"
+                      LogicalName="ExampleSource.%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>

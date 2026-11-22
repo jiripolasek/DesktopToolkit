@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net10.0-windows10.0.26100.0;$(DesktopToolkitAppTargetFramework)</TargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="../../../eng/WinUI.Samples.props" />
+
+  <PropertyGroup>
+    <Platforms>x86;x64;ARM64</Platforms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" />
+    <PackageReference Include="WinUIEdit" IncludeAssets="compile" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="JPSoftworks.DesktopToolkit.Controls.Charts.DevApp" />
+    <EmbeddedResource Include="../src/README.md" LogicalName="ChartsGuide.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../DateTime/src/JPSoftworks.DesktopToolkit.Controls.DateTime.csproj" />
+    <ProjectReference Include="../../../gallery/ui/JPSoftworks.DesktopToolkit.Gallery.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseChartsPackage)' != 'true'">
+    <ProjectReference Include="../src/JPSoftworks.DesktopToolkit.Controls.Charts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseChartsPackage)' == 'true'">
+    <PackageVersion Include="JPSoftworks.DesktopToolkit.Controls.Charts" Version="$(ChartsPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseChartsPackage)' == 'true'">
+    <PackageReference Include="JPSoftworks.DesktopToolkit.Controls.Charts" />
+  </ItemGroup>
+</Project>

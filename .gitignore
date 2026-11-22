@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+**/.vs/
+artifacts/
+.worktrees/
+*.user
+**/node_modules/
+**/.astro/
+**/dist/
+*.pfx
+Package.StoreAssociation.xml

@@ -1,0 +1,21 @@
+<Project>
+  <!-- Supplies NuGet metadata and shared package assets. -->
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <Platforms>AnyCPU;x64;ARM64</Platforms>
+    <Authors>Jiri Polasek</Authors>
+    <Copyright>(c) Jiri Polasek</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
+    <PackageIcon>toolkit-icon.png</PackageIcon>
+    <PackageProjectUrl>https://desktoptoolkit.jiripolasek.com/components/$(ComponentSlug)/</PackageProjectUrl>
+    <PackageOutputPath>$(DesktopToolkitRoot)artifacts/packages</PackageOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(PackageReadmeFile)" Exclude="@(None)" />
+    <None Update="$(PackageReadmeFile)" Pack="true" PackagePath="/" />
+    <None Include="$(MSBuildThisFileDirectory)../art/$(PackageIcon)" Pack="true" PackagePath="/" />
+    <None Include="$(DesktopToolkitRoot)LICENSE" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>

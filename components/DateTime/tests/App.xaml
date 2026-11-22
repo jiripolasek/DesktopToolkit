@@ -1,0 +1,29 @@
+<Application
+    x:Class="JPSoftworks.DesktopToolkit.Controls.DateTimeControlTests.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:JPSoftworks.DesktopToolkit.Controls">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources />
+            </ResourceDictionary.MergedDictionaries>
+            <ControlTemplate x:Key="HeadingFreeTemplate" TargetType="controls:CalendarDateRangePicker">
+                <StackPanel>
+                    <CalendarView x:Name="PART_StartCalendar" />
+                    <CalendarView x:Name="PART_EndCalendar" />
+                    <CalendarDatePicker x:Name="PART_StartDate" />
+                    <CalendarDatePicker x:Name="PART_EndDate" AutomationProperties.Name="Departure" />
+                    <ComboBox x:Name="PART_Presets" />
+                </StackPanel>
+            </ControlTemplate>
+            <DataTemplate x:Key="PickerTestContent">
+                <StackPanel>
+                    <controls:CalendarDateRangePicker x:Name="Picker" DateFormat="O" PlaceholderText="" PresetPlaceholderText="" />
+                    <TextBlock x:Name="ReferenceHint" Foreground="{ThemeResource ComboBoxPlaceHolderForeground}" />
+                    <DropDownButton x:Name="ReferenceButton" Content="Selected dates" />
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
