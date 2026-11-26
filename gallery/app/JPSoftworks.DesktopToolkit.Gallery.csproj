@@ -17,6 +17,16 @@
     <ProjectPriFileName>resources.pri</ProjectPriFileName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(PublishPortableGallery)' == 'true' and '$(PublishSingleFileGallery)' == 'true'">
+    <PublishAot>false</PublishAot>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <!-- WinUI requires full extraction for native DLL redirection. -->
+    <NoWarn>$(NoWarn);NETSDK1244</NoWarn>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <CopyOutputSymbolsToPublishDirectory>false</CopyOutputSymbolsToPublishDirectory>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(PublishPortableGallery)' == 'true'">
     <Content Update="Assets\**\*" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>

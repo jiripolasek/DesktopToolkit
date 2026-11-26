@@ -50,7 +50,11 @@ try {
                 "$package.nupkg"
                 if ($component.hasSymbols) { "$package.snupkg" }
             }
-            foreach ($arch in 'x64', 'arm64') { "gallery/JPSoftworks.DesktopToolkit.Gallery-$($Tag.Substring(1))-win-$arch.zip" }
+            foreach ($arch in 'x64', 'arm64') {
+                foreach ($suffix in '', '-single-file') {
+                    "gallery/JPSoftworks.DesktopToolkit.Gallery-$($Tag.Substring(1))-win-$arch$suffix.zip"
+                }
+            }
         )
         foreach ($file in $files) {
             $entry = $archive.GetEntry($file)

@@ -84,9 +84,11 @@ jobs:
           assets=(release-assets/*.nupkg release-assets/*.snupkg)
           (( ${#assets[@]} > 0 ))
           for arch in x64 arm64; do
-            gallery="release-assets/JPSoftworks.DesktopToolkit.Gallery-${RELEASE_TAG#v}-win-$arch.zip"
-            [[ -s "$gallery" ]]
-            assets+=("$gallery")
+            for suffix in '' -single-file; do
+              gallery="release-assets/JPSoftworks.DesktopToolkit.Gallery-${RELEASE_TAG#v}-win-$arch$suffix.zip"
+              [[ -s "$gallery" ]]
+              assets+=("$gallery")
+            done
           done
           if draft=$(gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft'); then
             if [[ "$draft" == false ]]; then
