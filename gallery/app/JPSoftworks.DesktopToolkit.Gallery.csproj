@@ -5,6 +5,11 @@
     <Version>0.1.0-preview.2</Version>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(PublishPortableGallery)' != 'true' and '$(PublishAot)' == 'true'">
+    <!-- Use the Native AOT symbols from the publish output. -->
+    <IncludeDebugSymbolsProjectOutputGroup>false</IncludeDebugSymbolsProjectOutputGroup>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(PublishPortableGallery)' == 'true'">
     <WindowsPackageType>None</WindowsPackageType>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
@@ -25,6 +30,11 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.Runtime" Condition="'$(PublishPortableGallery)' != 'true'" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
+    <!-- SettingsControls brings in the SDK metapackage. The Gallery prunes it in both publish modes. -->
+    <!-- WinUI supplies the UI assets. Runtime adds the Windows App Runtime dependency for MSIX. -->
+    <PrunePackageReference Include="Microsoft.WindowsAppSDK" Version="$(DesktopToolkitWindowsAppSDKVersion)" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="Serilog.Extensions.Logging" />
     <PackageReference Include="Serilog.Sinks.File" />

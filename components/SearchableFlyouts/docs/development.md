@@ -12,14 +12,11 @@ dotnet build ..\..\JPSoftworks.DesktopToolkit.slnx -p:Platform=x64
 winapp run .\dev\JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.DevApp.csproj --arch x64 --detach
 ```
 
-Open the solution in Visual Studio and select **JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.DevApp (Package)** for F5 deployment and debugging.
-The project builds as MSIX. The Unpackaged profile launches the EXE without package identity and must
-only be used with a build configured with WindowsPackageType=None. Using it with the default MSIX
-build can fail in Windows App SDK deployment initialization with REGDB_E_CLASSNOTREG.
-See [runtime initialization](https://learn.microsoft.com/windows/apps/windows-app-sdk/use-windows-app-sdk-run-time)
-for the startup requirements of unpackaged applications.
+Open the solution in Visual Studio, set **JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.DevApp**
+as the startup project, and press F5. The development app runs unpackaged with the Windows App SDK
+runtime in its output folder.
 
-Run the focused control cases on an x64 Windows desktop and verify the manifest and executable from an ARM64 solution build with these commands.
+Run the focused control cases on an x64 Windows desktop. The ARM64 solution check verifies the DevApp's executable architecture and bundled WinUI runtime.
 
 ```powershell
 dotnet run --project .\tests\SearchableFlyouts.ControlTests -f net8.0-windows10.0.19041 -p:Platform=x64

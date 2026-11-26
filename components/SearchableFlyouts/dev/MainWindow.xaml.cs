@@ -26,7 +26,7 @@ public sealed partial class MainWindow : Window
         this.ExtendsContentIntoTitleBar = true;
         this.SetTitleBar(this.AppTitleBar);
 
-        this.AppWindow.SetIcon("Assets/AppIcon.ico");
+        this.AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets", "AppIcon.ico"));
         this.RootFrame.Loaded += this.OnContentLoaded;
         this.RootFrame.ActualThemeChanged += (_, _) => this.UpdateCaptionColors();
 

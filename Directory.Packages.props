@@ -1,6 +1,8 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- NuGet prunes transitive SDK metapackage versions up to this value, inclusive. -->
+    <DesktopToolkitWindowsAppSDKVersion>2.6.5</DesktopToolkitWindowsAppSDKVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.251219" />
@@ -12,19 +14,18 @@
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2957" />
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools.WinApp" Version="0.8.0" />
     <PackageVersion Include="Microsoft.Windows.SDK.BuildTools.WinUIAnalyzer" Version="0.8.0" />
-    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="2.6.5" />
+    <!-- Standalone package consumer checks use the full SDK to verify compatibility. -->
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="$(DesktopToolkitWindowsAppSDKVersion)" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK.Runtime" Version="$(DesktopToolkitWindowsAppSDKVersion)" />
     <PackageVersion Include="Microsoft.WindowsAppSDK.WinUI" Version="1.8.260224000" />
-    <PackageVersion Update="Microsoft.WindowsAppSDK.WinUI" Version="2.6.5"
-                    Condition="'$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.ToastWindows'" />
+    <PackageVersion Update="Microsoft.WindowsAppSDK.WinUI" Version="$(DesktopToolkitWindowsAppSDKVersion)"
+                    Condition="'$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.ToastWindows' or
+                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.KeyVisual.DevApp' or
+                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.DevApp' or
+                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Gallery'" />
     <PackageVersion Include="Serilog" Version="4.4.0" />
     <PackageVersion Include="Serilog.Extensions.Logging" Version="10.0.0" />
     <PackageVersion Include="Serilog.Sinks.File" Version="7.0.0" />
     <PackageVersion Include="WinUIEdit" Version="0.0.5-prerelease" />
-    <PackageVersion Update="Microsoft.WindowsAppSDK" Version="1.8.260317003"
-                    Condition="'$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.DateTime.ControlTests' or
-                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.ControlTests' or
-                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.KeyVisual.ControlTests' or
-                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.Charts.Samples' or
-                               '$(MSBuildProjectName)' == 'JPSoftworks.DesktopToolkit.Controls.Charts.DevApp'" />
   </ItemGroup>
 </Project>
