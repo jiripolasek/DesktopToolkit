@@ -14,7 +14,7 @@ using Microsoft.UI.Xaml.Automation.Provider;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
+using Microsoft.UI.Xaml.XamlTypeInfo;
 using Microsoft.Windows.Globalization;
 
 namespace JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.ControlTests;
@@ -927,8 +927,9 @@ public partial class App : Application
         Check(
             themed.Visibility == Visibility.Collapsed && backdrop.Visibility == Visibility.Visible,
             "Opting in did not show the acrylic layer.");
+        var backdropType = new XamlControlsXamlMetaDataProvider().GetXamlType("Microsoft.UI.Xaml.Controls.SystemBackdropElement");
         Check(
-            ReleaseInfo.Major < 2
+            backdropType is null
                 ? backdrop.Background is not null && backdrop.Child is null
                 : backdrop.Child is not null && backdrop.Background is null, "The runtime's acrylic backdrop is missing.");
     }

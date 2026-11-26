@@ -9,7 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.WindowsAppSDK" />
+    <PackageVersion Update="Microsoft.WindowsAppSDK.WinUI" Version="$(DesktopToolkitWindowsAppSDKVersion)"
+                    Condition="'$(MSBuildProjectName)' != 'JPSoftworks.DesktopToolkit.Controls.Charts.Samples'" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
+    <!-- SettingsControls can bring in the SDK metapackage. WinUI supplies the required SDK assets. -->
+    <!-- Pruning applies per project. Consuming apps need their own rule. -->
+    <PrunePackageReference Include="Microsoft.WindowsAppSDK" Version="$(DesktopToolkitWindowsAppSDKVersion)" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" PrivateAssets="all" />
   </ItemGroup>
 </Project>

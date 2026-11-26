@@ -1,7 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="../../../eng/WinUI.PackagedApp.props" />
 
+  <PropertyGroup>
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+  </PropertyGroup>
+
   <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
     <ProjectReference Include="../src/JPSoftworks.DesktopToolkit.Controls.SearchableFlyouts.csproj" />
   </ItemGroup>
 </Project>

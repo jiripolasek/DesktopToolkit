@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" />
+    <!-- KeyVisual Samples brings in the SDK metapackage through SettingsControls. -->
+    <!-- The DevApp prunes its own restore and gets the required SDK assets from WinUI. -->
+    <PrunePackageReference Include="Microsoft.WindowsAppSDK" Version="$(DesktopToolkitWindowsAppSDKVersion)" />
     <ProjectReference Include="../samples/JPSoftworks.DesktopToolkit.Controls.KeyVisual.Samples.csproj" />
   </ItemGroup>
 </Project>

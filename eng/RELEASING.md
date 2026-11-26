@@ -5,10 +5,11 @@ One Git tag releases every package in the catalog and the gallery at the same ve
 The check fails if any version differs from the tag.
 
 Pull requests build the Windows solution, run the component tests, and check the package archives.
-Full CI also installs packages in the consumer projects that define integration checks, including Native AOT and trimmed builds. It publishes the gallery as self-contained x64 and ARM64 ZIPs and checks that the gallery version matches the catalog.
+Full CI also installs packages in the consumer projects that define integration checks, including Native AOT and trimmed builds. It publishes Native AOT and single-file Gallery ZIPs for x64 and ARM64 and checks that the Gallery version matches the catalog.
 The [CI workflow](../.github/workflows/ci.yml) lists the configurations it exercises.
 Run `./eng/Build.ps1 -TestPackage` on Windows to build, test, and pack the complete toolkit locally.
 Run `./eng/Publish-Gallery.ps1` to create both gallery downloads in `artifacts/gallery`, or pass `-Platform x64` or `-Platform ARM64` to build one architecture. Native AOT requires the Visual Studio C++ toolchain for the selected architectures.
+Pass `-SingleFile` to create ZIPs containing one self-contained Gallery executable and the license notices. The executable extracts its dependencies on first launch.
 Before the first release, set the `NUGET_USER` variable to `jiripolasek` in the `nuget` GitHub environment.
 Configure NuGet.org trusted publishing for GitHub repository `jiripolasek/DesktopToolkit`, workflow file `release.yml`, and environment `nuget`.
 Allow new packages and versions matching `JPSoftworks.DesktopToolkit.*`.
@@ -20,7 +21,7 @@ git tag -a v0.1.0-preview.2 -m "JPSoftworks Desktop Toolkit 0.1.0-preview.2" HEA
 git push origin refs/tags/v0.1.0-preview.2
 ```
 
-The workflow verifies the CI archive digest, both versioned gallery ZIPs, and every package's metadata before NuGet publishing. It uploads Core and waits for NuGet.org to index that version before uploading the standalone controls and their symbols. It publishes the Controls bundle once NuGet.org indexes its five direct dependencies. It attaches the same packages, symbols, and gallery ZIPs to the GitHub release. Prerelease tags create GitHub prereleases.
+The workflow verifies the CI archive digest, all four versioned Gallery ZIPs, and every package's metadata before NuGet publishing. It uploads Core and waits for NuGet.org to index that version before uploading the standalone controls and their symbols. It publishes the Controls bundle once NuGet.org indexes its five direct dependencies. It attaches the same packages, symbols, and gallery ZIPs to the GitHub release. Prerelease tags create GitHub prereleases.
 
 If publication stops partway through, wait for the accepted packages to appear on NuGet.org and rerun the failed jobs. The workflow compares previously published package contents with the validated files, allows for NuGet.org's repository signature, and resumes missing uploads. A conflicting published version requires a new toolkit version.
 

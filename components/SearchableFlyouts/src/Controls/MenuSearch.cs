@@ -7,13 +7,17 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.Windows.ApplicationModel.WindowsAppRuntime;
+using Microsoft.UI.Xaml.XamlTypeInfo;
 using Windows.Foundation;
 
 namespace JPSoftworks.DesktopToolkit.Controls;
 
 internal static class MenuSearch
 {
+    // Component-only apps may lack the runtime version resource.
+    private static readonly Lazy<bool> _supportsSystemBackdropElement = new(static () =>
+        new XamlControlsXamlMetaDataProvider().GetXamlType("Microsoft.UI.Xaml.Controls.SystemBackdropElement") is not null);
+
     internal static string[] Tokenize(string query)
     {
         return query.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
@@ -120,12 +124,11 @@ internal static class MenuSearch
             return;
         }
 
-        if (ReleaseInfo.Major < 2 || host.Child is not null)
+        if (host.Child is not null || !_supportsSystemBackdropElement.Value)
         {
             return;
         }
 
-        // Load the WinUI 2.x element only when its runtime is present.
         var corners = rounded ? " CornerRadius='{ThemeResource OverlayCornerRadius}'" : string.Empty;
         host.Child = (UIElement)XamlReader.Load(
             "<SystemBackdropElement xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"

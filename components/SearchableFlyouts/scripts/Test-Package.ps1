@@ -103,11 +103,13 @@ if ($coreVersion) {
     }
 }
 
-foreach ($file in @('App.xaml', 'App.xaml.cs', 'MainPage.xaml', 'MainPage.xaml.cs', 'app.manifest', 'Package.appxmanifest')) {
+foreach ($file in @('App.xaml', 'App.xaml.cs', 'MainPage.xaml', 'MainPage.xaml.cs', 'app.manifest')) {
     Copy-Item -LiteralPath (Join-Path $sample $file) -Destination $consumer
 }
+$fixtures = Join-Path $workspace 'tests/PackageConsumer'
 # The WinUI TitleBar adds a nullable initializer that triggers IL2059 on .NET 8.
-Copy-Item -LiteralPath (Join-Path $workspace 'tests/PackageConsumer/MainWindow.cs') -Destination $consumer
+Copy-Item -LiteralPath (Join-Path $fixtures 'MainWindow.cs') -Destination $consumer
+Copy-Item -LiteralPath (Join-Path $fixtures 'Package.appxmanifest') -Destination $consumer
 Copy-Item -LiteralPath (Join-Path $sample 'Assets') -Destination $consumer -Recurse
 # Inline repository-owned defaults and role imports into the standalone project.
 function Add-ConsumerProjectContent([string]$Path, [xml]$Destination) {
@@ -147,8 +149,11 @@ foreach ($reference in $project.SelectNodes('//PackageReference')) {
     $reference.RemoveAttribute('VersionOverride')
     $reference.SetAttribute('Version', $dependencyVersion)
 }
-if (!$WindowsAppSdkVersion) { $WindowsAppSdkVersion = $referenceVersions['Microsoft.WindowsAppSDK'] }
-$project.SelectSingleNode('//PackageReference[@Include="Microsoft.WindowsAppSDK"]').SetAttribute('Version', $WindowsAppSdkVersion)
+if (!$WindowsAppSdkVersion) { $WindowsAppSdkVersion = $centralVersions['Microsoft.WindowsAppSDK'] }
+# Exercise the packaged consumer's Windows App SDK version independently of the dev app.
+$consumerSdk = $project.SelectSingleNode('//PackageReference[@Include="Microsoft.WindowsAppSDK.WinUI"]')
+$consumerSdk.SetAttribute('Include', 'Microsoft.WindowsAppSDK')
+$consumerSdk.SetAttribute('Version', $WindowsAppSdkVersion)
 # Stop automatic imports when the output directory is inside another repository.
 foreach ($name in 'Directory.Build.props', 'Directory.Build.targets', 'Directory.Packages.props') {
     [IO.File]::WriteAllText((Join-Path $consumer $name), "<Project />" + [Environment]::NewLine)
@@ -159,6 +164,8 @@ foreach ($reference in @($project.SelectNodes('//ProjectReference'))) {
 $properties = $project.CreateElement('PropertyGroup')
 $consumerProperties = @{
     TargetFramework = $TargetFramework
+    WindowsPackageType = 'MSIX'
+    WindowsAppSDKSelfContained = 'false'
     SelfContained = 'true'
     ManagePackageVersionsCentrally = 'false'
     PublishAot = (($Flavor -eq 'Aot').ToString().ToLowerInvariant())

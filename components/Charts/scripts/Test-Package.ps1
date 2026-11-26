@@ -46,9 +46,13 @@ if ($coreVersion.Count -ne 1 -or
 }
 $dependencyArchive = Join-Path (Split-Path -Parent $package) "$coreId.$($coreVersion[0]).nupkg"
 Copy-Item -LiteralPath $dependencyArchive -Destination $feed
-[xml]$central = Get-Content -LiteralPath (Join-Path $root 'Directory.Packages.props') -Raw
-$gallerySdk = ($central.Project.ItemGroup.PackageVersion | Where-Object Include -eq 'Microsoft.WindowsAppSDK').Version
-$buildTools = ($central.Project.ItemGroup.PackageVersion | Where-Object Include -eq 'Microsoft.Windows.SDK.BuildTools').Version
+$galleryProject = Join-Path $root 'gallery/app/JPSoftworks.DesktopToolkit.Gallery.csproj'
+$evaluation = & dotnet msbuild $galleryProject '-getItem:PackageVersion' '-p:Configuration=Release' "-p:Platform=$Architecture"
+if ($LASTEXITCODE -ne 0) { throw 'Cannot evaluate the Gallery package versions.' }
+$centralVersions = ($evaluation | Out-String | ConvertFrom-Json).Items.PackageVersion
+$gallerySdk = ($centralVersions | Where-Object Identity -eq 'Microsoft.WindowsAppSDK').Version
+$buildTools = ($centralVersions | Where-Object Identity -eq 'Microsoft.Windows.SDK.BuildTools').Version
+if (!$gallerySdk -or !$buildTools) { throw 'Missing Windows App SDK or Build Tools version.' }
 
 $config = Join-Path $validation 'NuGet.Config'
 $escaped = [Security.SecurityElement]::Escape($feed)
