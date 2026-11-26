@@ -50,6 +50,6 @@ Copyright (c) Microsoft Corporation. All rights reserved.
 
 **Source**: https://github.com/microsoft/fluentui-system-icons/
 
-The Charts samples use icons from this set under the MIT License reproduced above.
+The Charts samples and README use icons from this set under the MIT License reproduced above. The README uses 16 px regular icons from `@fluentui/svg-icons` version 1.1.347.
 
 Copyright (c) 2020 Microsoft Corporation
